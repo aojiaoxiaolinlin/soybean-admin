@@ -1,6 +1,6 @@
-import { $t } from '@/locales';
 import type { I18nKey } from '@/types/app';
 import type { Option } from '@/types/common';
+import { $t } from '@/locales';
 
 /**
  * Transform record to option
@@ -23,7 +23,7 @@ import type { Option } from '@/types/common';
 export function transformRecordToOption<T extends Record<string, string>>(record: T) {
   return Object.entries(record).map(([value, label]) => ({
     value,
-    label
+    label,
   })) as Option<keyof T, T[keyof T]>[];
 }
 
@@ -35,7 +35,7 @@ export function transformRecordToOption<T extends Record<string, string>>(record
 export function translateOptions(options: Option<string, I18nKey>[]) {
   return options.map(option => ({
     ...option,
-    label: $t(option.label)
+    label: $t(option.label),
   }));
 }
 
@@ -55,6 +55,6 @@ export function toggleHtmlClass(className: string) {
 
   return {
     add,
-    remove
+    remove,
   };
 }

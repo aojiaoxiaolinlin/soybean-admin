@@ -26,7 +26,8 @@ export function getColorName(color: string) {
 
     if (match) {
       name = colorName;
-    } else {
+    }
+    else {
       const { r, g, b } = getRgb(hexValue);
       const { h, s, l } = getHsl(hexValue);
 

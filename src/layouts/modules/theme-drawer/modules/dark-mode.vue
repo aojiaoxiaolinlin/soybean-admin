@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import type { ThemeScheme } from '@/types/union-key';
 import { computed } from 'vue';
 import { themeSchemaRecord } from '@/constants/app';
-import { useThemeStore } from '@/store/modules/theme';
 import { $t } from '@/locales';
-import type { ThemeScheme } from '@/types/union-key';
+import { useThemeStore } from '@/store/modules/theme';
 import SettingItem from '../components/setting-item.vue';
 
 defineOptions({
-  name: 'DarkMode'
+  name: 'DarkMode',
 });
 
 const themeStore = useThemeStore();
@@ -15,7 +15,7 @@ const themeStore = useThemeStore();
 const icons: Record<ThemeScheme, string> = {
   light: 'material-symbols:sunny',
   dark: 'material-symbols:nightlight-rounded',
-  auto: 'material-symbols:hdr-auto'
+  auto: 'material-symbols:hdr-auto',
 };
 
 function handleSegmentChange(value: string | number) {

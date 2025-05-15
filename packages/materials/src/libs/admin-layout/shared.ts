@@ -22,7 +22,7 @@ function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps) {
     '--soy-sidebar-z-index': props.sidebarZIndex,
     '--soy-mobile-sidebar-z-index': props.mobileSidebarZIndex,
     '--soy-footer-height': `${props.footerHeight}px`,
-    '--soy-footer-z-index': props.footerZIndex
+    '--soy-footer-z-index': props.footerZIndex,
   };
 
   return cssVars;
@@ -42,7 +42,7 @@ export function createLayoutCssVars(props: AdminLayoutProps) {
     tabHeight,
     sidebarWidth,
     sidebarCollapsedWidth,
-    footerHeight
+    footerHeight,
   } = props;
 
   const headerZIndex = maxZIndex - 3;
@@ -61,7 +61,7 @@ export function createLayoutCssVars(props: AdminLayoutProps) {
     mobileSidebarZIndex,
     sidebarCollapsedWidth,
     footerHeight,
-    footerZIndex
+    footerZIndex,
   };
 
   return createLayoutCssVarsByCssVarsProps(cssProps);

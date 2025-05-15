@@ -1,14 +1,14 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>, K = never">
+import type { TableColumnCheck } from '@/types/naive-ui';
 import { VueDraggable } from 'vue-draggable-plus';
 import { $t } from '@/locales';
-import type { TableColumnCheck } from '@/types/naive-ui';
 
 defineOptions({
-  name: 'TableColumnSetting'
+  name: 'TableColumnSetting',
 });
 
 const columns = defineModel<TableColumnCheck[]>('columns', {
-  required: true
+  required: true,
 });
 </script>
 
@@ -29,7 +29,9 @@ const columns = defineModel<TableColumnCheck[]>('columns', {
           <template v-if="typeof item.title === 'function'">
             <component :is="item.title" />
           </template>
-          <template v-else>{{ item.title }}</template>
+          <template v-else>
+            {{ item.title }}
+          </template>
         </NCheckbox>
       </div>
     </VueDraggable>

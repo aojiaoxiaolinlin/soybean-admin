@@ -1,5 +1,5 @@
-import { computed } from 'vue';
 import { useCountDown, useLoading } from '@sa/hooks';
+import { computed } from 'vue';
 import { REG_PHONE } from '@/constants/reg';
 import { $t } from '@/locales';
 
@@ -49,7 +49,7 @@ export function useCaptcha() {
     startLoading();
 
     // request
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, 500);
     });
 
@@ -66,6 +66,6 @@ export function useCaptcha() {
     stop,
     isCounting,
     loading,
-    getCaptcha
+    getCaptcha,
   };
 }

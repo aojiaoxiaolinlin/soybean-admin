@@ -12,9 +12,21 @@
   "i18n-ally.enabledFrameworks": ["vue"],
   "i18n-ally.editor.preferEditor": true,
   "i18n-ally.keystyle": "nested",
-  "prettier.enable": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "unocss.root": ["./"],
   "vue.server.hybridMode": true,
-  "cSpell.words": ["iconify", "VITE", "vueuse"]
+  "markdownlint.config": {
+    "MD033": {
+      "allowed_elements": ["img", "div", "h1", "a", "span"]
+    },
+    "Md041": false
+  },
+  "cSpell.words": [
+    "antfu",
+    "iconify",
+    "ofetch",
+    "unocss",
+    "VITE",
+    "vueuse"
+  ]
 }

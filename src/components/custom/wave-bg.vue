@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { getPaletteColorByNumber } from '@sa/color';
+import { computed } from 'vue';
+
+const props = defineProps<Props>();
 
 defineOptions({ name: 'WaveBg' });
 
 interface Props {
   /** Theme color */
-  themeColor: string;
+  themeColor: string
 }
-
-const props = defineProps<Props>();
 
 const lightColor = computed(() => getPaletteColorByNumber(props.themeColor, 200));
 const darkColor = computed(() => getPaletteColorByNumber(props.themeColor, 500));

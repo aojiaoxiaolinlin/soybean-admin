@@ -1,24 +1,48 @@
-import { defineConfig } from '@soybeanjs/eslint-config';
+import antfu from '@antfu/eslint-config';
 
-export default defineConfig(
-  { vue: true, unocss: true },
-  {
-    rules: {
-      'vue/multi-word-component-names': [
-        'warn',
+export default antfu({
+  vue: {
+    overrides: {
+      'vue/operator-linebreak': ['error', 'before'],
+      'vue/multi-word-component-names': 'off',
+      'vue/block-order': [
+        'error',
         {
-          ignores: ['index', 'App', 'Register', '[id]', '[url]']
-        }
+          order: ['script', 'template', 'style'],
+        },
       ],
-      'vue/component-name-in-template-casing': [
-        'warn',
-        'PascalCase',
+      'vue/define-macros-order': [
+        'error',
         {
-          registeredComponentsOnly: false,
-          ignores: ['/^icon-/']
-        }
+          order: ['defineProps', 'defineEmits'],
+          defineExposeLast: false,
+        },
       ],
-      'unocss/order-attributify': 'off'
-    }
-  }
-);
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'vue/padding-line-between-blocks': ['error', 'always'],
+      'vue/prefer-use-template-ref': 'error',
+      'vue/require-emit-validator': 'error',
+      'vue/require-explicit-slots': 'error',
+      'vue/require-macro-variable-name': [
+        'error',
+        {
+          defineProps: 'props',
+          defineEmits: 'emit',
+          defineSlots: 'slots',
+          useSlots: 'slots',
+          useAttrs: 'attrs',
+        },
+      ],
+    },
+  },
+  typescript: true,
+
+  unocss: true,
+
+  stylistic: {
+    overrides: {
+      'style/semi': ['error', 'always'],
+    },
+  },
+  ignores: ['*.md'],
+});

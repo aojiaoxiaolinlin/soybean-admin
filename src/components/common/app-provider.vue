@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { createTextVNode, defineComponent } from 'vue';
 import { useDialog, useLoadingBar, useMessage, useNotification } from 'naive-ui';
+import { createTextVNode, defineComponent } from 'vue';
 
 defineOptions({
-  name: 'AppProvider'
+  name: 'AppProvider',
 });
 
 const ContextHolder = defineComponent({
@@ -19,8 +19,10 @@ const ContextHolder = defineComponent({
     register();
 
     return () => createTextVNode();
-  }
+  },
 });
+
+defineSlots<{ default: () => unknown }>();
 </script>
 
 <template>
@@ -29,7 +31,7 @@ const ContextHolder = defineComponent({
       <NNotificationProvider>
         <NMessageProvider>
           <ContextHolder />
-          <slot></slot>
+          <slot />
         </NMessageProvider>
       </NNotificationProvider>
     </NDialogProvider>

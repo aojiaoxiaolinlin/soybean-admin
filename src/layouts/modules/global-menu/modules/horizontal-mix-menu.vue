@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import type { Menu } from '@/types/app';
 import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDEBAR_MENU_ID } from '@/constants/app';
+import { useRouterPush } from '@/hooks/common/router';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
-import { useRouterPush } from '@/hooks/common/router';
-import type { Menu } from '@/types/app';
-import FirstLevelMenu from '../components/first-level-menu.vue';
 import { useMenu, useMixMenuContext } from '../../../context';
+import FirstLevelMenu from '../components/first-level-menu.vue';
 
 defineOptions({
-  name: 'HorizontalMixMenu'
+  name: 'HorizontalMixMenu',
 });
 
 const appStore = useAppStore();

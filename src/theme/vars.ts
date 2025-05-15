@@ -7,9 +7,9 @@ function createColorPaletteVars() {
 
   const colorPaletteVar = {} as ThemePaletteColor;
 
-  colors.forEach(color => {
+  colors.forEach((color) => {
     colorPaletteVar[color] = `rgb(var(--${color}-color))`;
-    colorPaletteNumbers.forEach(number => {
+    colorPaletteNumbers.forEach((number) => {
       colorPaletteVar[`${color}-${number}`] = `rgb(var(--${color}-${number}-color))`;
     });
   });
@@ -23,15 +23,15 @@ const colorPaletteVars = createColorPaletteVars();
 export const themeVars: ThemeTokenCSSVars = {
   colors: {
     ...colorPaletteVars,
-    nprogress: 'rgb(var(--nprogress-color))',
-    container: 'rgb(var(--container-bg-color))',
-    layout: 'rgb(var(--layout-bg-color))',
-    inverted: 'rgb(var(--inverted-bg-color))',
-    'base-text': 'rgb(var(--base-text-color))'
+    'nprogress': 'rgb(var(--nprogress-color))',
+    'container': 'rgb(var(--container-bg-color))',
+    'layout': 'rgb(var(--layout-bg-color))',
+    'inverted': 'rgb(var(--inverted-bg-color))',
+    'base-text': 'rgb(var(--base-text-color))',
   },
   boxShadow: {
     header: 'var(--header-box-shadow)',
     sidebar: 'var(--sidebar-box-shadow)',
-    tab: 'var(--tab-box-shadow)'
-  }
+    tab: 'var(--tab-box-shadow)',
+  },
 };

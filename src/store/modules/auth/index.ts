@@ -1,13 +1,13 @@
+import type { LoginToken, UserInfo } from '@/types/api';
+import { useLoading } from '@sa/hooks';
+import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { defineStore } from 'pinia';
-import { useLoading } from '@sa/hooks';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
-import { useRouterPush } from '@/hooks/common/router';
-import { localStg } from '@/utils/storage';
 import { SetupStoreId } from '@/enum';
+import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
-import type { LoginToken, UserInfo } from '@/types/api';
+import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { localStg } from '@/utils/storage';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -25,7 +25,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     userId: '',
     userName: '',
     roles: [],
-    buttons: []
+    buttons: [],
   });
 
   /** is super role in static route */
@@ -96,7 +96,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
    *
    * @param userName User name
    * @param password Password
-   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   * @param [redirect] Whether to redirect after login. Default is `true`
    */
   async function login(userName: string, password: string, redirect = true) {
     startLoading();
@@ -120,10 +120,11 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         window.$notification?.success({
           title: $t('page.login.common.loginSuccess'),
           content: $t('page.login.common.welcomeBack', { userName: userInfo.userName }),
-          duration: 4500
+          duration: 4500,
         });
       }
-    } else {
+    }
+    else {
       resetStore();
     }
 
@@ -180,6 +181,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUserInfo
+    initUserInfo,
   };
 });

@@ -1,6 +1,6 @@
 <div align="center">
-	<img src="./public/favicon.svg" width="160" />
-	<h1>SoybeanAdmin</h1>
+ <img src="./public/favicon.svg" width="160" alt="icon"/>
+ <h1>SoybeanAdmin</h1>
   <span>中文 | <a href="./README.en_US.md">English</a></span>
 </div>
 
@@ -35,7 +35,6 @@
 - **命令行工具**：内置高效的命令行工具，git提交、删除文件、发布等。
 - **移动端适配**：完美支持移动端，实现自适应布局。
 
-
 ## 版本
 
 - **NaiveUI 版本:**
@@ -59,12 +58,10 @@
   - [Gitee 仓库](https://gitee.com/honghuangdc/soybean-admin/tree/legacy)
   - [Gitcode 仓库](https://gitcode.com/soybeanjs/soybean-admin/tree/legacy)
 
-
 ## 文档
 
 - [地址](https://docs.soybeanjs.cn)
 - [旧版文档](https://legacy-docs.soybeanjs.cn)
-
 
 ## 合作事项
 
@@ -94,7 +91,6 @@
 
 期待与您开展深入合作，共同推动 SoybeanAdmin 项目及其在更多领域的成功应用！
 
-
 ## 示例图片
 
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-01.png)
@@ -108,7 +104,6 @@
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-09.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-10.png)
 ![](https://soybeanjs-1300612522.cos.ap-guangzhou.myqcloud.com/uPic/soybean-admin-v1-mobile.png)
-
 
 ## 使用
 
@@ -168,7 +163,6 @@ pnpm build
 - [ba](https://github.com/xiatianYa/Ba-Server): 基于goFrame框架开发的后端服务对接soybean-admin,适配动态路由,接口鉴权限。
 - [soybean-admin-go](https://github.com/WgoW/soybean-admin-go):基于gin+gorm框架开发的go语言后端服务对接soybean-admin的example分支,适配动态路由,接口鉴权限。
 
-
 ## 如何贡献
 
 我们热烈欢迎并感谢所有形式的贡献。如果您有任何想法或建议，欢迎通过提交 [pull requests](https://github.com/soybeanjs/soybean-admin/pulls) 或创建 GitHub [issue](https://github.com/soybeanjs/soybean-admin/issues/new) 来分享。
@@ -176,7 +170,6 @@ pnpm build
 ## Git 提交规范
 
 本项目已内置 `commit` 命令，您可以通过执行 `pnpm commit` 来生成符合 [Conventional Commits]([conventionalcommits](https://www.conventionalcommits.org/)) 规范的提交信息。在提交PR时，请务必使用 `commit` 命令来创建提交信息，以确保信息的规范性。
-
 
 ## 浏览器支持
 
@@ -189,7 +182,6 @@ pnpm build
 ## 开源作者
 
 [Soybean](https://github.com/honghuangdc)
-
 
 ## 贡献者
 

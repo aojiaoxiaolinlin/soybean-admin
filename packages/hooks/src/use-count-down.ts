@@ -1,5 +1,5 @@
-import { computed, onScopeDispose, ref } from 'vue';
 import { useRafFn } from '@vueuse/core';
+import { computed, onScopeDispose, ref } from 'vue';
 
 /**
  * count down
@@ -19,11 +19,12 @@ export default function useCountDown(seconds: number) {
     () => {
       if (fps.value > 0) {
         fps.value -= 1;
-      } else {
+      }
+      else {
         pause();
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   function start(updateSeconds: number = seconds) {
@@ -44,6 +45,6 @@ export default function useCountDown(seconds: number) {
     count,
     isCounting,
     start,
-    stop
+    stop,
   };
 }

@@ -1,15 +1,15 @@
+import type { RouteKey, RoutePath } from '@elegant-router/types';
 import type {
   LocationQueryRaw,
   NavigationGuardNext,
   RouteLocationNormalized,
   RouteLocationRaw,
-  Router
+  Router,
 } from 'vue-router';
-import type { RouteKey, RoutePath } from '@elegant-router/types';
+import { getRouteName } from '@/router/elegant/transform';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouteStore } from '@/store/modules/route';
 import { localStg } from '@/utils/storage';
-import { getRouteName } from '@/router/elegant/transform';
 
 /**
  * create route guard
@@ -89,7 +89,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
       path,
       replace: true,
       query: to.query,
-      hash: to.hash
+      hash: to.hash,
     };
 
     return location;
@@ -111,7 +111,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
     const location: RouteLocationRaw = {
       name: loginRoute,
-      query
+      query,
     };
 
     return location;
@@ -131,7 +131,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
         path,
         replace: true,
         query: to.query,
-        hash: to.hash
+        hash: to.hash,
       };
 
       return location;
@@ -152,7 +152,7 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
   if (exist) {
     const location: RouteLocationRaw = {
-      name: noPermissionRoute
+      name: noPermissionRoute,
     };
 
     return location;

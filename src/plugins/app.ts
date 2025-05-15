@@ -1,11 +1,10 @@
-import { h } from 'vue';
 import type { App } from 'vue';
 import { NButton } from 'naive-ui';
+import { h } from 'vue';
 import { $t } from '@/locales';
 
 export function setupAppErrorHandle(app: App) {
   app.config.errorHandler = (err, vm, info) => {
-    // eslint-disable-next-line no-console
     console.error(err, vm, info);
   };
 }
@@ -15,13 +14,15 @@ export function setupAppVersionNotification() {
   const UPDATE_CHECK_INTERVAL = 3 * 60 * 1000;
 
   const canAutoUpdateApp = import.meta.env.VITE_AUTOMATICALLY_DETECT_UPDATE === 'Y' && import.meta.env.PROD;
-  if (!canAutoUpdateApp) return;
+  if (!canAutoUpdateApp)
+    return;
 
   let isShow = false;
   let updateInterval: ReturnType<typeof setInterval> | undefined;
 
   const checkForUpdates = async () => {
-    if (isShow) return;
+    if (isShow)
+      return;
 
     const buildTime = await getHtmlBuildTime();
 
@@ -44,9 +45,9 @@ export function setupAppVersionNotification() {
               onClick() {
                 n?.destroy();
                 isShow = false;
-              }
+              },
             },
-            () => $t('system.updateCancel')
+            () => $t('system.updateCancel'),
           ),
           h(
             NButton,
@@ -54,15 +55,15 @@ export function setupAppVersionNotification() {
               type: 'primary',
               onClick() {
                 location.reload();
-              }
+              },
             },
-            () => $t('system.updateConfirm')
-          )
+            () => $t('system.updateConfirm'),
+          ),
         ]);
       },
       onClose() {
         isShow = false;
-      }
+      },
     });
   };
 

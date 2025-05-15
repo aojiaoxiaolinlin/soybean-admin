@@ -6,7 +6,7 @@ import { useThemeStore } from '@/store/modules/theme';
 import GlobalLogo from '../global-logo/index.vue';
 
 defineOptions({
-  name: 'GlobalSidebar'
+  name: 'GlobalSidebar',
 });
 
 const appStore = useAppStore();
@@ -24,9 +24,9 @@ const menuWrapperClass = computed(() => (showLogo.value ? 'flex-1-hidden' : 'h-f
     <GlobalLogo
       v-if="showLogo"
       :show-title="!appStore.sidebarCollapse"
-      :style="{ height: themeStore.header.height + 'px' }"
+      :style="{ height: `${themeStore.header.height}px` }"
     />
-    <div :id="GLOBAL_SIDEBAR_MENU_ID" :class="menuWrapperClass"></div>
+    <div :id="GLOBAL_SIDEBAR_MENU_ID" :class="menuWrapperClass" />
   </DarkModeContainer>
 </template>
 

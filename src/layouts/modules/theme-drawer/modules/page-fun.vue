@@ -4,15 +4,15 @@ import {
   resetCacheStrategyOptions,
   themePageAnimationModeOptions,
   themeScrollModeOptions,
-  themeTabModeOptions
+  themeTabModeOptions,
 } from '@/constants/app';
+import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
 import { translateOptions } from '@/utils/common';
-import { $t } from '@/locales';
 import SettingItem from '../components/setting-item.vue';
 
 defineOptions({
-  name: 'PageFun'
+  name: 'PageFun',
 });
 
 const themeStore = useThemeStore();

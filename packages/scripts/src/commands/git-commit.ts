@@ -1,14 +1,14 @@
-import path from 'node:path';
-import { readFileSync } from 'node:fs';
-import { prompt } from 'enquirer';
-import { execCommand } from '../shared';
-import { locales } from '../locales';
 import type { Lang } from '../locales';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { prompt } from 'enquirer';
+import { locales } from '../locales';
+import { execCommand } from '../shared';
 
 interface PromptObject {
-  types: string;
-  scopes: string;
-  description: string;
+  types: string
+  scopes: string
+  description: string
 }
 
 /**
@@ -26,13 +26,13 @@ export async function gitCommit(lang: Lang = 'en-us') {
 
     return {
       name: value,
-      message
+      message,
     };
   });
 
   const scopesChoices = gitCommitScopes.map(([value, msg]) => ({
     name: value,
-    message: `${value.padEnd(30)} (${msg})`
+    message: `${value.padEnd(30)} (${msg})`,
   }));
 
   const result = await prompt<PromptObject>([
@@ -40,19 +40,19 @@ export async function gitCommit(lang: Lang = 'en-us') {
       name: 'types',
       type: 'select',
       message: gitCommitMessages.types,
-      choices: typesChoices
+      choices: typesChoices,
     },
     {
       name: 'scopes',
       type: 'select',
       message: gitCommitMessages.scopes,
-      choices: scopesChoices
+      choices: scopesChoices,
     },
     {
       name: 'description',
       type: 'text',
-      message: gitCommitMessages.description
-    }
+      message: gitCommitMessages.description,
+    },
   ]);
 
   const breaking = result.description.startsWith('!') ? '!' : '';
@@ -72,10 +72,11 @@ export async function gitCommitVerify(lang: Lang = 'en-us', ignores: RegExp[] = 
 
   const commitMsg = readFileSync(gitMsgPath, 'utf8').trim();
 
-  if (ignores.some(regExp => regExp.test(commitMsg))) return;
+  if (ignores.some(regExp => regExp.test(commitMsg)))
+    return;
 
-  const REG_EXP = /(?<type>[a-z]+)(?:\((?<scope>.+)\))?(?<breaking>!)?: (?<description>.+)/i;
-
+  // const REG_EXP = /(?<type>[a-z]+)(?:\((?<scope>.+)\))?(?<breaking>!)?: (?<description>.+)/i;
+  const REG_EXP = /[a-z]+(?:\(.+\))?!?: .+/i;
   if (!REG_EXP.test(commitMsg)) {
     const errorMsg = locales[lang].gitCommitVerify;
 

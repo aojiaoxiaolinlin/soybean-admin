@@ -19,7 +19,8 @@ export class Crypto<T extends object> {
     const dataString = decrypted.toString(CryptoJS.enc.Utf8);
     try {
       return JSON.parse(dataString) as T;
-    } catch {
+    }
+    catch {
       // avoid parse error
       return null;
     }

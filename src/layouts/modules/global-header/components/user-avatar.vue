@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { VNode } from 'vue';
-import { useAuthStore } from '@/store/modules/auth';
-import { useRouterPush } from '@/hooks/common/router';
+import { computed } from 'vue';
 import { useSvgIcon } from '@/hooks/common/icon';
+import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
+import { useAuthStore } from '@/store/modules/auth';
 
 defineOptions({
-  name: 'UserAvatar'
+  name: 'UserAvatar',
 });
 
 const authStore = useAuthStore();
@@ -22,22 +22,22 @@ type DropdownKey = 'logout';
 
 type DropdownOption =
   | {
-      key: DropdownKey;
-      label: string;
-      icon?: () => VNode;
-    }
+    key: DropdownKey
+    label: string
+    icon?: () => VNode
+  }
   | {
-      type: 'divider';
-      key: string;
-    };
+    type: 'divider'
+    key: string
+  };
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       label: $t('common.logout'),
       key: 'logout',
-      icon: SvgIconVNode({ icon: 'ph:sign-out', fontSize: 18 })
-    }
+      icon: SvgIconVNode({ icon: 'ph:sign-out', fontSize: 18 }),
+    },
   ];
 
   return opts;
@@ -51,14 +51,15 @@ function logout() {
     negativeText: $t('common.cancel'),
     onPositiveClick: () => {
       authStore.resetStore();
-    }
+    },
   });
 }
 
 function handleDropdown(key: DropdownKey) {
   if (key === 'logout') {
     logout();
-  } else {
+  }
+  else {
     // If your other options are jumps from other routes, they will be directly supported here
     routerPushByKey(key);
   }

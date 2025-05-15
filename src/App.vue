@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { NConfigProvider, darkTheme } from 'naive-ui';
 import type { WatermarkProps } from 'naive-ui';
+import { darkTheme, NConfigProvider } from 'naive-ui';
+import { computed } from 'vue';
+import { naiveDateLocales, naiveLocales } from './locales/naive';
 import { useAppStore } from './store/modules/app';
 import { useThemeStore } from './store/modules/theme';
-import { naiveDateLocales, naiveLocales } from './locales/naive';
 
 defineOptions({
-  name: 'App'
+  name: 'App',
 });
 
 const appStore = useAppStore();
@@ -35,7 +35,7 @@ const watermarkProps = computed<WatermarkProps>(() => {
     xOffset: 12,
     yOffset: 60,
     rotate: -15,
-    zIndex: 9999
+    zIndex: 9999,
   };
 });
 </script>

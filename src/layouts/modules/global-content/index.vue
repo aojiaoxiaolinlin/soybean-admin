@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { LAYOUT_SCROLL_EL_ID } from '@sa/materials';
+import { computed } from 'vue';
 import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useTabStore } from '@/store/modules/tab';
+import { useThemeStore } from '@/store/modules/theme';
+
+withDefaults(defineProps<Props>(), {
+  showPadding: true,
+});
 
 defineOptions({
-  name: 'GlobalContent'
+  name: 'GlobalContent',
 });
 
 interface Props {
   /** Show padding for content */
-  showPadding?: boolean;
+  showPadding?: boolean
 }
-
-withDefaults(defineProps<Props>(), {
-  showPadding: true
-});
 
 const appStore = useAppStore();
 const themeStore = useThemeStore();

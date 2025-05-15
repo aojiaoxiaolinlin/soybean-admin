@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { createReusableTemplate } from '@vueuse/core';
 import type { RouteKey } from '@elegant-router/types';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
-import { useRouterPush } from '@/hooks/common/router';
 import type { Menu } from '@/types/app';
+import { createReusableTemplate } from '@vueuse/core';
+import { useRouterPush } from '@/hooks/common/router';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
-  name: 'GlobalBreadcrumb'
+  name: 'GlobalBreadcrumb',
 });
 
 const themeStore = useThemeStore();
@@ -15,7 +15,7 @@ const routeStore = useRouteStore();
 const { routerPushByKey } = useRouterPush();
 
 interface BreadcrumbContentProps {
-  breadcrumb: Menu;
+  breadcrumb: Menu
 }
 
 const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<BreadcrumbContentProps>();

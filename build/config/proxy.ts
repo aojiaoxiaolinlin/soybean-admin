@@ -1,9 +1,9 @@
 import type { HttpProxy, ProxyOptions } from 'vite';
-import { bgRed, bgYellow, green, lightBlue } from 'kolorist';
-import { consola } from 'consola';
 import type { ServiceConfigItem } from '../../src/types/app';
-import { createServiceConfig } from '../../src/utils/service';
 import type { ImportMeta } from '../../src/types/vite-env';
+import { consola } from 'consola';
+import { bgRed, bgYellow, green, lightBlue } from 'kolorist';
+import { createServiceConfig } from '../../src/utils/service';
 /**
  * Set http proxy
  *
@@ -13,7 +13,8 @@ import type { ImportMeta } from '../../src/types/vite-env';
 export function createViteProxy(env: ImportMeta, enable: boolean) {
   const isEnableHttpProxy = enable && env.VITE_HTTP_PROXY === 'Y';
 
-  if (!isEnableHttpProxy) return undefined;
+  if (!isEnableHttpProxy)
+    return undefined;
 
   const isEnableProxyLog = env.VITE_PROXY_LOG === 'Y';
 
@@ -21,7 +22,7 @@ export function createViteProxy(env: ImportMeta, enable: boolean) {
 
   const proxy: Record<string, ProxyOptions> = createProxyItem({ baseURL, proxyPattern }, isEnableProxyLog);
 
-  other.forEach(item => {
+  other.forEach((item) => {
     Object.assign(proxy, createProxyItem(item, isEnableProxyLog));
   });
 
@@ -36,7 +37,8 @@ function createProxyItem(item: ServiceConfigItem, enableLog: boolean) {
     changeOrigin: true,
     configure: (_proxy: HttpProxy.Server, options: ProxyOptions) => {
       _proxy.on('proxyReq', (_proxyReq, req, _res) => {
-        if (!enableLog) return;
+        if (!enableLog)
+          return;
 
         const requestUrl = `${lightBlue('[proxy url]')}: ${bgYellow(` ${req.method} `)} ${green(`${item.proxyPattern}${req.url}`)}`;
 
@@ -45,11 +47,12 @@ function createProxyItem(item: ServiceConfigItem, enableLog: boolean) {
         consola.log(`${requestUrl}\n${proxyUrl}`);
       });
       _proxy.on('error', (_err, req, _res) => {
-        if (!enableLog) return;
+        if (!enableLog)
+          return;
         consola.log(bgRed(`Error: ${req.method} `), green(`${options.target}${req.url}`));
       });
     },
-    rewrite: path => path.replace(new RegExp(`^${item.proxyPattern}`), '')
+    rewrite: path => path.replace(new RegExp(`^${item.proxyPattern}`), ''),
   };
 
   return proxy;

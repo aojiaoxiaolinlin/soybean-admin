@@ -1,8 +1,8 @@
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
 import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
+import type { Breadcrumb, Menu } from '@/types/app';
 import { useSvgIcon } from '@/hooks/common/icon';
 import { $t } from '@/locales';
-import type { Breadcrumb, Menu } from '@/types/app';
 
 /**
  * Filter auth routes by roles
@@ -77,7 +77,7 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
   const menus: Menu[] = [];
 
-  routes.forEach(route => {
+  routes.forEach((route) => {
     if (!route.meta?.hideInMenu) {
       const menu = getGlobalMenuByBaseRoute(route);
 
@@ -100,14 +100,14 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
 export function updateLocaleOfGlobalMenus(menus: Menu[]) {
   const result: Menu[] = [];
 
-  menus.forEach(menu => {
+  menus.forEach((menu) => {
     const { i18nKey, label, children } = menu;
 
     const newLabel = i18nKey ? $t(i18nKey) : label;
 
     const newMenu: Menu = {
       ...menu,
-      label: newLabel
+      label: newLabel,
     };
 
     if (children?.length) {
@@ -139,7 +139,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
     i18nKey,
     routeKey: name as RouteKey,
     routePath: path as RouteMap[RouteKey],
-    icon: SvgIconVNode({ icon, localIcon, fontSize: iconFontSize || 20 })
+    icon: SvgIconVNode({ icon, localIcon, fontSize: iconFontSize || 20 }),
   };
 
   return menu;
@@ -153,9 +153,9 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 export function getCacheRouteNames(routes: RouteRecordRaw[]) {
   const cacheNames: LastLevelRouteKey[] = [];
 
-  routes.forEach(route => {
+  routes.forEach((route) => {
     // only get last two level route, which has component
-    route.children?.forEach(child => {
+    route.children?.forEach((child) => {
       if (child.component && child.meta?.keepAlive) {
         cacheNames.push(child.name as LastLevelRouteKey);
       }
@@ -204,7 +204,7 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
 export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: Menu[]) {
   const keyPath: string[] = [];
 
-  menus.some(menu => {
+  menus.some((menu) => {
     const path = findMenuPath(selectedKey, menu);
 
     const find = Boolean(path?.length);
@@ -264,7 +264,7 @@ function transformMenuToBreadcrumb(menu: Menu) {
   const { children, ...rest } = menu;
 
   const breadcrumb: Breadcrumb = {
-    ...rest
+    ...rest,
   };
 
   if (children?.length) {
@@ -320,7 +320,8 @@ export function getBreadcrumbsByRoute(route: RouteLocationNormalizedLoaded, menu
  * @param treeMap
  */
 export function transformMenuToSearchMenus(menus: Menu[], treeMap: Menu[] = []) {
-  if (menus && menus.length === 0) return [];
+  if (menus && menus.length === 0)
+    return [];
   return menus.reduce((acc, cur) => {
     if (!cur.children) {
       acc.push(cur);

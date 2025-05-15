@@ -1,11 +1,6 @@
-import { computed, effectScope, onScopeDispose, reactive, ref, watch } from 'vue';
-import type { Ref } from 'vue';
-import type { PaginationProps } from 'naive-ui';
-import { jsonClone } from '@sa/utils';
 import type { TableColumnCheck } from '@sa/hooks';
-import { useBoolean, useHookTable } from '@sa/hooks';
-import { useAppStore } from '@/store/modules/app';
-import { $t } from '@/locales';
+import type { PaginationProps } from 'naive-ui';
+import type { Ref } from 'vue';
 import type {
   GetTableData,
   NaiveTableConfig,
@@ -13,8 +8,13 @@ import type {
   TableColumn,
   TableColumnWithKey,
   TableData,
-  TableDataWithIndex
+  TableDataWithIndex,
 } from '@/types/naive-ui';
+import { useBoolean, useHookTable } from '@sa/hooks';
+import { jsonClone } from '@sa/utils';
+import { computed, effectScope, onScopeDispose, reactive, ref, watch } from 'vue';
+import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app';
 
 export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
   const scope = effectScope();
@@ -38,12 +38,12 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
     getData,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
   } = useHookTable<A, GetTableData<A>, TableColumn<TableDataWithIndex<GetTableData<A>>>>({
     apiFn,
     apiParams,
     columns: config.columns,
-    transformer: res => {
+    transformer: (res) => {
       const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
 
       // Ensure that the size is greater than 0, If it is less than 0, it will cause paging calculation errors.
@@ -52,7 +52,7 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
       const recordsWithIndex = records.map((item, index) => {
         return {
           ...item,
-          index: (current - 1) * pageSize + index + 1
+          index: (current - 1) * pageSize + index + 1,
         };
       });
 
@@ -60,30 +60,32 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
         data: recordsWithIndex,
         pageNum: current,
         pageSize,
-        total
+        total,
       };
     },
-    getColumnChecks: cols => {
+    getColumnChecks: (cols) => {
       const checks: TableColumnCheck[] = [];
 
-      cols.forEach(column => {
+      cols.forEach((column) => {
         if (isTableColumnHasKey(column)) {
           checks.push({
             key: column.key as string,
             title: column.title!,
-            checked: true
+            checked: true,
           });
-        } else if (column.type === 'selection') {
+        }
+        else if (column.type === 'selection') {
           checks.push({
             key: SELECTION_KEY,
             title: $t('common.check'),
-            checked: true
+            checked: true,
           });
-        } else if (column.type === 'expand') {
+        }
+        else if (column.type === 'expand') {
           checks.push({
             key: EXPAND_KEY,
             title: $t('common.expandColumn'),
-            checked: true
+            checked: true,
           });
         }
       });
@@ -93,12 +95,14 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
     getColumns: (cols, checks) => {
       const columnMap = new Map<string, TableColumn<GetTableData<A>>>();
 
-      cols.forEach(column => {
+      cols.forEach((column) => {
         if (isTableColumnHasKey(column)) {
           columnMap.set(column.key as string, column);
-        } else if (column.type === 'selection') {
+        }
+        else if (column.type === 'selection') {
           columnMap.set(SELECTION_KEY, column);
-        } else if (column.type === 'expand') {
+        }
+        else if (column.type === 'expand') {
           columnMap.set(EXPAND_KEY, column);
         }
       });
@@ -109,16 +113,16 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
 
       return filteredColumns;
     },
-    onFetched: async transformed => {
+    onFetched: async (transformed) => {
       const { pageNum, pageSize, total } = transformed;
 
       updatePagination({
         page: pageNum,
         pageSize,
-        itemCount: total
+        itemCount: total,
       });
     },
-    immediate
+    immediate,
   });
 
   const pagination: PaginationProps = reactive({
@@ -132,7 +136,7 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
 
       updateSearchParams({
         current: page,
-        size: pagination.pageSize!
+        size: pagination.pageSize!,
       });
 
       getData();
@@ -143,16 +147,16 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
 
       updateSearchParams({
         current: pagination.page,
-        size: pageSize
+        size: pageSize,
       });
 
       getData();
     },
     ...(showTotal
       ? {
-          prefix: page => $t('dataTable.itemCount', { total: page.itemCount })
+          prefix: page => $t('dataTable.itemCount', { total: page.itemCount }),
         }
-      : {})
+      : {}),
   });
 
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
@@ -160,7 +164,7 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
     const p: PaginationProps = {
       ...pagination,
       pageSlot: isMobile.value ? 3 : 9,
-      prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
+      prefix: !isMobile.value && showTotal ? pagination.prefix : undefined,
     };
 
     return p;
@@ -177,12 +181,12 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
    */
   async function getDataByPage(pageNum: number = 1) {
     updatePagination({
-      page: pageNum
+      page: pageNum,
     });
 
     updateSearchParams({
       current: pageNum,
-      size: pagination.pageSize!
+      size: pagination.pageSize!,
     });
 
     await getData();
@@ -193,7 +197,7 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
       () => appStore.locale,
       () => {
         reloadColumns();
-      }
+      },
     );
   });
 
@@ -215,7 +219,7 @@ export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
     getDataByPage,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
   };
 }
 
@@ -269,7 +273,7 @@ export function useTableOperate<T extends TableData>(data: Ref<T[]>, getData: ()
     handleEdit,
     checkedRowKeys,
     onBatchDeleted,
-    onDeleted
+    onDeleted,
   };
 }
 

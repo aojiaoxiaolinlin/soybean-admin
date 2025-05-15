@@ -1,14 +1,14 @@
-import process from 'node:process';
-import path from 'node:path';
-import { writeFile } from 'node:fs/promises';
 import { existsSync, mkdirSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import process from 'node:process';
 import { prompt } from 'enquirer';
 import { green, red } from 'kolorist';
 
 interface PromptObject {
-  routeName: string;
-  addRouteParams: boolean;
-  routeParams: string;
+  routeName: string
+  addRouteParams: boolean
+  routeParams: string
 }
 
 /** generate route */
@@ -18,14 +18,14 @@ export async function generateRoute() {
       name: 'routeName',
       type: 'text',
       message: 'please enter route name',
-      initial: 'demo-route_child'
+      initial: 'demo-route_child',
     },
     {
       name: 'addRouteParams',
       type: 'confirm',
       message: 'add route params?',
-      initial: false
-    }
+      initial: false,
+    },
   ]);
 
   if (result.addRouteParams) {
@@ -33,13 +33,13 @@ export async function generateRoute() {
       name: 'routeParams',
       type: 'text',
       message: 'please enter route params',
-      initial: 'id'
+      initial: 'id',
     });
 
     Object.assign(result, answers);
   }
 
-  const PAGE_DIR_NAME_PATTERN = /^[\w-]+[0-9a-zA-Z]+$/;
+  const PAGE_DIR_NAME_PATTERN = /^[\w-]+[0-9a-z]$/i;
 
   if (!PAGE_DIR_NAME_PATTERN.test(result.routeName)) {
     throw new Error(`${red('route name is invalid, it only allow letters, numbers, "-" or "_"')}.
@@ -51,7 +51,7 @@ For example:
 `);
   }
 
-  const PARAM_REG = /^\w+$/g;
+  const PARAM_REG = /^\w+$/;
 
   if (result.routeParams && !PARAM_REG.test(result.routeParams)) {
     throw new Error(red('route params is invalid, it only allow letters, numbers or "_".'));
@@ -69,7 +69,8 @@ For example:
 
   if (!existsSync(routeDir)) {
     mkdirSync(routeDir, { recursive: true });
-  } else {
+  }
+  else {
     throw new Error(red('route already exists'));
   }
 

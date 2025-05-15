@@ -1,8 +1,8 @@
-import { colord, extend } from 'colord';
-import namesPlugin from 'colord/plugins/names';
-import mixPlugin from 'colord/plugins/mix';
-import labPlugin from 'colord/plugins/lab';
 import type { AnyColor, HslColor, RgbColor } from 'colord';
+import { colord, extend } from 'colord';
+import labPlugin from 'colord/plugins/lab';
+import mixPlugin from 'colord/plugins/mix';
+import namesPlugin from 'colord/plugins/names';
 
 extend([namesPlugin, mixPlugin, labPlugin]);
 
@@ -75,7 +75,7 @@ export function transformColorWithOpacity(color: AnyColor, alpha: number, bgColo
   const resultRgb: RgbColor = {
     r: calRgb(oR, bgR, alpha),
     g: calRgb(oG, bgG, alpha),
-    b: calRgb(oB, bgB, alpha)
+    b: calRgb(oB, bgB, alpha),
   };
 
   return colord(resultRgb).toHex();

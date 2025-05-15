@@ -16,13 +16,13 @@ export interface RequestOption<ResponseData = any> {
    *
    * @param config Axios config
    */
-  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  onRequest: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>
   /**
    * The hook to check backend response is success or not
    *
    * @param response Axios response
    */
-  isBackendSuccess: (response: AxiosResponse<ResponseData>) => boolean;
+  isBackendSuccess: (response: AxiosResponse<ResponseData>) => boolean
   /**
    * The hook after backend request fail
    *
@@ -34,13 +34,13 @@ export interface RequestOption<ResponseData = any> {
   onBackendFail: (
     response: AxiosResponse<ResponseData>,
     instance: AxiosInstance
-  ) => Promise<AxiosResponse | null> | Promise<void>;
+  ) => Promise<AxiosResponse | null> | Promise<void>
   /**
    * transform backend response when the responseType is json
    *
    * @param response Axios response
    */
-  transformBackendResponse(response: AxiosResponse<ResponseData>): any | Promise<any>;
+  transformBackendResponse: (response: AxiosResponse<ResponseData>) => any | Promise<any>
   /**
    * The hook to handle error
    *
@@ -48,15 +48,15 @@ export interface RequestOption<ResponseData = any> {
    *
    * @param error
    */
-  onError: (error: AxiosError<ResponseData>) => void | Promise<void>;
+  onError: (error: AxiosError<ResponseData>) => void | Promise<void>
 }
 
 interface ResponseMap {
-  blob: Blob;
-  text: string;
-  arrayBuffer: ArrayBuffer;
-  stream: ReadableStream<Uint8Array>;
-  document: Document;
+  blob: Blob
+  text: string
+  arrayBuffer: ArrayBuffer
+  stream: ReadableStream<Uint8Array>
+  document: Document
 }
 export type ResponseType = keyof ResponseMap | 'json';
 
@@ -65,7 +65,7 @@ export type MappedType<R extends ResponseType, JsonType = any> = R extends keyof
   : JsonType;
 
 export type CustomAxiosRequestConfig<R extends ResponseType = 'json'> = Omit<AxiosRequestConfig, 'responseType'> & {
-  responseType?: R;
+  responseType?: R
 };
 
 export interface RequestInstanceCommon<T> {
@@ -76,33 +76,33 @@ export interface RequestInstanceCommon<T> {
    *
    * @param requestId
    */
-  cancelRequest: (requestId: string) => void;
+  cancelRequest: (requestId: string) => void
   /**
    * cancel all request
    *
    * if the request provide abort controller sign from config, it will not collect in the abort controller map
    */
-  cancelAllRequest: () => void;
+  cancelAllRequest: () => void
   /** you can set custom state in the request instance */
-  state: T;
+  state: T
 }
 
 /** The request instance */
 export interface RequestInstance<S = Record<string, unknown>> extends RequestInstanceCommon<S> {
-  <T = any, R extends ResponseType = 'json'>(config: CustomAxiosRequestConfig<R>): Promise<MappedType<R, T>>;
+  <T = any, R extends ResponseType = 'json'>(config: CustomAxiosRequestConfig<R>): Promise<MappedType<R, T>>
 }
 
-export type FlatResponseSuccessData<T = any, ResponseData = any> = {
-  data: T;
-  error: null;
-  response: AxiosResponse<ResponseData>;
-};
+export interface FlatResponseSuccessData<T = any, ResponseData = any> {
+  data: T
+  error: null
+  response: AxiosResponse<ResponseData>
+}
 
-export type FlatResponseFailData<ResponseData = any> = {
-  data: null;
-  error: AxiosError<ResponseData>;
-  response: AxiosResponse<ResponseData>;
-};
+export interface FlatResponseFailData<ResponseData = any> {
+  data: null
+  error: AxiosError<ResponseData>
+  response: AxiosResponse<ResponseData>
+}
 
 export type FlatResponseData<T = any, ResponseData = any> =
   | FlatResponseSuccessData<T, ResponseData>
@@ -111,5 +111,5 @@ export type FlatResponseData<T = any, ResponseData = any> =
 export interface FlatRequestInstance<S = Record<string, unknown>, ResponseData = any> extends RequestInstanceCommon<S> {
   <T = any, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig<R>
-  ): Promise<FlatResponseData<MappedType<R, T>, ResponseData>>;
+  ): Promise<FlatResponseData<MappedType<R, T>, ResponseData>>
 }

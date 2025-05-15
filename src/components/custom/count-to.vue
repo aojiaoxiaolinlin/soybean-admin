@@ -1,24 +1,6 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue';
 import { TransitionPresets, useTransition } from '@vueuse/core';
-
-defineOptions({
-  name: 'CountTo'
-});
-
-interface Props {
-  startValue?: number;
-  endValue?: number;
-  duration?: number;
-  autoplay?: boolean;
-  decimals?: number;
-  prefix?: string;
-  suffix?: string;
-  separator?: string;
-  decimal?: string;
-  useEasing?: boolean;
-  transition?: keyof typeof TransitionPresets;
-}
+import { computed, nextTick, ref, watch } from 'vue';
 
 const props = withDefaults(defineProps<Props>(), {
   startValue: 0,
@@ -31,8 +13,26 @@ const props = withDefaults(defineProps<Props>(), {
   separator: ',',
   decimal: '.',
   useEasing: true,
-  transition: 'linear'
+  transition: 'linear',
 });
+
+defineOptions({
+  name: 'CountTo',
+});
+
+interface Props {
+  startValue?: number
+  endValue?: number
+  duration?: number
+  autoplay?: boolean
+  decimals?: number
+  prefix?: string
+  suffix?: string
+  separator?: string
+  decimal?: string
+  useEasing?: boolean
+  transition?: keyof typeof TransitionPresets
+}
 
 const source = ref(props.startValue);
 
@@ -41,7 +41,7 @@ const transition = computed(() => (props.useEasing ? TransitionPresets[props.tra
 const outputValue = useTransition(source, {
   disabled: false,
   duration: props.duration,
-  transition: transition.value
+  transition: transition.value,
 });
 
 const value = computed(() => formatValue(outputValue.value));
@@ -77,7 +77,7 @@ watch(
       start();
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 

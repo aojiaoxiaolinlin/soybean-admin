@@ -1,12 +1,12 @@
-import { computed, ref, shallowRef, triggerRef } from 'vue';
 import type {
   ComputedGetter,
   DebuggerOptions,
   Ref,
   ShallowRef,
   WritableComputedOptions,
-  WritableComputedRef
+  WritableComputedRef,
 } from 'vue';
+import { computed, ref, shallowRef, triggerRef } from 'vue';
 
 type Updater<T> = (value: T) => T;
 type Mutator<T> = (value: T) => void;
@@ -37,7 +37,7 @@ type Mutator<T> = (value: T) => void;
  *   ```
  */
 export interface Signal<T> {
-  (): Readonly<T>;
+  (): Readonly<T>
   /**
    * Set the value of the signal
    *
@@ -45,7 +45,7 @@ export interface Signal<T> {
    *
    * @param value
    */
-  set(value: T): void;
+  set: (value: T) => void
   /**
    * Update the value of the signal using an updater function
    *
@@ -53,7 +53,7 @@ export interface Signal<T> {
    *
    * @param updater
    */
-  update(updater: Updater<T>): void;
+  update: (updater: Updater<T>) => void
   /**
    * Mutate the value of the signal using a mutator function
    *
@@ -63,7 +63,7 @@ export interface Signal<T> {
    *
    * @param mutator
    */
-  mutate(mutator: Mutator<T>): void;
+  mutate: (mutator: Mutator<T>) => void
   /**
    * Get the reference of the signal
    *
@@ -81,11 +81,11 @@ export interface Signal<T> {
    * </script>
    * ```
    */
-  getRef(): Readonly<ShallowRef<Readonly<T>>>;
+  getRef: () => Readonly<ShallowRef<Readonly<T>>>
 }
 
 export interface ReadonlySignal<T> {
-  (): Readonly<T>;
+  (): Readonly<T>
 }
 
 export interface SignalOptions {
@@ -94,7 +94,7 @@ export interface SignalOptions {
    *
    * @default false use `sharedRef` to store the value
    */
-  useRef?: boolean;
+  useRef?: boolean
 }
 
 export function useSignal<T>(initialValue: T, options?: SignalOptions): Signal<T> {
@@ -109,7 +109,7 @@ export function useComputed<T>(getter: ComputedGetter<T>, debugOptions?: Debugge
 export function useComputed<T>(options: WritableComputedOptions<T>, debugOptions?: DebuggerOptions): Signal<T>;
 export function useComputed<T>(
   getterOrOptions: ComputedGetter<T> | WritableComputedOptions<T>,
-  debugOptions?: DebuggerOptions
+  debugOptions?: DebuggerOptions,
 ) {
   const isGetter = typeof getterOrOptions === 'function';
 

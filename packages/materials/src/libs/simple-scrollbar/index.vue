@@ -3,8 +3,10 @@ import Simplebar from 'simplebar-vue';
 import 'simplebar-vue/dist/simplebar.min.css';
 
 defineOptions({
-  name: 'SimpleScrollbar'
+  name: 'SimpleScrollbar',
 });
+
+defineSlots<{ default: () => void }>();
 </script>
 
 <template>

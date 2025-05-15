@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { AdminLayoutProps } from '../../types';
-import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID, createLayoutCssVars } from './shared';
+import { computed } from 'vue';
 import style from './index.module.css';
-
-defineOptions({
-  name: 'AdminLayout'
-});
+import { createLayoutCssVars, LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID } from './shared';
 
 const props = withDefaults(defineProps<AdminLayoutProps>(), {
   mode: 'vertical',
@@ -25,30 +21,34 @@ const props = withDefaults(defineProps<AdminLayoutProps>(), {
   sidebarCollapsedWidth: 64,
   footerVisible: true,
   footerHeight: 48,
-  rightFooter: false
+  rightFooter: false,
+});
+
+const emit = defineEmits<Emits>();
+
+defineOptions({
+  name: 'AdminLayout',
 });
 
 interface Emits {
   /** Update sidebarCollapse */
-  (e: 'update:sidebarCollapse', collapse: boolean): void;
+  (_e: 'update:sidebarCollapse', _collapse: boolean): void
 }
 
-const emit = defineEmits<Emits>();
+type SlotFn = (_props?: Record<string, unknown>) => unknown;
 
-type SlotFn = (props?: Record<string, unknown>) => any;
-
-type Slots = {
+interface Slots {
   /** Main */
-  default?: SlotFn;
+  default?: SlotFn
   /** Header */
-  header?: SlotFn;
+  header?: SlotFn
   /** Tab */
-  tab?: SlotFn;
+  tab?: SlotFn
   /** Sidebar */
-  sidebar?: SlotFn;
+  sidebar?: SlotFn
   /** Footer */
-  footer?: SlotFn;
-};
+  footer?: SlotFn
+}
 
 const slots = defineSlots<Slots>();
 
@@ -129,16 +129,16 @@ function handleClickMask() {
             commonClass,
             headerClass,
             headerLeftGapClass,
-            { 'absolute top-0 left-0 w-full': fixedHeaderAndTab }
+            { 'absolute top-0 left-0 w-full': fixedHeaderAndTab },
           ]"
         >
-          <slot name="header"></slot>
+          <slot name="header" />
         </header>
         <div
           v-show="!fullContent && fixedHeaderAndTab"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-header-placement']]"
-        ></div>
+        />
       </template>
 
       <!-- Tab -->
@@ -151,16 +151,16 @@ function handleClickMask() {
             tabClass,
             { 'top-0!': fullContent || !showHeader },
             leftGapClass,
-            { 'absolute left-0 w-full': fixedHeaderAndTab }
+            { 'absolute left-0 w-full': fixedHeaderAndTab },
           ]"
         >
-          <slot name="tab"></slot>
+          <slot name="tab" />
         </div>
         <div
           v-show="fullContent || fixedHeaderAndTab"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-tab-placement']]"
-        ></div>
+        />
       </template>
 
       <!-- Sidebar -->
@@ -172,10 +172,10 @@ function handleClickMask() {
             commonClass,
             sidebarClass,
             sidebarPaddingClass,
-            sidebarCollapse ? style['layout-sidebar_collapsed'] : style['layout-sidebar']
+            sidebarCollapse ? style['layout-sidebar_collapsed'] : style['layout-sidebar'],
           ]"
         >
-          <slot name="sidebar"></slot>
+          <slot name="sidebar" />
         </aside>
       </template>
 
@@ -187,17 +187,17 @@ function handleClickMask() {
             commonClass,
             mobileSidebarClass,
             style['layout-mobile-sidebar'],
-            sidebarCollapse ? 'overflow-hidden' : style['layout-sidebar']
+            sidebarCollapse ? 'overflow-hidden' : style['layout-sidebar'],
           ]"
         >
-          <slot name="sidebar"></slot>
+          <slot name="sidebar" />
         </aside>
         <div
           v-show="!sidebarCollapse"
           class="absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.2)]"
           :class="[style['layout-mobile-sidebar-mask']]"
           @click="handleClickMask"
-        ></div>
+        />
       </template>
 
       <!-- Main Content -->
@@ -206,7 +206,7 @@ function handleClickMask() {
         class="flex flex-col flex-grow"
         :class="[commonClass, contentClass, leftGapClass, { 'overflow-y-auto': isContentScroll }]"
       >
-        <slot></slot>
+        <slot />
       </main>
 
       <!-- Footer -->
@@ -219,16 +219,16 @@ function handleClickMask() {
             commonClass,
             footerClass,
             footerLeftGapClass,
-            { 'absolute left-0 bottom-0 w-full': fixedFooter }
+            { 'absolute left-0 bottom-0 w-full': fixedFooter },
           ]"
         >
-          <slot name="footer"></slot>
+          <slot name="footer" />
         </footer>
         <div
           v-show="!fullContent && fixedFooter"
           class="flex-shrink-0 overflow-hidden"
           :class="[style['layout-footer-placement']]"
-        ></div>
+        />
       </template>
     </div>
   </div>

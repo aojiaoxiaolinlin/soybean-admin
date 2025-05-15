@@ -5,19 +5,19 @@ interface AdminLayoutHeaderConfig {
    *
    * @default true
    */
-  headerVisible?: boolean;
+  headerVisible?: boolean
   /**
    * Header class
    *
    * @default ''
    */
-  headerClass?: string;
+  headerClass?: string
   /**
    * Header height
    *
    * @default 56px
    */
-  headerHeight?: number;
+  headerHeight?: number
 }
 
 /** Tab config */
@@ -27,19 +27,19 @@ interface AdminLayoutTabConfig {
    *
    * @default true
    */
-  tabVisible?: boolean;
+  tabVisible?: boolean
   /**
    * Tab class
    *
    * @default ''
    */
-  tabClass?: string;
+  tabClass?: string
   /**
    * Tab height
    *
    * @default 48px
    */
-  tabHeight?: number;
+  tabHeight?: number
 }
 
 /** Sidebar config */
@@ -49,37 +49,37 @@ interface AdminLayoutSidebarConfig {
    *
    * @default true
    */
-  sidebarVisible?: boolean;
+  sidebarVisible?: boolean
   /**
    * Sidebar class
    *
    * @default ''
    */
-  sidebarClass?: string;
+  sidebarClass?: string
   /**
    * Mobile sidebar class
    *
    * @default ''
    */
-  mobileSidebarClass?: string;
+  mobileSidebarClass?: string
   /**
    * Sidebar collapse status
    *
    * @default false
    */
-  sidebarCollapse?: boolean;
+  sidebarCollapse?: boolean
   /**
    * Sidebar width when collapse is false
    *
    * @default '220px'
    */
-  sidebarWidth?: number;
+  sidebarWidth?: number
   /**
    * Sidebar width when collapse is true
    *
    * @default '64px'
    */
-  sidebarCollapsedWidth?: number;
+  sidebarCollapsedWidth?: number
 }
 
 /** Content config */
@@ -89,13 +89,13 @@ export interface AdminLayoutContentConfig {
    *
    * @default ''
    */
-  contentClass?: string;
+  contentClass?: string
   /**
    * Whether content is full the page
    *
    * If true, other elements will be hidden by `display: none`
    */
-  fullContent?: boolean;
+  fullContent?: boolean
 }
 
 /** Footer config */
@@ -105,31 +105,31 @@ export interface AdminLayoutFooterConfig {
    *
    * @default true
    */
-  footerVisible?: boolean;
+  footerVisible?: boolean
   /**
    * Whether footer is fixed
    *
    * @default true
    */
-  fixedFooter?: boolean;
+  fixedFooter?: boolean
   /**
    * Footer class
    *
    * @default ''
    */
-  footerClass?: string;
+  footerClass?: string
   /**
    * Footer height
    *
    * @default 48px
    */
-  footerHeight?: number;
+  footerHeight?: number
   /**
    * Whether footer is on the right side
    *
    * When the layout is vertical, the footer is on the right side
    */
-  rightFooter?: boolean;
+  rightFooter?: boolean
 }
 
 /**
@@ -153,24 +153,24 @@ export type LayoutScrollMode = 'wrapper' | 'content';
 /** Admin layout props */
 export interface AdminLayoutProps
   extends AdminLayoutHeaderConfig,
-    AdminLayoutTabConfig,
-    AdminLayoutSidebarConfig,
-    AdminLayoutContentConfig,
-    AdminLayoutFooterConfig {
+  AdminLayoutTabConfig,
+  AdminLayoutSidebarConfig,
+  AdminLayoutContentConfig,
+  AdminLayoutFooterConfig {
   /**
    * Layout mode
    *
    * - {@link LayoutMode}
    */
-  mode?: LayoutMode;
+  mode?: LayoutMode
   /** Is mobile layout */
-  isMobile?: boolean;
+  isMobile?: boolean
   /**
    * Scroll mode
    *
    * - {@link ScrollMode}
    */
-  scrollMode?: LayoutScrollMode;
+  scrollMode?: LayoutScrollMode
   /**
    * The id of the scroll element of the layout
    *
@@ -187,11 +187,11 @@ export interface AdminLayoutProps
    * const adminLayoutScrollElId = '__ADMIN_LAYOUT_SCROLL_EL_ID__'
    * ```
    */
-  scrollElId?: string;
+  scrollElId?: string
   /** The class of the scroll element */
-  scrollElClass?: string;
+  scrollElClass?: string
   /** The class of the scroll wrapper element */
-  scrollWrapperClass?: string;
+  scrollWrapperClass?: string
   /**
    * The common class of the layout
    *
@@ -199,19 +199,19 @@ export interface AdminLayoutProps
    *
    * @default 'transition-all-300'
    */
-  commonClass?: string;
+  commonClass?: string
   /**
    * Whether fix the header and tab
    *
    * @default true
    */
-  fixedTop?: boolean;
+  fixedTop?: boolean
   /**
    * The max z-index of the layout
    *
    * The z-index of Header,Tab,Sidebar and Footer will not exceed this value
    */
-  maxZIndex?: number;
+  maxZIndex?: number
 }
 
 type Kebab<S extends string> = S extends Uncapitalize<S> ? S : `-${Uncapitalize<S>}`;
@@ -226,11 +226,11 @@ export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
   'headerHeight' | 'tabHeight' | 'sidebarWidth' | 'sidebarCollapsedWidth' | 'footerHeight'
 > & {
-  headerZIndex?: number;
-  tabZIndex?: number;
-  sidebarZIndex?: number;
-  mobileSidebarZIndex?: number;
-  footerZIndex?: number;
+  headerZIndex?: number
+  tabZIndex?: number
+  sidebarZIndex?: number
+  mobileSidebarZIndex?: number
+  footerZIndex?: number
 };
 
 export type LayoutCssVars = {
@@ -249,13 +249,13 @@ export type PageTabMode = 'button' | 'chrome';
 
 export interface PageTabProps {
   /** Whether is dark mode */
-  darkMode?: boolean;
+  darkMode?: boolean
   /**
    * The mode of the tab
    *
    * - {@link TabMode}
    */
-  mode?: PageTabMode;
+  mode?: PageTabMode
   /**
    * The common class of the layout
    *
@@ -263,31 +263,31 @@ export interface PageTabProps {
    *
    * @default 'transition-all-300'
    */
-  commonClass?: string;
+  commonClass?: string
   /** The class of the button tab */
-  buttonClass?: string;
+  buttonClass?: string
   /** The class of the chrome tab */
-  chromeClass?: string;
+  chromeClass?: string
   /** Whether the tab is active */
-  active?: boolean;
+  active?: boolean
   /** The color of the active tab */
-  activeColor?: string;
+  activeColor?: string
   /**
    * Whether the tab is closable
    *
    * Show the close icon when true
    */
-  closable?: boolean;
+  closable?: boolean
 }
 
-export type PageTabCssVarsProps = {
-  primaryColor: string;
-  primaryColor1: string;
-  primaryColor2: string;
-  primaryColorOpacity1: string;
-  primaryColorOpacity2: string;
-  primaryColorOpacity3: string;
-};
+export interface PageTabCssVarsProps {
+  primaryColor: string
+  primaryColor1: string
+  primaryColor2: string
+  primaryColorOpacity1: string
+  primaryColorOpacity2: string
+  primaryColorOpacity3: string
+}
 
 export type PageTabCssVars = {
   [K in keyof PageTabCssVarsProps as `${Prefix}${KebabCase<K>}`]: string | number;

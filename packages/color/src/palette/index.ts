@@ -1,8 +1,8 @@
 import type { AnyColor } from 'colord';
-import { getHex } from '../shared';
 import type { ColorPaletteNumber } from '../types';
-import { getRecommendedColorPalette } from './recommend';
+import { getHex } from '../shared';
 import { getAntDColorPalette } from './antd';
+import { getRecommendedColorPalette } from './recommend';
 
 /**
  * get color palette by provided color
@@ -15,10 +15,11 @@ export function getColorPalette(color: AnyColor, recommended = false) {
 
   if (recommended) {
     const colorPalette = getRecommendedColorPalette(getHex(color));
-    colorPalette.palettes.forEach(palette => {
+    colorPalette.palettes.forEach((palette) => {
       colorMap.set(palette.number, palette.hex);
     });
-  } else {
+  }
+  else {
     const colors = getAntDColorPalette(color);
 
     const colorNumbers: ColorPaletteNumber[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];

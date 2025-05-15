@@ -1,9 +1,9 @@
 /** The strategic pattern */
 export interface StrategicPattern {
   /** The condition */
-  condition: boolean;
+  condition: boolean
   /** If the condition is true, then call the action function */
-  callback: () => void;
+  callback: () => void
 }
 
 /**
@@ -12,7 +12,7 @@ export interface StrategicPattern {
  * @property value: The option value
  * @property label: The option label
  */
-export type Option<K = string, M = string> = { value: K; label: M };
+export interface Option<K = string, M = string> { value: K, label: M }
 
 export type YesOrNo = 'Y' | 'N';
 

@@ -1,8 +1,9 @@
+import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface';
+import type { Menu } from '@/types/app';
+import { useContext } from '@sa/hooks';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useContext } from '@sa/hooks';
 import { useRouteStore } from '@/store/modules/route';
-import type { Menu } from '@/types/app';
 
 export const { setupStore: setupMixMenuContext, useStore: useMixMenuContext } = useContext('mix-menu', useMixMenu);
 
@@ -25,16 +26,16 @@ function useMixMenu() {
 
   const allMenus = computed<Menu[]>(() => routeStore.menus);
 
-  const firstLevelMenus = computed<Menu[]>(() =>
-    routeStore.menus.map(menu => {
+  const firstLevelMenus = computed<MenuMixedOption[]>(() =>
+    routeStore.menus.map((menu) => {
       const { children: _, ...rest } = menu;
 
       return rest;
-    })
+    }),
   );
 
-  const childLevelMenus = computed<Menu[]>(
-    () => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []
+  const childLevelMenus = computed<MenuMixedOption[]>(
+    () => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || [],
   );
 
   const isActiveFirstLevelMenuHasChildren = computed(() => {
@@ -52,7 +53,7 @@ function useMixMenu() {
     () => {
       getActiveFirstLevelMenuKey();
     },
-    { immediate: true }
+    { immediate: true },
   );
 
   return {
@@ -62,7 +63,7 @@ function useMixMenu() {
     isActiveFirstLevelMenuHasChildren,
     activeFirstLevelMenuKey,
     setActiveFirstLevelMenuKey,
-    getActiveFirstLevelMenuKey
+    getActiveFirstLevelMenuKey,
   };
 }
 
@@ -79,6 +80,6 @@ export function useMenu() {
   });
 
   return {
-    selectedKey
+    selectedKey,
   };
 }

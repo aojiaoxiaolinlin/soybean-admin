@@ -1,26 +1,27 @@
 import type { App } from 'vue';
+import type { RouterHistory } from 'vue-router';
+import type { ImportMeta, RouterHistoryMode } from '@/types/vite-env';
 import {
-  type RouterHistory,
   createMemoryHistory,
   createRouter,
   createWebHashHistory,
-  createWebHistory
+  createWebHistory,
+
 } from 'vue-router';
-import type { ImportMeta, RouterHistoryMode } from '@/types/vite-env';
-import { createBuiltinVueRoutes } from './routes/builtin';
 import { createRouterGuard } from './guard';
+import { createBuiltinVueRoutes } from './routes/builtin';
 
 const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env as ImportMeta;
 
 const historyCreatorMap: Record<RouterHistoryMode, (base?: string) => RouterHistory> = {
   hash: createWebHashHistory,
   history: createWebHistory,
-  memory: createMemoryHistory
+  memory: createMemoryHistory,
 };
 
 export const router = createRouter({
   history: historyCreatorMap[VITE_ROUTER_HISTORY_MODE](VITE_BASE_URL),
-  routes: createBuiltinVueRoutes()
+  routes: createBuiltinVueRoutes(),
 });
 
 /** Setup Vue Router */

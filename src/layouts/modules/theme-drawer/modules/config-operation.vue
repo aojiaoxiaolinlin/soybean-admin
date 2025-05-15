@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
 import Clipboard from 'clipboard';
-import { useThemeStore } from '@/store/modules/theme';
+import { computed, onMounted, useTemplateRef } from 'vue';
 import { $t } from '@/locales';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
-  name: 'ConfigOperation'
+  name: 'ConfigOperation',
 });
 
 const themeStore = useThemeStore();
 
-const domRef = ref<HTMLElement | null>(null);
+const domRef = useTemplateRef('domRef');
 
 function initClipboard() {
-  if (!domRef.value) return;
+  if (!domRef.value)
+    return;
 
   const clipboard = new Clipboard(domRef.value);
 
@@ -48,9 +49,13 @@ onMounted(() => {
 <template>
   <div class="w-full flex justify-between">
     <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0 -z-1" />
-    <NButton type="error" ghost @click="handleReset">{{ $t('theme.configOperation.resetConfig') }}</NButton>
+    <NButton type="error" ghost @click="handleReset">
+      {{ $t('theme.configOperation.resetConfig') }}
+    </NButton>
     <div ref="domRef" data-clipboard-target="#themeConfigCopyTarget">
-      <NButton type="primary">{{ $t('theme.configOperation.copyConfig') }}</NButton>
+      <NButton type="primary">
+        {{ $t('theme.configOperation.copyConfig') }}
+      </NButton>
     </div>
   </div>
 </template>

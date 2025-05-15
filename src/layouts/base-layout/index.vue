@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue';
-import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
 import type { LayoutMode } from '@sa/materials';
+import type { HeaderProps } from '@/types/app';
+import type { ThemeLayoutMode } from '@/types/union-key';
+import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
+import { computed, defineAsyncComponent } from 'vue';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
-import type { ThemeLayoutMode } from '@/types/union-key';
-import type { HeaderProps } from '@/types/app';
+import { setupMixMenuContext } from '../context';
+import GlobalContent from '../modules/global-content/index.vue';
+import GlobalFooter from '../modules/global-footer/index.vue';
 import GlobalHeader from '../modules/global-header/index.vue';
 import GlobalSidebar from '../modules/global-sidebar/index.vue';
 import GlobalTab from '../modules/global-tab/index.vue';
-import GlobalContent from '../modules/global-content/index.vue';
-import GlobalFooter from '../modules/global-footer/index.vue';
 import ThemeDrawer from '../modules/theme-drawer/index.vue';
-import { setupMixMenuContext } from '../context';
 
 defineOptions({
-  name: 'BaseLayout'
+  name: 'BaseLayout',
 });
 
 const appStore = useAppStore();
@@ -34,26 +34,26 @@ const headerProps = computed(() => {
   const { mode, reverseHorizontalMix } = themeStore.layout;
 
   const headerPropsConfig: Record<ThemeLayoutMode, HeaderProps> = {
-    vertical: {
+    'vertical': {
       showLogo: false,
       showMenu: false,
-      showMenuToggler: true
+      showMenuToggler: true,
     },
     'vertical-mix': {
       showLogo: false,
       showMenu: false,
-      showMenuToggler: false
+      showMenuToggler: false,
     },
-    horizontal: {
+    'horizontal': {
       showLogo: true,
       showMenu: true,
-      showMenuToggler: false
+      showMenuToggler: false,
     },
     'horizontal-mix': {
       showLogo: true,
       showMenu: true,
-      showMenuToggler: reverseHorizontalMix && isActiveFirstLevelMenuHasChildren.value
-    }
+      showMenuToggler: reverseHorizontalMix && isActiveFirstLevelMenuHasChildren.value,
+    },
   };
 
   return headerPropsConfig[mode];

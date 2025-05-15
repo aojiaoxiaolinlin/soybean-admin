@@ -1,36 +1,36 @@
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import { createFlatRequest } from '@sa/axios';
 import type {
   AxiosError,
   CreateAxiosDefaults,
   CustomAxiosRequestConfig,
   MappedType,
   RequestOption,
-  ResponseType
+  ResponseType,
 } from '@sa/axios';
+import type { Ref } from 'vue';
+import { createFlatRequest } from '@sa/axios';
+import { ref } from 'vue';
 import useLoading from './use-loading';
 
-export type HookRequestInstanceResponseSuccessData<T = any> = {
-  data: Ref<T>;
-  error: Ref<null>;
-};
+export interface HookRequestInstanceResponseSuccessData<T = any> {
+  data: Ref<T>
+  error: Ref<null>
+}
 
-export type HookRequestInstanceResponseFailData<ResponseData = any> = {
-  data: Ref<null>;
-  error: Ref<AxiosError<ResponseData>>;
-};
+export interface HookRequestInstanceResponseFailData<ResponseData = any> {
+  data: Ref<null>
+  error: Ref<AxiosError<ResponseData>>
+}
 
 export type HookRequestInstanceResponseData<T = any, ResponseData = any> = {
-  loading: Ref<boolean>;
+  loading: Ref<boolean>
 } & (HookRequestInstanceResponseSuccessData<T> | HookRequestInstanceResponseFailData<ResponseData>);
 
 export interface HookRequestInstance<ResponseData = any> {
   <T = any, R extends ResponseType = 'json'>(
     config: CustomAxiosRequestConfig
-  ): HookRequestInstanceResponseData<MappedType<R, T>, ResponseData>;
-  cancelRequest: (requestId: string) => void;
-  cancelAllRequest: () => void;
+  ): HookRequestInstanceResponseData<MappedType<R, T>, ResponseData>
+  cancelRequest: (requestId: string) => void
+  cancelAllRequest: () => void
 }
 
 /**
@@ -41,12 +41,12 @@ export interface HookRequestInstance<ResponseData = any> {
  */
 export default function createHookRequest<ResponseData = any>(
   axiosConfig?: CreateAxiosDefaults,
-  options?: Partial<RequestOption<ResponseData>>
+  options?: Partial<RequestOption<ResponseData>>,
 ) {
   const request = createFlatRequest<ResponseData>(axiosConfig, options);
 
   const hookRequest: HookRequestInstance<ResponseData> = function hookRequest<T = any, R extends ResponseType = 'json'>(
-    config: CustomAxiosRequestConfig
+    config: CustomAxiosRequestConfig,
   ) {
     const { loading, startLoading, endLoading } = useLoading();
 
@@ -55,10 +55,11 @@ export default function createHookRequest<ResponseData = any>(
 
     startLoading();
 
-    request(config).then(res => {
+    request(config).then((res) => {
       if (res.data) {
         data.value = res.data;
-      } else {
+      }
+      else {
         error.value = res.error;
       }
 
@@ -68,7 +69,7 @@ export default function createHookRequest<ResponseData = any>(
     return {
       loading,
       data,
-      error
+      error,
     };
   } as HookRequestInstance<ResponseData>;
 

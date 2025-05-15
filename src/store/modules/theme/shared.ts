@@ -1,26 +1,27 @@
 import type { GlobalThemeOverrides } from 'naive-ui';
-import { defu } from 'defu';
-import { addColorAlpha, getColorPalette, getPaletteColorByNumber, getRgb } from '@sa/color';
-import { DARK_CLASS } from '@/constants/app';
-import { toggleHtmlClass } from '@/utils/common';
-import { localStg } from '@/utils/storage';
-import { overrideThemeSettings, themeSettings } from '@/theme/settings';
-import { themeVars } from '@/theme/vars';
 import type {
   BaseToken,
   ThemeColor,
   ThemeColorKey,
   ThemePaletteColor,
   ThemeSetting,
-  ThemeTokenCSSVars
+  ThemeTokenCSSVars,
 } from '@/types/app';
+import { addColorAlpha, getColorPalette, getPaletteColorByNumber, getRgb } from '@sa/color';
+import { defu } from 'defu';
+import { DARK_CLASS } from '@/constants/app';
+import { overrideThemeSettings, themeSettings } from '@/theme/settings';
+import { themeVars } from '@/theme/vars';
+import { toggleHtmlClass } from '@/utils/common';
+import { localStg } from '@/utils/storage';
 
 /** Init theme settings */
 export function initThemeSettings() {
   const isProd = import.meta.env.PROD;
 
   // if it is development mode, the theme settings will not be cached, by update `themeSettings` in `src/theme/settings.ts` to update theme settings
-  if (!isProd) return themeSettings;
+  if (!isProd)
+    return themeSettings;
 
   // if it is production mode, the theme settings will be cached in localStorage
   // if want to update theme settings when publish new version, please update `overrideThemeSettings` in `src/theme/settings.ts`
@@ -45,7 +46,7 @@ export function initThemeSettings() {
  *
  * @param colors Theme colors
  * @param tokens Theme setting tokens
- * @param [recommended=false] Use recommended color. Default is `false`
+ * @param [recommended] Use recommended color. Default is `false`
  */
 export function createThemeToken(colors: ThemeColor, tokens?: ThemeSetting['tokens'], recommended = false) {
   const paletteColors = createThemePaletteColors(colors, recommended);
@@ -56,27 +57,27 @@ export function createThemeToken(colors: ThemeColor, tokens?: ThemeSetting['toke
     colors: {
       ...paletteColors,
       nprogress: paletteColors.primary,
-      ...light.colors
+      ...light.colors,
     },
     boxShadow: {
-      ...light.boxShadow
-    }
+      ...light.boxShadow,
+    },
   };
 
   const darkThemeTokens: ThemeTokenCSSVars = {
     colors: {
       ...themeTokens.colors,
-      ...dark?.colors
+      ...dark?.colors,
     },
     boxShadow: {
       ...themeTokens.boxShadow,
-      ...dark?.boxShadow
-    }
+      ...dark?.boxShadow,
+    },
   };
 
   return {
     themeTokens,
-    darkThemeTokens
+    darkThemeTokens,
   };
 }
 
@@ -84,13 +85,13 @@ export function createThemeToken(colors: ThemeColor, tokens?: ThemeSetting['toke
  * Create theme palette colors
  *
  * @param colors Theme colors
- * @param [recommended=false] Use recommended color. Default is `false`
+ * @param [recommended] Use recommended color. Default is `false`
  */
 function createThemePaletteColors(colors: ThemeColor, recommended = false) {
   const colorKeys = Object.keys(colors) as ThemeColorKey[];
   const colorPaletteVar = {} as ThemePaletteColor;
 
-  colorKeys.forEach(key => {
+  colorKeys.forEach((key) => {
     const colorMap = getColorPalette(colors[key], recommended);
 
     colorPaletteVar[key] = colorMap.get(500)!;
@@ -181,7 +182,8 @@ export function toggleCssDarkMode(darkMode = false) {
 
   if (darkMode) {
     add();
-  } else {
+  }
+  else {
     remove();
   }
 }
@@ -203,15 +205,15 @@ type NaiveColorScene = '' | 'Suppl' | 'Hover' | 'Pressed' | 'Active';
 type NaiveColorKey = `${ThemeColorKey}Color${NaiveColorScene}`;
 type NaiveThemeColor = Partial<Record<NaiveColorKey, string>>;
 interface NaiveColorAction {
-  scene: NaiveColorScene;
-  handler: (color: string) => string;
+  scene: NaiveColorScene
+  handler: (color: string) => string
 }
 
 /**
  * Get naive theme colors
  *
  * @param colors Theme colors
- * @param [recommended=false] Use recommended color. Default is `false`
+ * @param [recommended] Use recommended color. Default is `false`
  */
 function getNaiveThemeColors(colors: ThemeColor, recommended = false) {
   const colorActions: NaiveColorAction[] = [
@@ -219,15 +221,15 @@ function getNaiveThemeColors(colors: ThemeColor, recommended = false) {
     { scene: 'Suppl', handler: color => color },
     { scene: 'Hover', handler: color => getPaletteColorByNumber(color, 500, recommended) },
     { scene: 'Pressed', handler: color => getPaletteColorByNumber(color, 700, recommended) },
-    { scene: 'Active', handler: color => addColorAlpha(color, 0.1) }
+    { scene: 'Active', handler: color => addColorAlpha(color, 0.1) },
   ];
 
   const themeColors: NaiveThemeColor = {};
 
   const colorEntries = Object.entries(colors) as [ThemeColorKey, string][];
 
-  colorEntries.forEach(color => {
-    colorActions.forEach(action => {
+  colorEntries.forEach((color) => {
+    colorActions.forEach((action) => {
       const [colorType, colorValue] = color;
       const colorKey: NaiveColorKey = `${colorType}Color${action.scene}`;
       themeColors[colorKey] = action.handler(colorValue);
@@ -241,7 +243,7 @@ function getNaiveThemeColors(colors: ThemeColor, recommended = false) {
  * Get naive theme
  *
  * @param colors Theme colors
- * @param [recommended=false] Use recommended color. Default is `false`
+ * @param [recommended] Use recommended color. Default is `false`
  */
 export function getNaiveTheme(colors: ThemeColor, recommended = false) {
   const { primary: colorLoading } = colors;
@@ -249,14 +251,14 @@ export function getNaiveTheme(colors: ThemeColor, recommended = false) {
   const theme: GlobalThemeOverrides = {
     common: {
       ...getNaiveThemeColors(colors, recommended),
-      borderRadius: '6px'
+      borderRadius: '6px',
     },
     LoadingBar: {
-      colorLoading
+      colorLoading,
     },
     Tag: {
-      borderRadius: '6px'
-    }
+      borderRadius: '6px',
+    },
   };
 
   return theme;

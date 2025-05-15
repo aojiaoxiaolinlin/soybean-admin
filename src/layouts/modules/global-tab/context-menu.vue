@@ -1,75 +1,76 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { VNode } from 'vue';
-import { useTabStore } from '@/store/modules/tab';
+import type { DropdownKey } from '@/types/app';
+import { computed } from 'vue';
 import { useSvgIcon } from '@/hooks/common/icon';
 import { $t } from '@/locales';
-import type { DropdownKey } from '@/types/app';
+import { useTabStore } from '@/store/modules/tab';
+
+const props = withDefaults(defineProps<Props>(), {
+  excludeKeys: () => [],
+  disabledKeys: () => [],
+});
 
 defineOptions({
-  name: 'ContextMenu'
+  name: 'ContextMenu',
 });
 
 interface Props {
   /** ClientX */
-  x: number;
+  x: number
   /** ClientY */
-  y: number;
-  tabId: string;
-  excludeKeys?: DropdownKey[];
-  disabledKeys?: DropdownKey[];
+  y: number
+  tabId: string
+  excludeKeys?: DropdownKey[]
+  disabledKeys?: DropdownKey[]
 }
-
-const props = withDefaults(defineProps<Props>(), {
-  excludeKeys: () => [],
-  disabledKeys: () => []
-});
 
 const visible = defineModel<boolean>('visible');
 
 const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore();
 const { SvgIconVNode } = useSvgIcon();
 
-type DropdownOption = {
-  key: DropdownKey;
-  label: string;
-  icon?: () => VNode;
-  disabled?: boolean;
-};
+interface DropdownOption {
+  key: DropdownKey
+  label: string
+  icon?: () => VNode
+  disabled?: boolean
+  [k: string]: unknown
+}
 
 const options = computed(() => {
   const opts: DropdownOption[] = [
     {
       key: 'closeCurrent',
       label: $t('dropdown.closeCurrent'),
-      icon: SvgIconVNode({ icon: 'ant-design:close-outlined', fontSize: 18 })
+      icon: SvgIconVNode({ icon: 'ant-design:close-outlined', fontSize: 18 }),
     },
     {
       key: 'closeOther',
       label: $t('dropdown.closeOther'),
-      icon: SvgIconVNode({ icon: 'ant-design:column-width-outlined', fontSize: 18 })
+      icon: SvgIconVNode({ icon: 'ant-design:column-width-outlined', fontSize: 18 }),
     },
     {
       key: 'closeLeft',
       label: $t('dropdown.closeLeft'),
-      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-left', fontSize: 18 })
+      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-left', fontSize: 18 }),
     },
     {
       key: 'closeRight',
       label: $t('dropdown.closeRight'),
-      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-right', fontSize: 18 })
+      icon: SvgIconVNode({ icon: 'mdi:format-horizontal-align-right', fontSize: 18 }),
     },
     {
       key: 'closeAll',
       label: $t('dropdown.closeAll'),
-      icon: SvgIconVNode({ icon: 'ant-design:line-outlined', fontSize: 18 })
-    }
+      icon: SvgIconVNode({ icon: 'ant-design:line-outlined', fontSize: 18 }),
+    },
   ];
   const { excludeKeys, disabledKeys } = props;
 
   const result = opts.filter(opt => !excludeKeys.includes(opt.key));
 
-  disabledKeys.forEach(key => {
+  disabledKeys.forEach((key) => {
     const opt = result.find(item => item.key === key);
 
     if (opt) {
@@ -99,7 +100,7 @@ const dropdownAction: Record<DropdownKey, () => void> = {
   },
   closeAll() {
     clearTabs();
-  }
+  },
 };
 
 function handleDropdown(optionKey: DropdownKey) {

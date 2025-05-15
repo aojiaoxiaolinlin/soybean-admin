@@ -1,6 +1,6 @@
 import type { CustomRoute, ElegantConstRoute, ElegantRoute } from '@elegant-router/types';
-import { generatedRoutes } from '../elegant/routes';
 import { layouts, views } from '../elegant/imports';
+import { generatedRoutes } from '../elegant/routes';
 import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 
 /**
@@ -16,17 +16,18 @@ export function createStaticRoutes() {
 
   const authRoutes: ElegantRoute[] = [];
 
-  [...customRoutes, ...generatedRoutes].forEach(item => {
+  [...customRoutes, ...generatedRoutes].forEach((item) => {
     if (item.meta?.constant) {
       constantRoutes.push(item);
-    } else {
+    }
+    else {
       authRoutes.push(item);
     }
   });
 
   return {
     constantRoutes,
-    authRoutes
+    authRoutes,
   };
 }
 

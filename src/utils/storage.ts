@@ -1,5 +1,5 @@
-import { createLocalforage, createStorage } from '@sa/utils';
 import type { Local, Session } from '@/types/storage';
+import { createLocalforage, createStorage } from '@sa/utils';
 
 const storagePrefix = import.meta.env.VITE_STORAGE_PREFIX || '';
 

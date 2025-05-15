@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
-import { useRouterPush } from '@/hooks/common/router';
-import { useFormRules, useNaiveForm } from '@/hooks/common/form';
-import { useCaptcha } from '@/hooks/business/captcha';
-import { $t } from '@/locales';
 import type { FormRule } from '@/types/app';
+import { computed, reactive } from 'vue';
+import { useCaptcha } from '@/hooks/business/captcha';
+import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useRouterPush } from '@/hooks/common/router';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: 'Register'
+  name: 'Register',
 });
 
 const { toggleLoginModule } = useRouterPush();
@@ -15,17 +15,17 @@ const { formRef, validate } = useNaiveForm();
 const { label, isCounting, loading, getCaptcha } = useCaptcha();
 
 interface FormModel {
-  phone: string;
-  code: string;
-  password: string;
-  confirmPassword: string;
+  phone: string
+  code: string
+  password: string
+  confirmPassword: string
 }
 
 const model: FormModel = reactive({
   phone: '',
   code: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
 });
 
 const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
@@ -35,7 +35,7 @@ const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
     phone: formRules.phone,
     code: formRules.code,
     password: formRules.pwd,
-    confirmPassword: createConfirmPwdRule(model.password)
+    confirmPassword: createConfirmPwdRule(model.password),
   };
 });
 

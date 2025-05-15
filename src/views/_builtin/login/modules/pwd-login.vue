@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import type { FormRule } from '@/types/app';
 import { computed, reactive } from 'vue';
 import { loginModuleRecord } from '@/constants/app';
-import { useAuthStore } from '@/store/modules/auth';
-import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
+import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
-import type { FormRule } from '@/types/app';
+import { useAuthStore } from '@/store/modules/auth';
 
 defineOptions({
-  name: 'PwdLogin'
+  name: 'PwdLogin',
 });
 
 const authStore = useAuthStore();
@@ -16,13 +16,13 @@ const { toggleLoginModule } = useRouterPush();
 const { formRef, validate } = useNaiveForm();
 
 interface FormModel {
-  userName: string;
-  password: string;
+  userName: string
+  password: string
 }
 
 const model: FormModel = reactive({
   userName: 'Soybean',
-  password: '123456'
+  password: '123456',
 });
 
 const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
@@ -31,7 +31,7 @@ const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
 
   return {
     userName: formRules.userName,
-    password: formRules.pwd
+    password: formRules.pwd,
   };
 });
 
@@ -43,10 +43,10 @@ async function handleSubmit() {
 type AccountKey = 'super' | 'admin' | 'user';
 
 interface Account {
-  key: AccountKey;
-  label: string;
-  userName: string;
-  password: string;
+  key: AccountKey
+  label: string
+  userName: string
+  password: string
 }
 
 const accounts = computed<Account[]>(() => [
@@ -54,20 +54,20 @@ const accounts = computed<Account[]>(() => [
     key: 'super',
     label: $t('page.login.pwdLogin.superAdmin'),
     userName: 'Super',
-    password: '123456'
+    password: '123456',
   },
   {
     key: 'admin',
     label: $t('page.login.pwdLogin.admin'),
     userName: 'Admin',
-    password: '123456'
+    password: '123456',
   },
   {
     key: 'user',
     label: $t('page.login.pwdLogin.user'),
     userName: 'User',
-    password: '123456'
-  }
+    password: '123456',
+  },
 ]);
 
 async function handleAccountLogin(account: Account) {
@@ -106,7 +106,9 @@ async function handleAccountLogin(account: Account) {
           {{ $t(loginModuleRecord.register) }}
         </NButton>
       </div>
-      <NDivider class="text-14px text-#666 !m-0">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</NDivider>
+      <NDivider class="text-14px text-#666 !m-0">
+        {{ $t('page.login.pwdLogin.otherAccountLogin') }}
+      </NDivider>
       <div class="flex-center gap-12px">
         <NButton v-for="item in accounts" :key="item.key" type="primary" @click="handleAccountLogin(item)">
           {{ item.label }}

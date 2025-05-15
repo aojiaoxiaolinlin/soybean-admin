@@ -52,5 +52,5 @@ export type NaiveTableConfig<A extends TableApiFn> = Pick<
    *
    * @default false
    */
-  showTotal?: boolean;
+  showTotal?: boolean
 };

@@ -1,19 +1,19 @@
-import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from 'vue';
 import type { Ref } from 'vue';
-import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
-import { defineStore } from 'pinia';
-import { getPaletteColorByNumber } from '@sa/color';
-import { localStg } from '@/utils/storage';
-import { SetupStoreId } from '@/enum';
 import type { ThemeColor, ThemeColorKey, ThemeSetting } from '@/types/app';
 import type { ThemeLayoutMode, ThemeScheme } from '@/types/union-key';
+import { getPaletteColorByNumber } from '@sa/color';
+import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from 'vue';
+import { SetupStoreId } from '@/enum';
+import { localStg } from '@/utils/storage';
 import {
   addThemeVarsToGlobal,
   createThemeToken,
   getNaiveTheme,
   initThemeSettings,
   toggleAuxiliaryColorModes,
-  toggleCssDarkMode
+  toggleCssDarkMode,
 } from './shared';
 
 /** Theme store */
@@ -44,7 +44,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const colors: ThemeColor = {
       primary: themeColor,
       ...otherColor,
-      info: isInfoFollowPrimary ? themeColor : otherColor.info
+      info: isInfoFollowPrimary ? themeColor : otherColor.info,
     };
     return colors;
   });
@@ -123,7 +123,8 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
     if (key === 'primary') {
       settings.value.themeColor = colorValue;
-    } else {
+    }
+    else {
       settings.value.otherColor[key] = colorValue;
     }
   }
@@ -142,7 +143,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const { themeTokens, darkThemeTokens } = createThemeToken(
       themeColors.value,
       settings.value.tokens,
-      settings.value.recommendColor
+      settings.value.recommendColor,
     );
     addThemeVarsToGlobal(themeTokens, darkThemeTokens);
   }
@@ -159,7 +160,8 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   function cacheThemeSettings() {
     const isProd = import.meta.env.PROD;
 
-    if (!isProd) return;
+    if (!isProd)
+      return;
 
     localStg.set('themeSettings', settings.value);
   }
@@ -174,29 +176,29 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     // watch dark mode
     watch(
       darkMode,
-      val => {
+      (val) => {
         toggleCssDarkMode(val);
         localStg.set('darkMode', val);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watch(
       [grayscaleMode, colorWeaknessMode],
-      val => {
+      (val) => {
         toggleAuxiliaryColorModes(val[0], val[1]);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // themeColors change, update css vars and storage theme color
     watch(
       themeColors,
-      val => {
+      (val) => {
         setupThemeVarsToGlobal();
         localStg.set('themeColor', val.primary);
       },
-      { immediate: true }
+      { immediate: true },
     );
   });
 
@@ -218,6 +220,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     toggleThemeScheme,
     updateThemeColors,
     setThemeLayout,
-    setLayoutReverseHorizontalMix
+    setLayoutReverseHorizontalMix,
   };
 });

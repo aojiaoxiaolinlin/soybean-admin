@@ -1,6 +1,6 @@
-import { computed, reactive, ref } from 'vue';
 import type { Ref, VNodeChild } from 'vue';
 import { jsonClone } from '@sa/utils';
+import { computed, reactive, ref } from 'vue';
 import useBoolean from './use-boolean';
 import useLoading from './use-loading';
 
@@ -10,57 +10,57 @@ export type ApiFn = (args: any) => Promise<unknown>;
 
 export type TableColumnCheckTitle = string | ((...args: any) => VNodeChild);
 
-export type TableColumnCheck = {
-  key: string;
-  title: TableColumnCheckTitle;
-  checked: boolean;
-};
+export interface TableColumnCheck {
+  key: string
+  title: TableColumnCheckTitle
+  checked: boolean
+}
 
 export type TableDataWithIndex<T> = T & { index: number };
 
-export type TransformedData<T> = {
-  data: TableDataWithIndex<T>[];
-  pageNum: number;
-  pageSize: number;
-  total: number;
-};
+export interface TransformedData<T> {
+  data: TableDataWithIndex<T>[]
+  pageNum: number
+  pageSize: number
+  total: number
+}
 
 export type Transformer<T, Response> = (response: Response) => TransformedData<T>;
 
-export type TableConfig<A extends ApiFn, T, C> = {
+export interface TableConfig<A extends ApiFn, T, C> {
   /** api function to get table data */
-  apiFn: A;
+  apiFn: A
   /** api params */
-  apiParams?: Parameters<A>[0];
+  apiParams?: Parameters<A>[0]
   /** transform api response to table data */
-  transformer: Transformer<T, Awaited<ReturnType<A>>>;
+  transformer: Transformer<T, Awaited<ReturnType<A>>>
   /** columns factory */
-  columns: () => C[];
+  columns: () => C[]
   /**
    * get column checks
    *
    * @param columns
    */
-  getColumnChecks: (columns: C[]) => TableColumnCheck[];
+  getColumnChecks: (columns: C[]) => TableColumnCheck[]
   /**
    * get columns
    *
    * @param columns
    */
-  getColumns: (columns: C[], checks: TableColumnCheck[]) => C[];
+  getColumns: (columns: C[], checks: TableColumnCheck[]) => C[]
   /**
    * callback when response fetched
    *
    * @param transformed transformed data
    */
-  onFetched?: (transformed: TransformedData<T>) => MaybePromise<void>;
+  onFetched?: (transformed: TransformedData<T>) => MaybePromise<void>
   /**
    * whether to get data immediately
    *
    * @default true
    */
-  immediate?: boolean;
-};
+  immediate?: boolean
+}
 
 export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<A, T, C>) {
   const { loading, startLoading, endLoading } = useLoading();
@@ -87,7 +87,7 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
 
     columnChecks.value = defaultChecks.map(col => ({
       ...col,
-      checked: checkMap.get(col.key) ?? col.checked
+      checked: checkMap.get(col.key) ?? col.checked,
     }));
   }
 
@@ -149,6 +149,6 @@ export default function useHookTable<A extends ApiFn, T, C>(config: TableConfig<
     getData,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
   };
 }

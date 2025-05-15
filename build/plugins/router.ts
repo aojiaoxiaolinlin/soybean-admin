@@ -1,14 +1,14 @@
-import type { RouteMeta } from 'vue-router';
-import ElegantVueRouter from '@elegant-router/vue/vite';
 import type { RouteKey } from '@elegant-router/types';
-import type { LoginModule } from '@/types/union-key';
+import type { RouteMeta } from 'vue-router';
 import type { I18nKey } from '@/types/app';
+import type { LoginModule } from '@/types/union-key';
+import ElegantVueRouter from '@elegant-router/vue/vite';
 
 export function setupElegantRouter() {
   return ElegantVueRouter({
     layouts: {
       base: 'src/layouts/base-layout/index.vue',
-      blank: 'src/layouts/blank-layout/index.vue'
+      blank: 'src/layouts/blank-layout/index.vue',
     },
     routePathTransformer(routeName, routePath) {
       const key = routeName as RouteKey;
@@ -30,7 +30,7 @@ export function setupElegantRouter() {
 
       const meta: Partial<RouteMeta> = {
         title: key,
-        i18nKey: `route.${key}` as I18nKey
+        i18nKey: `route.${key}` as I18nKey,
       };
 
       if (constantRoutes.includes(key)) {
@@ -38,6 +38,6 @@ export function setupElegantRouter() {
       }
 
       return meta;
-    }
+    },
   });
 }

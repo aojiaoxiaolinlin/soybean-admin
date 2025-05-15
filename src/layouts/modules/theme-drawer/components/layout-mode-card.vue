@@ -1,68 +1,69 @@
 <script setup lang="ts">
 import type { PopoverPlacement } from 'naive-ui';
+import type { ThemeLayoutMode } from '@/types/union-key';
 import { themeLayoutModeRecord } from '@/constants/app';
 import { $t } from '@/locales';
-import type { ThemeLayoutMode } from '@/types/union-key';
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<Emits>();
 
 defineOptions({
-  name: 'LayoutModeCard'
+  name: 'LayoutModeCard',
 });
 
 interface Props {
   /** Layout mode */
-  mode: ThemeLayoutMode;
+  mode: ThemeLayoutMode
   /** Disabled */
-  disabled?: boolean;
+  disabled?: boolean
 }
-
-const props = defineProps<Props>();
 
 interface Emits {
   /** Layout mode change */
-  (e: 'update:mode', mode: ThemeLayoutMode): void;
+  (_e: 'update:mode', _mode: ThemeLayoutMode): void
 }
-
-const emit = defineEmits<Emits>();
 
 type LayoutConfig = Record<
   ThemeLayoutMode,
   {
-    placement: PopoverPlacement;
-    headerClass: string;
-    menuClass: string;
-    mainClass: string;
+    placement: PopoverPlacement
+    headerClass: string
+    menuClass: string
+    mainClass: string
   }
 >;
 
 const layoutConfig: LayoutConfig = {
-  vertical: {
+  'vertical': {
     placement: 'bottom',
     headerClass: '',
     menuClass: 'w-1/3 h-full',
-    mainClass: 'w-2/3 h-3/4'
+    mainClass: 'w-2/3 h-3/4',
   },
   'vertical-mix': {
     placement: 'bottom',
     headerClass: '',
     menuClass: 'w-1/4 h-full',
-    mainClass: 'w-2/3 h-3/4'
+    mainClass: 'w-2/3 h-3/4',
   },
-  horizontal: {
+  'horizontal': {
     placement: 'bottom',
     headerClass: '',
     menuClass: 'w-full h-1/4',
-    mainClass: 'w-full h-3/4'
+    mainClass: 'w-full h-3/4',
   },
   'horizontal-mix': {
     placement: 'bottom',
     headerClass: '',
     menuClass: 'w-full h-1/4',
-    mainClass: 'w-2/3 h-3/4'
-  }
+    mainClass: 'w-2/3 h-3/4',
+  },
 };
 
 function handleChangeMode(mode: ThemeLayoutMode) {
-  if (props.disabled) return;
+  if (props.disabled)
+    return;
 
   emit('update:mode', mode);
 }
@@ -83,7 +84,7 @@ function handleChangeMode(mode: ThemeLayoutMode) {
             class="h-64px w-96px gap-6px rd-4px p-6px shadow dark:shadow-coolGray-5"
             :class="[key.includes('vertical') ? 'flex' : 'flex-col']"
           >
-            <slot :name="key"></slot>
+            <slot :name="key" />
           </div>
         </template>
         {{ $t(themeLayoutModeRecord[key]) }}

@@ -1,15 +1,15 @@
-import { computed, nextTick, ref, shallowRef } from 'vue';
-import type { RouteRecordRaw } from 'vue-router';
-import { defineStore } from 'pinia';
-import { useBoolean } from '@sa/hooks';
 import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
-import { router } from '@/router';
-import { fetchGetConstantRoutes, fetchGetUserRoutes, fetchIsRouteExist } from '@/service/api';
+import type { RouteRecordRaw } from 'vue-router';
+import type { Menu } from '@/types/app';
+import { useBoolean } from '@sa/hooks';
+import { defineStore } from 'pinia';
+import { computed, nextTick, ref, shallowRef } from 'vue';
 import { SetupStoreId } from '@/enum';
+import { router } from '@/router';
+import { getRouteName, getRoutePath } from '@/router/elegant/transform';
 import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
-import { getRouteName, getRoutePath } from '@/router/elegant/transform';
-import type { Menu } from '@/types/app';
+import { fetchGetConstantRoutes, fetchGetUserRoutes, fetchIsRouteExist } from '@/service/api';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 import {
@@ -21,7 +21,7 @@ import {
   isRouteExistByRouteName,
   sortRoutesByOrder,
   transformMenuToSearchMenus,
-  updateLocaleOfGlobalMenus
+  updateLocaleOfGlobalMenus,
 } from './shared';
 
 export const useRouteStore = defineStore(SetupStoreId.Route, () => {
@@ -57,7 +57,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function addConstantRoutes(routes: ElegantConstRoute[]) {
     const constantRoutesMap = new Map<string, ElegantConstRoute>([]);
 
-    routes.forEach(route => {
+    routes.forEach((route) => {
       constantRoutesMap.set(route.name, route);
     });
 
@@ -70,7 +70,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   function addAuthRoutes(routes: ElegantConstRoute[]) {
     const authRoutesMap = new Map<string, ElegantConstRoute>([]);
 
-    routes.forEach(route => {
+    routes.forEach((route) => {
       authRoutesMap.set(route.name, route);
     });
 
@@ -115,7 +115,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   /**
    * Reset route cache
    *
-   * @default router.currentRoute.value.name current route name
+   * @default
    * @param routeKey
    */
   async function resetRouteCache(routeKey?: RouteKey) {
@@ -151,18 +151,21 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
   /** init constant route */
   async function initConstantRoute() {
-    if (isInitConstantRoute.value) return;
+    if (isInitConstantRoute.value)
+      return;
 
     const staticRoute = createStaticRoutes();
 
     if (authRouteMode.value === 'static') {
       addConstantRoutes(staticRoute.constantRoutes);
-    } else {
+    }
+    else {
       const { data, error } = await fetchGetConstantRoutes();
 
       if (!error) {
         addConstantRoutes(data);
-      } else {
+      }
+      else {
         // if fetch constant routes failed, use static constant routes
         addConstantRoutes(staticRoute.constantRoutes);
       }
@@ -184,7 +187,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     if (authRouteMode.value === 'static') {
       initStaticAuthRoute();
-    } else {
+    }
+    else {
       await initDynamicAuthRoute();
     }
 
@@ -197,7 +201,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
 
     if (authStore.isStaticSuper) {
       addAuthRoutes(staticAuthRoutes);
-    } else {
+    }
+    else {
       const filteredAuthRoutes = filterAuthRoutesByRoles(staticAuthRoutes, authStore.userInfo.roles);
 
       addAuthRoutes(filteredAuthRoutes);
@@ -224,7 +229,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       handleUpdateRootRouteRedirect(home);
 
       setIsInitAuthRoute(true);
-    } else {
+    }
+    else {
       // if fetch user routes failed, reset store
       authStore.resetStore();
     }
@@ -253,7 +259,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
    * @param routes Vue routes
    */
   function addRoutesToVueRouter(routes: RouteRecordRaw[]) {
-    routes.forEach(route => {
+    routes.forEach((route) => {
       const removeFn = router.addRoute(route);
       addRemoveRouteFn(removeFn);
     });
@@ -344,6 +350,6 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     getIsAuthRouteExist,
     getSelectedMenuKeyPath,
     onRouteSwitchWhenLoggedIn,
-    onRouteSwitchWhenNotLoggedIn
+    onRouteSwitchWhenNotLoggedIn,
   };
 });

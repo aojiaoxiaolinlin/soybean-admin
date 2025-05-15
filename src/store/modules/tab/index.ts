@@ -1,13 +1,13 @@
-import { computed, ref } from 'vue';
+import type { RouteKey } from '@elegant-router/types';
+import type { RouterPushOptions, Tab, TabRoute } from '@/types/app';
 import { useEventListener } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import type { RouteKey } from '@elegant-router/types';
+import { computed, ref } from 'vue';
+import { SetupStoreId } from '@/enum';
+import { useRouterPush } from '@/hooks/common/router';
 import { router } from '@/router';
 import { useRouteStore } from '@/store/modules/route';
-import { useRouterPush } from '@/hooks/common/router';
 import { localStg } from '@/utils/storage';
-import { SetupStoreId } from '@/enum';
-import type { RouterPushOptions, Tab, TabRoute } from '@/types/app';
 import { useThemeStore } from '../theme';
 import {
   extractTabsByAllRoutes,
@@ -20,7 +20,7 @@ import {
   getTabIdByRoute,
   isTabInTabs,
   updateTabByI18nKey,
-  updateTabsByI18nKey
+  updateTabsByI18nKey,
 } from './shared';
 
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
@@ -97,7 +97,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    */
   async function removeTab(tabId: string) {
     const removeTabIndex = tabs.value.findIndex(tab => tab.id === tabId);
-    if (removeTabIndex === -1) return;
+    if (removeTabIndex === -1)
+      return;
 
     const isRemoveActiveTab = activeTabId.value === tabId;
     const nextTab = tabs.value[removeTabIndex + 1] || homeTab.value;
@@ -120,7 +121,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    */
   async function removeTabByRouteName(routeName: RouteKey) {
     const tab = findTabByRouteName(routeName, tabs.value);
-    if (!tab) return;
+    if (!tab)
+      return;
 
     await removeTab(tab.id);
   }
@@ -191,7 +193,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   async function clearLeftTabs(tabId: string) {
     const tabIds = tabs.value.map(tab => tab.id);
     const index = tabIds.indexOf(tabId);
-    if (index === -1) return;
+    if (index === -1)
+      return;
 
     const excludes = tabIds.slice(index);
     await clearTabs(excludes);
@@ -211,7 +214,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
     const tabIds = tabs.value.map(tab => tab.id);
     const index = tabIds.indexOf(tabId);
-    if (index === -1) return;
+    if (index === -1)
+      return;
 
     const excludes = tabIds.slice(0, index + 1);
     await clearTabs(excludes);
@@ -220,7 +224,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   /**
    * Set new label of tab
    *
-   * @default activeTabId
+   * @default
    * @param label New tab label
    * @param tabId Tab id
    */
@@ -228,7 +232,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     const id = tabId || activeTabId.value;
 
     const tab = tabs.value.find(item => item.id === id);
-    if (!tab) return;
+    if (!tab)
+      return;
 
     tab.oldLabel = tab.label;
     tab.newLabel = label;
@@ -237,14 +242,15 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   /**
    * Reset tab label
    *
-   * @default activeTabId
+   * @default
    * @param tabId Tab id
    */
   function resetTabLabel(tabId?: string) {
     const id = tabId || activeTabId.value;
 
     const tab = tabs.value.find(item => item.id === id);
-    if (!tab) return;
+    if (!tab)
+      return;
 
     tab.newLabel = undefined;
   }
@@ -255,7 +261,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param tabId
    */
   function isTabRetain(tabId: string) {
-    if (tabId === homeTab.value?.id) return true;
+    if (tabId === homeTab.value?.id)
+      return true;
 
     const fixedTabIds = getFixedTabIds(tabs.value);
 
@@ -273,7 +280,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
 
   /** Cache tabs */
   function cacheTabs() {
-    if (!themeStore.tab.cache) return;
+    if (!themeStore.tab.cache)
+      return;
 
     localStg.set('globalTabs', tabs.value);
   }
@@ -303,6 +311,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     isTabRetain,
     updateTabsByLocale,
     getTabIdByRoute,
-    cacheTabs
+    cacheTabs,
   };
 });

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 import type { RouteKey } from '@elegant-router/types';
 import { SimpleScrollbar } from '@sa/materials';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDEBAR_MENU_ID } from '@/constants/app';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
+import { useAppStore } from '@/store/modules/app';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
 import { useMenu, useMixMenuContext } from '../../../context';
 
 defineOptions({
-  name: 'ReversedHorizontalMixMenu'
+  name: 'ReversedHorizontalMixMenu',
 });
 
 const route = useRoute();
@@ -24,7 +24,7 @@ const {
   childLevelMenus,
   activeFirstLevelMenuKey,
   setActiveFirstLevelMenuKey,
-  isActiveFirstLevelMenuHasChildren
+  isActiveFirstLevelMenuHasChildren,
 } = useMixMenuContext();
 const { selectedKey } = useMenu();
 
@@ -51,7 +51,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 

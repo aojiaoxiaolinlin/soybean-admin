@@ -1,7 +1,7 @@
+import type { RequestInstanceState } from './type';
 import { useAuthStore } from '@/store/modules/auth';
 import { localStg } from '@/utils/storage';
 import { fetchRefreshToken } from '../api';
-import type { RequestInstanceState } from './type';
 
 export function getAuthorization() {
   const token = localStg.get('token');
@@ -58,7 +58,7 @@ export function showErrorMsg(state: RequestInstanceState, message: string) {
         setTimeout(() => {
           state.errMsgStack = [];
         }, 5000);
-      }
+      },
     });
   }
 }

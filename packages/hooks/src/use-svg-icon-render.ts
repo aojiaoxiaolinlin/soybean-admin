@@ -1,5 +1,5 @@
-import { h } from 'vue';
 import type { Component } from 'vue';
+import { h } from 'vue';
 
 /**
  * Svg icon render hook
@@ -9,13 +9,13 @@ import type { Component } from 'vue';
 export default function useSvgIconRender(SvgIcon: Component) {
   interface IconConfig {
     /** Iconify icon name */
-    icon?: string;
+    icon?: string
     /** Local icon name */
-    localIcon?: string;
+    localIcon?: string
     /** Icon color */
-    color?: string;
+    color?: string
     /** Icon size */
-    fontSize?: number;
+    fontSize?: number
   }
 
   type IconStyle = Partial<Pick<CSSStyleDeclaration, 'color' | 'fontSize'>>;
@@ -45,6 +45,6 @@ export default function useSvgIconRender(SvgIcon: Component) {
   };
 
   return {
-    SvgIconVNode
+    SvgIconVNode,
   };
 }

@@ -2,13 +2,13 @@
 import { computed } from 'vue';
 import { $t } from '@/locales';
 
+const props = defineProps<Props>();
+
 defineOptions({ name: 'PinToggler' });
 
 interface Props {
-  pin?: boolean;
+  pin?: boolean
 }
-
-const props = defineProps<Props>();
 
 const icon = computed(() => (props.pin ? 'mdi-pin-off' : 'mdi-pin'));
 </script>

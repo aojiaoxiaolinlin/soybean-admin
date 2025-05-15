@@ -6,15 +6,15 @@
 
 export interface PaginatingCommonParams {
   /** current page number */
-  current: number;
+  current: number
   /** page size */
-  size: number;
+  size: number
   /** total count */
-  total: number;
+  total: number
 }
 
 export interface PaginatingQueryRecord<T = unknown> extends PaginatingCommonParams {
-  records: T[];
+  records: T[]
 }
 
 /** common search params of table */
@@ -31,38 +31,38 @@ export type EnableStatus = '1' | '2';
 /** common record */
 export type CommonRecord<T = any> = {
   /** record id */
-  id: number;
+  id: number
   /** record creator */
-  createBy: string;
+  createBy: string
   /** record create time */
-  createTime: string;
+  createTime: string
   /** record updater */
-  updateBy: string;
+  updateBy: string
   /** record update time */
-  updateTime: string;
+  updateTime: string
   /** record status */
-  status: EnableStatus | null;
+  status: EnableStatus | null
 } & T;
 
 export interface LoginToken {
-  token: string;
-  refreshToken: string;
+  token: string
+  refreshToken: string
 }
 
 export interface UserInfo {
-  userId: string;
-  userName: string;
-  roles: string[];
-  buttons: string[];
+  userId: string
+  userName: string
+  roles: string[]
+  buttons: string[]
 }
 
 type ElegantConstRoute = import('@elegant-router/types').ElegantConstRoute;
 
 export interface MenuRoute extends ElegantConstRoute {
-  id: string;
+  id: string
 }
 
 export interface UserRoute {
-  routes: MenuRoute[];
-  home: import('@elegant-router/types').LastLevelRouteKey;
+  routes: MenuRoute[]
+  home: import('@elegant-router/types').LastLevelRouteKey
 }

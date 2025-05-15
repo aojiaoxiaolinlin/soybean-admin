@@ -1,9 +1,9 @@
-import { useRouter } from 'vue-router';
-import type { RouteLocationRaw } from 'vue-router';
 import type { RouteKey } from '@elegant-router/types';
-import { router as globalRouter } from '@/router';
+import type { RouteLocationRaw } from 'vue-router';
 import type { RouterPushOptions } from '@/types/app';
 import type { LoginModule } from '@/types/union-key';
+import { useRouter } from 'vue-router';
+import { router as globalRouter } from '@/router';
 
 /**
  * Router push
@@ -24,7 +24,7 @@ export function useRouterPush(inSetup = true) {
     const { query, params } = options || {};
 
     const routeLocation: RouteLocationRaw = {
-      name: key
+      name: key,
     };
 
     if (Object.keys(query || {}).length) {
@@ -44,7 +44,7 @@ export function useRouterPush(inSetup = true) {
 
     const query: Record<string, string> = {};
 
-    meta?.query?.forEach(item => {
+    meta?.query?.forEach((item) => {
       query[item.key] = item.value;
     });
 
@@ -66,14 +66,14 @@ export function useRouterPush(inSetup = true) {
 
     const options: RouterPushOptions = {
       params: {
-        module
-      }
+        module,
+      },
     };
 
     const redirect = redirectUrl || route.value.fullPath;
 
     options.query = {
-      redirect
+      redirect,
     };
 
     return routerPushByKey('login', options);
@@ -93,14 +93,15 @@ export function useRouterPush(inSetup = true) {
   /**
    * Redirect from login
    *
-   * @param [needRedirect=true] Whether to redirect after login. Default is `true`
+   * @param [needRedirect] Whether to redirect after login. Default is `true`
    */
   async function redirectFromLogin(needRedirect = true) {
     const redirect = route.value.query?.redirect as string;
 
     if (needRedirect && redirect) {
       await routerPush(redirect);
-    } else {
+    }
+    else {
       await toHome();
     }
   }
@@ -112,6 +113,6 @@ export function useRouterPush(inSetup = true) {
     routerPushByKeyWithMetaQuery,
     toLogin,
     toggleLoginModule,
-    redirectFromLogin
+    redirectFromLogin,
   };
 }

@@ -1,21 +1,21 @@
 <script setup lang="ts">
+import type { Menu } from '@/types/app';
+import { useBoolean } from '@sa/hooks';
+import { SimpleScrollbar } from '@sa/materials';
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { SimpleScrollbar } from '@sa/materials';
-import { useBoolean } from '@sa/hooks';
 import { GLOBAL_SIDEBAR_MENU_ID } from '@/constants/app';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
-import type { Menu } from '@/types/app';
+import { useAppStore } from '@/store/modules/app';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
 import { useMenu, useMixMenuContext } from '../../../context';
-import FirstLevelMenu from '../components/first-level-menu.vue';
 import GlobalLogo from '../../global-logo/index.vue';
+import FirstLevelMenu from '../components/first-level-menu.vue';
 
 defineOptions({
-  name: 'VerticalMixMenu'
+  name: 'VerticalMixMenu',
 });
 
 const route = useRoute();
@@ -29,7 +29,7 @@ const {
   childLevelMenus,
   activeFirstLevelMenuKey,
   setActiveFirstLevelMenuKey,
-  getActiveFirstLevelMenuKey
+  getActiveFirstLevelMenuKey,
   //
 } = useMixMenuContext();
 const { selectedKey } = useMenu();
@@ -45,7 +45,8 @@ function handleSelectMixMenu(menu: Menu) {
 
   if (menu.children?.length) {
     setDrawerVisible(true);
-  } else {
+  }
+  else {
     routerPushByKeyWithMetaQuery(menu.routeKey);
   }
 }
@@ -73,7 +74,7 @@ watch(
   () => {
     updateExpandedKeys();
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 
@@ -90,21 +91,23 @@ watch(
         @select="handleSelectMixMenu"
         @toggle-sidebar-collapse="appStore.toggleSidebarCollapse"
       >
-        <GlobalLogo :show-title="false" :style="{ height: themeStore.header.height + 'px' }" />
+        <GlobalLogo :show-title="false" :style="{ height: `${themeStore.header.height}px` }" />
       </FirstLevelMenu>
       <div
         class="relative h-full transition-width-300"
         :style="{
-          width: appStore.mixSidebarFixed && hasChildMenus ? themeStore.sidebar.mixChildMenuWidth + 'px' : '0px'
+          width: appStore.mixSidebarFixed && hasChildMenus ? `${themeStore.sidebar.mixChildMenuWidth}px` : '0px',
         }"
       >
         <DarkModeContainer
           class="absolute-lt h-full flex-col-stretch nowrap-hidden shadow-sm transition-all-300"
           :inverted="inverted"
-          :style="{ width: showDrawer ? themeStore.sidebar.mixChildMenuWidth + 'px' : '0px' }"
+          :style="{ width: showDrawer ? `${themeStore.sidebar.mixChildMenuWidth}px` : '0px' }"
         >
-          <header class="flex-y-center justify-between px-12px" :style="{ height: themeStore.header.height + 'px' }">
-            <h2 class="text-16px text-primary font-bold">{{ $t('system.title') }}</h2>
+          <header class="flex-y-center justify-between px-12px" :style="{ height: `${themeStore.header.height}px` }">
+            <h2 class="text-16px text-primary font-bold">
+              {{ $t('system.title') }}
+            </h2>
             <PinToggler
               :pin="appStore.mixSidebarFixed"
               :class="{ 'text-white:88 !hover:text-white': inverted }"

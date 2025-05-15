@@ -1,13 +1,13 @@
-import { effectScope, nextTick, onScopeDispose, ref, watch } from 'vue';
+import type { LangOption, LangType } from '@/types/app';
+import { useBoolean } from '@sa/hooks';
 import { breakpointsTailwind, useBreakpoints, useEventListener, useTitle } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { useBoolean } from '@sa/hooks';
-import { router } from '@/router';
-import { localStg } from '@/utils/storage';
+import { effectScope, nextTick, onScopeDispose, ref, watch } from 'vue';
 import { SetupStoreId } from '@/enum';
 import { $t, setLocale } from '@/locales';
 import { setDayjsLocale } from '@/locales/dayjs';
-import type { LangOption, LangType } from '@/types/app';
+import { router } from '@/router';
+import { localStg } from '@/utils/storage';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { useThemeStore } from '../theme';
@@ -26,7 +26,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const {
     bool: mixSidebarFixed,
     setBool: setMixSidebarFixed,
-    toggle: toggleMixSidebarFixed
+    toggle: toggleMixSidebarFixed,
   } = useBoolean(localStg.get('mixSidebarFixed') === 'Y');
 
   /** Is mobile layout */
@@ -42,7 +42,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
 
     const d = themeStore.page.animate ? duration : 40;
 
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       setTimeout(resolve, d);
     });
 
@@ -58,12 +58,12 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const localeOptions: LangOption[] = [
     {
       label: '中文',
-      key: 'zh-CN'
+      key: 'zh-CN',
     },
     {
       label: 'English',
-      key: 'en-US'
-    }
+      key: 'en-US',
+    },
   ];
 
   function changeLocale(lang: LangType) {
@@ -90,17 +90,18 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     // watch isMobile, if is mobile, collapse sidebar
     watch(
       isMobile,
-      newValue => {
+      (newValue) => {
         if (newValue) {
           // backup theme setting before is mobile
           localStg.set('backupThemeSettingBeforeIsMobile', {
             layout: themeStore.layout.mode,
-            sidebarCollapse: sidebarCollapse.value
+            sidebarCollapse: sidebarCollapse.value,
           });
 
           themeStore.setThemeLayout('vertical');
           setSidebarCollapse(true);
-        } else {
+        }
+        else {
           // when is not mobile, recover the backup theme setting
           const backup = localStg.get('backupThemeSettingBeforeIsMobile');
 
@@ -114,7 +115,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // watch locale
@@ -165,6 +166,6 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     toggleSidebarCollapse,
     mixSidebarFixed,
     setMixSidebarFixed,
-    toggleMixSidebarFixed
+    toggleMixSidebarFixed,
   };
 });

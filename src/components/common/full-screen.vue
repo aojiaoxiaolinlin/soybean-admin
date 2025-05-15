@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
 
+defineProps<Props>();
+
 defineOptions({
-  name: 'FullScreen'
+  name: 'FullScreen',
 });
 
 interface Props {
-  full?: boolean;
+  full?: boolean
 }
-
-defineProps<Props>();
 </script>
 
 <template>

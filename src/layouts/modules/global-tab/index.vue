@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { nextTick, reactive, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useElementBounding } from '@vueuse/core';
+import type { DropdownKey, Tab } from '@/types/app';
 import { PageTab } from '@sa/materials';
+import { useElementBounding } from '@vueuse/core';
+import { nextTick, reactive, useTemplateRef, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import BetterScroll from '@/components/custom/better-scroll.vue';
 import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useTabStore } from '@/store/modules/tab';
+import { useThemeStore } from '@/store/modules/theme';
 import { isPC } from '@/utils/agent';
-import BetterScroll from '@/components/custom/better-scroll.vue';
-import type { DropdownKey, Tab } from '@/types/app';
 import ContextMenu from './context-menu.vue';
 
 defineOptions({
-  name: 'GlobalTab'
+  name: 'GlobalTab',
 });
 
 const route = useRoute();
@@ -22,21 +22,22 @@ const themeStore = useThemeStore();
 const routeStore = useRouteStore();
 const tabStore = useTabStore();
 
-const bsWrapper = ref<HTMLElement>();
+const bsWrapper = useTemplateRef('bsWrapper');
 const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
-const bsScroll = ref<InstanceType<typeof BetterScroll>>();
-const tabRef = ref<HTMLElement>();
+const bsScroll = useTemplateRef<InstanceType<typeof BetterScroll>>('bsScroll');
+const tabRef = useTemplateRef('tabRef');
 const isPCFlag = isPC();
 
 const TAB_DATA_ID = 'data-tab-id';
 
 type TabNamedNodeMap = NamedNodeMap & {
-  [TAB_DATA_ID]: Attr;
+  [TAB_DATA_ID]: Attr
 };
 
 async function scrollToActiveTab() {
   await nextTick();
-  if (!tabRef.value) return;
+  if (!tabRef.value)
+    return;
 
   const { children } = tabRef.value;
 
@@ -96,17 +97,17 @@ async function refresh() {
 }
 
 interface DropdownConfig {
-  visible: boolean;
-  x: number;
-  y: number;
-  tabId: string;
+  visible: boolean
+  x: number
+  y: number
+  tabId: string
 }
 
 const dropdown: DropdownConfig = reactive({
   visible: false,
   x: 0,
   y: 0,
-  tabId: ''
+  tabId: '',
 });
 
 function setDropdown(config: Partial<DropdownConfig>) {
@@ -137,7 +138,7 @@ async function handleContextMenu(e: MouseEvent, tabId: string) {
       visible: true,
       x: clientX,
       y: clientY,
-      tabId
+      tabId,
     });
     isClickContextMenu = false;
   }, DURATION);
@@ -156,13 +157,13 @@ watch(
   () => route.fullPath,
   () => {
     tabStore.addTab(route);
-  }
+  },
 );
 watch(
   () => tabStore.activeTabId,
   () => {
     scrollToActiveTab();
-  }
+  },
 );
 
 // init
@@ -194,7 +195,9 @@ init();
             <template #prefix>
               <SvgIcon :icon="tab.icon" :local-icon="tab.localIcon" class="inline-block align-text-bottom text-16px" />
             </template>
-            <div class="max-w-240px ellipsis-text">{{ tab.label }}</div>
+            <div class="max-w-240px ellipsis-text">
+              {{ tab.label }}
+            </div>
           </PageTab>
         </div>
       </BetterScroll>

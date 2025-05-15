@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { createReusableTemplate } from '@vueuse/core';
-import { SimpleScrollbar } from '@sa/materials';
-import { transformColorWithOpacity } from '@sa/color';
 import type { Menu } from '@/types/app';
-
-defineOptions({
-  name: 'FirstLevelMenu'
-});
-
-interface Props {
-  menus: Menu[];
-  activeMenuKey?: string;
-  inverted?: boolean;
-  sidebarCollapse?: boolean;
-  darkMode?: boolean;
-  themeColor: string;
-}
+import { transformColorWithOpacity } from '@sa/color';
+import { SimpleScrollbar } from '@sa/materials';
+import { createReusableTemplate } from '@vueuse/core';
+import { computed } from 'vue';
 
 const props = defineProps<Props>();
 
-interface Emits {
-  (e: 'select', menu: Menu): boolean;
-  (e: 'toggleSidebarCollapse'): void;
+const emit = defineEmits<Emits>();
+
+defineOptions({
+  name: 'FirstLevelMenu',
+});
+
+interface Props {
+  menus: Menu[]
+  activeMenuKey?: string
+  inverted?: boolean
+  sidebarCollapse?: boolean
+  darkMode?: boolean
+  themeColor: string
 }
 
-const emit = defineEmits<Emits>();
+interface Emits {
+  (_e: 'select', _menu: Menu): boolean
+  (_e: 'toggleSidebarCollapse'): void
+}
 
 interface MixMenuItemProps {
   /** Menu item label */
-  label: Menu['label'];
+  label: Menu['label']
   /** Menu item icon */
-  icon: Menu['icon'];
+  icon: Menu['icon']
   /** Active menu item */
-  active: boolean;
+  active: boolean
   /** Mini size */
-  isMini?: boolean;
+  isMini?: boolean
 }
 const [DefineMixMenuItem, MixMenuItem] = createReusableTemplate<MixMenuItemProps>();
 
@@ -55,6 +55,8 @@ function handleClickMixMenu(menu: Menu) {
 function toggleSidebarCollapse() {
   emit('toggleSidebarCollapse');
 }
+
+defineSlots<{ default: () => void }>();
 </script>
 
 <template>
@@ -65,7 +67,7 @@ function toggleSidebarCollapse() {
       :class="{
         'text-primary selected-mix-menu': active,
         'text-white:65 hover:text-white': inverted,
-        '!text-white !bg-primary': active && inverted
+        '!text-white !bg-primary': active && inverted,
       }"
     >
       <component :is="icon" :class="[isMini ? 'text-icon-small' : 'text-icon-large']" />
@@ -80,7 +82,7 @@ function toggleSidebarCollapse() {
   <!-- define component end: MixMenuItem -->
 
   <div class="h-full flex-col-stretch flex-1-hidden">
-    <slot></slot>
+    <slot />
     <SimpleScrollbar>
       <MixMenuItem
         v-for="menu in menus"

@@ -5,7 +5,7 @@ import type { ThemeLayoutMode } from './union-key';
 /** The storage namespace */
 export interface Session {
   /** The theme color */
-  themeColor: string;
+  themeColor: string
   // /**
   //  * the theme settings
   //  */
@@ -14,32 +14,32 @@ export interface Session {
 
 export interface Local {
   /** The i18n language */
-  lang: LangType;
+  lang: LangType
   /** The token */
-  token: string;
+  token: string
   /** Fixed sidebar with mix-menu */
-  mixSidebarFixed: YesOrNo;
+  mixSidebarFixed: YesOrNo
   /** The refresh token */
-  refreshToken: string;
+  refreshToken: string
   /** The theme color */
-  themeColor: string;
+  themeColor: string
   /** The dark mode */
-  darkMode: boolean;
+  darkMode: boolean
   /** The theme settings */
-  themeSettings: ThemeSetting;
+  themeSettings: ThemeSetting
   /**
    * The override theme flags
    *
    * The value is the build time of the project
    */
-  overrideThemeFlag: string;
+  overrideThemeFlag: string
   /** The global tabs */
-  globalTabs: Tab[];
+  globalTabs: Tab[]
   /** The backup theme setting before is mobile */
   backupThemeSettingBeforeIsMobile: {
-    layout: ThemeLayoutMode;
-    sidebarCollapse: boolean;
-  };
+    layout: ThemeLayoutMode
+    sidebarCollapse: boolean
+  }
   /** The last login user id */
-  lastLoginUserId: string;
+  lastLoginUserId: string
 }

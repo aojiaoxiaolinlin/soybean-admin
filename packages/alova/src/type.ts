@@ -5,7 +5,7 @@ export type CustomAlovaConfig<AG extends AlovaGenerics> = Omit<
   'statesHook' | 'beforeRequest' | 'responded' | 'requestAdapter'
 > & {
   /** request adapter. all request of alova will be sent by it. */
-  requestAdapter?: AlovaRequestAdapter<AG['RequestConfig'], AG['Response'], AG['ResponseHeader']>;
+  requestAdapter?: AlovaRequestAdapter<AG['RequestConfig'], AG['Response'], AG['ResponseHeader']>
 };
 
 export interface RequestOptions<AG extends AlovaGenerics> {
@@ -16,24 +16,24 @@ export interface RequestOptions<AG extends AlovaGenerics> {
    *
    * @param method alova Method Instance
    */
-  onRequest?: AlovaOptions<AG>['beforeRequest'];
+  onRequest?: AlovaOptions<AG>['beforeRequest']
   /**
    * The hook to check backend response is success or not
    *
    * @param response alova response
    */
-  isBackendSuccess: (response: AG['Response']) => Promise<boolean>;
+  isBackendSuccess: (response: AG['Response']) => Promise<boolean>
 
   /** The config to refresh token */
   tokenRefresher?: {
     /** detect the token is expired */
-    isExpired(response: AG['Response'], Method: Method<AG>): Promise<boolean> | boolean;
+    isExpired: (response: AG['Response'], Method: Method<AG>) => Promise<boolean> | boolean
     /** refresh token handler */
-    handler(response: AG['Response'], Method: Method<AG>): Promise<void>;
-  };
+    handler: (response: AG['Response'], Method: Method<AG>) => Promise<void>
+  }
 
   /** The hook after backend request complete */
-  onComplete?: ResponseCompleteHandler<AG>;
+  onComplete?: ResponseCompleteHandler<AG>
 
   /**
    * The hook to handle error
@@ -42,11 +42,11 @@ export interface RequestOptions<AG extends AlovaGenerics> {
    *
    * @param error
    */
-  onError?: (error: any, response: AG['Response'] | null, methodInstance: Method<AG>) => any | Promise<any>;
+  onError?: (error: any, response: AG['Response'] | null, methodInstance: Method<AG>) => any | Promise<any>
   /**
    * transform backend response when the responseType is json
    *
    * @param response alova response
    */
-  transformBackendResponse: (response: AG['Response']) => any;
+  transformBackendResponse: (response: AG['Response']) => any
 }

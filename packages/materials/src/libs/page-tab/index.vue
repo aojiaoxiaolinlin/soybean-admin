@@ -1,29 +1,30 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { Component } from 'vue';
 import type { PageTabMode, PageTabProps } from '../../types';
-import { ACTIVE_COLOR, createTabCssVars } from './shared';
-import ChromeTab from './chrome-tab.vue';
+import type { SlotFn } from './type';
+import { computed } from 'vue';
 import ButtonTab from './button-tab.vue';
-import SvgClose from './svg-close.vue';
+import ChromeTab from './chrome-tab.vue';
 import style from './index.module.css';
-
-defineOptions({
-  name: 'PageTab'
-});
+import { ACTIVE_COLOR, createTabCssVars } from './shared';
+import SvgClose from './svg-close.vue';
 
 const props = withDefaults(defineProps<PageTabProps>(), {
   mode: 'chrome',
   commonClass: 'transition-all-300',
   activeColor: ACTIVE_COLOR,
-  closable: true
+  closable: true,
+});
+
+const emit = defineEmits<Emits>();
+
+defineOptions({
+  name: 'PageTab',
 });
 
 interface Emits {
-  (e: 'close'): void;
+  (_e: 'close'): void
 }
-
-const emit = defineEmits<Emits>();
 
 const activeTabComponent = computed(() => {
   const { mode, chromeClass, buttonClass } = props;
@@ -31,13 +32,13 @@ const activeTabComponent = computed(() => {
   const tabComponentMap = {
     chrome: {
       component: ChromeTab,
-      class: chromeClass
+      class: chromeClass,
     },
     button: {
       component: ButtonTab,
-      class: buttonClass
-    }
-  } satisfies Record<PageTabMode, { component: Component; class?: string }>;
+      class: buttonClass,
+    },
+  } satisfies Record<PageTabMode, { component: Component, class?: string }>;
 
   return tabComponentMap[mode];
 });
@@ -45,7 +46,7 @@ const activeTabComponent = computed(() => {
 const cssVars = computed(() => createTabCssVars(props.activeColor));
 
 const bindProps = computed(() => {
-  const { chromeClass: _chromeCls, buttonClass: _btnCls, ...rest } = props;
+  const { ...rest } = props;
 
   return rest;
 });
@@ -53,14 +54,36 @@ const bindProps = computed(() => {
 function handleClose() {
   emit('close');
 }
+
+interface Slots {
+  /**
+   * Slot
+   *
+   * The center content of the tab
+   */
+  default?: SlotFn
+  /**
+   * Slot
+   *
+   * The left content of the tab
+   */
+  prefix?: SlotFn
+  /**
+   * Slot
+   *
+   * The right content of the tab
+   */
+  suffix?: SlotFn
+}
+defineSlots<Slots>();
 </script>
 
 <template>
   <component :is="activeTabComponent.component" :class="activeTabComponent.class" :style="cssVars" v-bind="bindProps">
     <template #prefix>
-      <slot name="prefix"></slot>
+      <slot name="prefix" />
     </template>
-    <slot></slot>
+    <slot />
     <template #suffix>
       <slot name="suffix">
         <SvgClose v-if="closable" :class="[style['svg-close']]" @pointerdown.stop="handleClose" />

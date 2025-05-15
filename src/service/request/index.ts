@@ -1,13 +1,14 @@
 import type { AxiosResponse } from 'axios';
-import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
-import { useAuthStore } from '@/store/modules/auth';
-import { localStg } from '@/utils/storage';
-import { getServiceBaseURL } from '@/utils/service';
-import { $t } from '@/locales';
-import type { ImportMeta } from '@/types/vite-env';
-import type { DemoResponse, Response } from '@/types/app';
-import { getAuthorization, handleExpiredRequest, showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
+import type { DemoResponse, Response } from '@/types/app';
+import type { ImportMeta } from '@/types/vite-env';
+import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
+import { $t } from '@/locales';
+import { useAuthStore } from '@/store/modules/auth';
+import { getServiceBaseURL } from '@/utils/service';
+import { localStg } from '@/utils/storage';
+import { getAuthorization, handleExpiredRequest, showErrorMsg } from './shared';
+
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
 const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env as ImportMeta, isHttpProxy);
 
@@ -15,8 +16,8 @@ export const request = createFlatRequest<Response, RequestInstanceState>(
   {
     baseURL,
     headers: {
-      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2'
-    }
+      apifoxToken: 'XL299LiMEDZ0H5h3A29PxwQXdMJqWyY2',
+    },
   },
   {
     async onRequest(config) {
@@ -71,7 +72,7 @@ export const request = createFlatRequest<Response, RequestInstanceState>(
           },
           onClose() {
             logoutAndCleanup();
-          }
+          },
         });
 
         return null;
@@ -120,13 +121,13 @@ export const request = createFlatRequest<Response, RequestInstanceState>(
       }
 
       showErrorMsg(request.state, message);
-    }
-  }
+    },
+  },
 );
 
 export const demoRequest = createRequest<DemoResponse>(
   {
-    baseURL: otherBaseURL.demo
+    baseURL: otherBaseURL.demo,
   },
   {
     async onRequest(config) {
@@ -162,6 +163,6 @@ export const demoRequest = createRequest<DemoResponse>(
       }
 
       window.$message?.error(message);
-    }
-  }
+    },
+  },
 );

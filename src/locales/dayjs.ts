@@ -1,8 +1,8 @@
+import type { LangType } from '@/types/app';
 import { locale } from 'dayjs';
+import { localStg } from '@/utils/storage';
 import 'dayjs/locale/zh-cn';
 import 'dayjs/locale/en';
-import { localStg } from '@/utils/storage';
-import type { LangType } from '@/types/app';
 
 /**
  * Set dayjs locale
@@ -12,7 +12,7 @@ import type { LangType } from '@/types/app';
 export function setDayjsLocale(lang: LangType = 'zh-CN') {
   const localMap = {
     'zh-CN': 'zh-cn',
-    'en-US': 'en'
+    'en-US': 'en',
   } satisfies Record<LangType, string>;
 
   const l = lang || localStg.get('lang') || 'zh-CN';

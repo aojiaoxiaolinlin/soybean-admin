@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue';
 import { Icon } from '@iconify/vue';
+import { computed, useAttrs } from 'vue';
+
+const props = defineProps<Props>();
 
 defineOptions({ name: 'SvgIcon', inheritAttrs: false });
 
@@ -12,18 +14,16 @@ defineOptions({ name: 'SvgIcon', inheritAttrs: false });
  */
 interface Props {
   /** Iconify icon name */
-  icon?: string;
+  icon?: string
   /** Local svg icon name */
-  localIcon?: string;
+  localIcon?: string
 }
-
-const props = defineProps<Props>();
 
 const attrs = useAttrs();
 
-const bindAttrs = computed<{ class: string; style: string }>(() => ({
+const bindAttrs = computed<{ class: string, style: string }>(() => ({
   class: (attrs.class as string) || '',
-  style: (attrs.style as string) || ''
+  style: (attrs.style as string) || '',
 }));
 
 const symbolId = computed(() => {
