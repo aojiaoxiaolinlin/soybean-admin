@@ -2,6 +2,7 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useContext } from '@sa/hooks';
 import { useRouteStore } from '@/store/modules/route';
+import type { Menu } from '@/types/app';
 
 export const { setupStore: setupMixMenuContext, useStore: useMixMenuContext } = useContext('mix-menu', useMixMenu);
 
@@ -22,9 +23,9 @@ function useMixMenu() {
     setActiveFirstLevelMenuKey(firstLevelRouteName);
   }
 
-  const allMenus = computed<App.Global.Menu[]>(() => routeStore.menus);
+  const allMenus = computed<Menu[]>(() => routeStore.menus);
 
-  const firstLevelMenus = computed<App.Global.Menu[]>(() =>
+  const firstLevelMenus = computed<Menu[]>(() =>
     routeStore.menus.map(menu => {
       const { children: _, ...rest } = menu;
 
@@ -32,7 +33,7 @@ function useMixMenu() {
     })
   );
 
-  const childLevelMenus = computed<App.Global.Menu[]>(
+  const childLevelMenus = computed<Menu[]>(
     () => routeStore.menus.find(menu => menu.key === activeFirstLevelMenuKey.value)?.children || []
   );
 

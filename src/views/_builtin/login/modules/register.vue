@@ -4,6 +4,7 @@ import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { useCaptcha } from '@/hooks/business/captcha';
 import { $t } from '@/locales';
+import type { FormRule } from '@/types/app';
 
 defineOptions({
   name: 'Register'
@@ -27,7 +28,7 @@ const model: FormModel = reactive({
   confirmPassword: ''
 });
 
-const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
+const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
   const { formRules, createConfirmPwdRule } = useFormRules();
 
   return {

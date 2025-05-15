@@ -2,12 +2,13 @@
 import { computed } from 'vue';
 import type { PopoverPlacement } from 'naive-ui';
 import { $t } from '@/locales';
+import type { ThemeScheme } from '@/types/union-key';
 
 defineOptions({ name: 'ThemeSchemaSwitch' });
 
 interface Props {
   /** Theme schema */
-  themeSchema: UnionKey.ThemeScheme;
+  themeSchema: ThemeScheme;
   /** Show tooltip */
   showTooltip?: boolean;
   /** Tooltip placement */
@@ -29,7 +30,7 @@ function handleSwitch() {
   emit('switch');
 }
 
-const icons: Record<UnionKey.ThemeScheme, string> = {
+const icons: Record<ThemeScheme, string> = {
   light: 'material-symbols:sunny',
   dark: 'material-symbols:nightlight-rounded',
   auto: 'material-symbols:hdr-auto'

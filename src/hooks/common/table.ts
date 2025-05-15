@@ -2,15 +2,21 @@ import { computed, effectScope, onScopeDispose, reactive, ref, watch } from 'vue
 import type { Ref } from 'vue';
 import type { PaginationProps } from 'naive-ui';
 import { jsonClone } from '@sa/utils';
+import type { TableColumnCheck } from '@sa/hooks';
 import { useBoolean, useHookTable } from '@sa/hooks';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
+import type {
+  GetTableData,
+  NaiveTableConfig,
+  TableApiFn,
+  TableColumn,
+  TableColumnWithKey,
+  TableData,
+  TableDataWithIndex
+} from '@/types/naive-ui';
 
-type TableData = NaiveUI.TableData;
-type GetTableData<A extends NaiveUI.TableApiFn> = NaiveUI.GetTableData<A>;
-type TableColumn<T> = NaiveUI.TableColumn<T>;
-
-export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
+export function useTable<A extends TableApiFn>(config: NaiveTableConfig<A>) {
   const scope = effectScope();
   const appStore = useAppStore();
 
@@ -33,7 +39,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     searchParams,
     updateSearchParams,
     resetSearchParams
-  } = useHookTable<A, GetTableData<A>, TableColumn<NaiveUI.TableDataWithIndex<GetTableData<A>>>>({
+  } = useHookTable<A, GetTableData<A>, TableColumn<TableDataWithIndex<GetTableData<A>>>>({
     apiFn,
     apiParams,
     columns: config.columns,
@@ -58,7 +64,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       };
     },
     getColumnChecks: cols => {
-      const checks: NaiveUI.TableColumnCheck[] = [];
+      const checks: TableColumnCheck[] = [];
 
       cols.forEach(column => {
         if (isTableColumnHasKey(column)) {
@@ -144,7 +150,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     },
     ...(showTotal
       ? {
-          prefix: page => $t('datatable.itemCount', { total: page.itemCount })
+          prefix: page => $t('dataTable.itemCount', { total: page.itemCount })
         }
       : {})
   });
@@ -213,10 +219,10 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
   };
 }
 
-export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
+export function useTableOperate<T extends TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
   const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
 
-  const operateType = ref<NaiveUI.TableOperateType>('add');
+  const operateType = ref('add');
 
   function handleAdd() {
     operateType.value = 'add';
@@ -267,6 +273,6 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
   };
 }
 
-function isTableColumnHasKey<T>(column: TableColumn<T>): column is NaiveUI.TableColumnWithKey<T> {
-  return Boolean((column as NaiveUI.TableColumnWithKey<T>).key);
+function isTableColumnHasKey<T>(column: TableColumn<T>): column is TableColumnWithKey<T> {
+  return Boolean((column as TableColumnWithKey<T>).key);
 }

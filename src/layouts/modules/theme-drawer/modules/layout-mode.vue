@@ -21,15 +21,15 @@ function handleReverseHorizontalMixChange(value: boolean) {
   <NDivider>{{ $t('theme.layoutMode.title') }}</NDivider>
   <LayoutModeCard v-model:mode="themeStore.layout.mode" :disabled="appStore.isMobile">
     <template #vertical>
-      <div class="layout-sider h-full w-18px"></div>
+      <div class="layout-sidebar h-full w-18px"></div>
       <div class="vertical-wrapper">
         <div class="layout-header"></div>
         <div class="layout-main"></div>
       </div>
     </template>
     <template #vertical-mix>
-      <div class="layout-sider h-full w-8px"></div>
-      <div class="layout-sider h-full w-16px"></div>
+      <div class="layout-sidebar h-full w-8px"></div>
+      <div class="layout-sidebar h-full w-16px"></div>
       <div class="vertical-wrapper">
         <div class="layout-header"></div>
         <div class="layout-main"></div>
@@ -44,7 +44,7 @@ function handleReverseHorizontalMixChange(value: boolean) {
     <template #horizontal-mix>
       <div class="layout-header"></div>
       <div class="horizontal-wrapper">
-        <div class="layout-sider w-18px"></div>
+        <div class="layout-sidebar w-18px"></div>
         <div class="layout-main"></div>
       </div>
     </template>
@@ -63,7 +63,7 @@ function handleReverseHorizontalMixChange(value: boolean) {
   --uno: h-16px bg-primary rd-4px;
 }
 
-.layout-sider {
+.layout-sidebar {
   --uno: bg-primary-300 rd-4px;
 }
 

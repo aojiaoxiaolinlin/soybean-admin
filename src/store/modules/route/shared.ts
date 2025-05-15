@@ -2,6 +2,7 @@ import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } 
 import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
 import { useSvgIcon } from '@/hooks/common/icon';
 import { $t } from '@/locales';
+import type { Breadcrumb, Menu } from '@/types/app';
 
 /**
  * Filter auth routes by roles
@@ -74,7 +75,7 @@ export function sortRoutesByOrder(routes: ElegantConstRoute[]) {
  * @param routes Auth routes
  */
 export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
-  const menus: App.Global.Menu[] = [];
+  const menus: Menu[] = [];
 
   routes.forEach(route => {
     if (!route.meta?.hideInMenu) {
@@ -96,15 +97,15 @@ export function getGlobalMenusByAuthRoutes(routes: ElegantConstRoute[]) {
  *
  * @param menus
  */
-export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
-  const result: App.Global.Menu[] = [];
+export function updateLocaleOfGlobalMenus(menus: Menu[]) {
+  const result: Menu[] = [];
 
   menus.forEach(menu => {
     const { i18nKey, label, children } = menu;
 
     const newLabel = i18nKey ? $t(i18nKey) : label;
 
-    const newMenu: App.Global.Menu = {
+    const newMenu: Menu = {
       ...menu,
       label: newLabel
     };
@@ -132,7 +133,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
 
   const label = i18nKey ? $t(i18nKey) : title!;
 
-  const menu: App.Global.Menu = {
+  const menu: Menu = {
     key: name as string,
     label,
     i18nKey,
@@ -200,7 +201,7 @@ function recursiveGetIsRouteExistByRouteName(route: ElegantConstRoute, routeName
  * @param selectedKey
  * @param menus
  */
-export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Global.Menu[]) {
+export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: Menu[]) {
   const keyPath: string[] = [];
 
   menus.some(menu => {
@@ -224,10 +225,10 @@ export function getSelectedMenuKeyPathByKey(selectedKey: string, menus: App.Glob
  * @param targetKey Target menu key
  * @param menu Menu
  */
-function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null {
+function findMenuPath(targetKey: string, menu: Menu): string[] | null {
   const path: string[] = [];
 
-  function dfs(item: App.Global.Menu): boolean {
+  function dfs(item: Menu): boolean {
     path.push(item.key);
 
     if (item.key === targetKey) {
@@ -259,10 +260,10 @@ function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null
  *
  * @param menu
  */
-function transformMenuToBreadcrumb(menu: App.Global.Menu) {
+function transformMenuToBreadcrumb(menu: Menu) {
   const { children, ...rest } = menu;
 
-  const breadcrumb: App.Global.Breadcrumb = {
+  const breadcrumb: Breadcrumb = {
     ...rest
   };
 
@@ -279,10 +280,7 @@ function transformMenuToBreadcrumb(menu: App.Global.Menu) {
  * @param route
  * @param menus
  */
-export function getBreadcrumbsByRoute(
-  route: RouteLocationNormalizedLoaded,
-  menus: App.Global.Menu[]
-): App.Global.Breadcrumb[] {
+export function getBreadcrumbsByRoute(route: RouteLocationNormalizedLoaded, menus: Menu[]): Breadcrumb[] {
   const key = route.name as string;
   const activeKey = route.meta?.activeMenu;
 
@@ -321,7 +319,7 @@ export function getBreadcrumbsByRoute(
  * @param menus - menus
  * @param treeMap
  */
-export function transformMenuToSearchMenus(menus: App.Global.Menu[], treeMap: App.Global.Menu[] = []) {
+export function transformMenuToSearchMenus(menus: Menu[], treeMap: Menu[] = []) {
   if (menus && menus.length === 0) return [];
   return menus.reduce((acc, cur) => {
     if (!cur.children) {

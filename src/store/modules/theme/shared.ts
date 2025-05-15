@@ -6,6 +6,14 @@ import { toggleHtmlClass } from '@/utils/common';
 import { localStg } from '@/utils/storage';
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
 import { themeVars } from '@/theme/vars';
+import type {
+  BaseToken,
+  ThemeColor,
+  ThemeColorKey,
+  ThemePaletteColor,
+  ThemeSetting,
+  ThemeTokenCSSVars
+} from '@/types/app';
 
 /** Init theme settings */
 export function initThemeSettings() {
@@ -39,16 +47,12 @@ export function initThemeSettings() {
  * @param tokens Theme setting tokens
  * @param [recommended=false] Use recommended color. Default is `false`
  */
-export function createThemeToken(
-  colors: App.Theme.ThemeColor,
-  tokens?: App.Theme.ThemeSetting['tokens'],
-  recommended = false
-) {
+export function createThemeToken(colors: ThemeColor, tokens?: ThemeSetting['tokens'], recommended = false) {
   const paletteColors = createThemePaletteColors(colors, recommended);
 
   const { light, dark } = tokens || themeSettings.tokens;
 
-  const themeTokens: App.Theme.ThemeTokenCSSVars = {
+  const themeTokens: ThemeTokenCSSVars = {
     colors: {
       ...paletteColors,
       nprogress: paletteColors.primary,
@@ -59,7 +63,7 @@ export function createThemeToken(
     }
   };
 
-  const darkThemeTokens: App.Theme.ThemeTokenCSSVars = {
+  const darkThemeTokens: ThemeTokenCSSVars = {
     colors: {
       ...themeTokens.colors,
       ...dark?.colors
@@ -82,9 +86,9 @@ export function createThemeToken(
  * @param colors Theme colors
  * @param [recommended=false] Use recommended color. Default is `false`
  */
-function createThemePaletteColors(colors: App.Theme.ThemeColor, recommended = false) {
-  const colorKeys = Object.keys(colors) as App.Theme.ThemeColorKey[];
-  const colorPaletteVar = {} as App.Theme.ThemePaletteColor;
+function createThemePaletteColors(colors: ThemeColor, recommended = false) {
+  const colorKeys = Object.keys(colors) as ThemeColorKey[];
+  const colorPaletteVar = {} as ThemePaletteColor;
 
   colorKeys.forEach(key => {
     const colorMap = getColorPalette(colors[key], recommended);
@@ -104,7 +108,7 @@ function createThemePaletteColors(colors: App.Theme.ThemeColor, recommended = fa
  *
  * @param tokens Theme base tokens
  */
-function getCssVarByTokens(tokens: App.Theme.BaseToken) {
+function getCssVarByTokens(tokens: BaseToken) {
   const styles: string[] = [];
 
   function removeVarPrefix(value: string) {
@@ -140,7 +144,7 @@ function getCssVarByTokens(tokens: App.Theme.BaseToken) {
  *
  * @param tokens
  */
-export function addThemeVarsToGlobal(tokens: App.Theme.BaseToken, darkTokens: App.Theme.BaseToken) {
+export function addThemeVarsToGlobal(tokens: BaseToken, darkTokens: BaseToken) {
   const cssVarStr = getCssVarByTokens(tokens);
   const darkCssVarStr = getCssVarByTokens(darkTokens);
 
@@ -186,17 +190,17 @@ export function toggleCssDarkMode(darkMode = false) {
  * Toggle auxiliary color modes
  *
  * @param grayscaleMode
- * @param colourWeakness
+ * @param colorWeakness
  */
-export function toggleAuxiliaryColorModes(grayscaleMode = false, colourWeakness = false) {
+export function toggleAuxiliaryColorModes(grayscaleMode = false, colorWeakness = false) {
   const htmlElement = document.documentElement;
-  htmlElement.style.filter = [grayscaleMode ? 'grayscale(100%)' : '', colourWeakness ? 'invert(80%)' : '']
+  htmlElement.style.filter = [grayscaleMode ? 'grayscale(100%)' : '', colorWeakness ? 'invert(80%)' : '']
     .filter(Boolean)
     .join(' ');
 }
 
 type NaiveColorScene = '' | 'Suppl' | 'Hover' | 'Pressed' | 'Active';
-type NaiveColorKey = `${App.Theme.ThemeColorKey}Color${NaiveColorScene}`;
+type NaiveColorKey = `${ThemeColorKey}Color${NaiveColorScene}`;
 type NaiveThemeColor = Partial<Record<NaiveColorKey, string>>;
 interface NaiveColorAction {
   scene: NaiveColorScene;
@@ -209,7 +213,7 @@ interface NaiveColorAction {
  * @param colors Theme colors
  * @param [recommended=false] Use recommended color. Default is `false`
  */
-function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) {
+function getNaiveThemeColors(colors: ThemeColor, recommended = false) {
   const colorActions: NaiveColorAction[] = [
     { scene: '', handler: color => color },
     { scene: 'Suppl', handler: color => color },
@@ -220,7 +224,7 @@ function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) 
 
   const themeColors: NaiveThemeColor = {};
 
-  const colorEntries = Object.entries(colors) as [App.Theme.ThemeColorKey, string][];
+  const colorEntries = Object.entries(colors) as [ThemeColorKey, string][];
 
   colorEntries.forEach(color => {
     colorActions.forEach(action => {
@@ -239,7 +243,7 @@ function getNaiveThemeColors(colors: App.Theme.ThemeColor, recommended = false) 
  * @param colors Theme colors
  * @param [recommended=false] Use recommended color. Default is `false`
  */
-export function getNaiveTheme(colors: App.Theme.ThemeColor, recommended = false) {
+export function getNaiveTheme(colors: ThemeColor, recommended = false) {
   const { primary: colorLoading } = colors;
 
   const theme: GlobalThemeOverrides = {

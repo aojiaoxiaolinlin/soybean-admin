@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/store/modules/theme';
 import { $t } from '@/locales';
+import type { ThemeColorKey } from '@/types/app';
 import SettingItem from '../components/setting-item.vue';
 
 defineOptions({
@@ -9,7 +10,7 @@ defineOptions({
 
 const themeStore = useThemeStore();
 
-function handleUpdateColor(color: string, key: App.Theme.ThemeColorKey) {
+function handleUpdateColor(color: string, key: ThemeColorKey) {
   themeStore.updateThemeColors(key, color);
 }
 

@@ -4,6 +4,7 @@ import type { RouteKey } from '@elegant-router/types';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
+import type { Menu } from '@/types/app';
 
 defineOptions({
   name: 'GlobalBreadcrumb'
@@ -14,7 +15,7 @@ const routeStore = useRouteStore();
 const { routerPushByKey } = useRouterPush();
 
 interface BreadcrumbContentProps {
-  breadcrumb: App.Global.Menu;
+  breadcrumb: Menu;
 }
 
 const [DefineBreadcrumbContent, BreadcrumbContent] = createReusableTemplate<BreadcrumbContentProps>();

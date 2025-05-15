@@ -17,10 +17,10 @@ function createLayoutCssVarsByCssVarsProps(props: LayoutCssVarsProps) {
     '--soy-header-z-index': props.headerZIndex,
     '--soy-tab-height': `${props.tabHeight}px`,
     '--soy-tab-z-index': props.tabZIndex,
-    '--soy-sider-width': `${props.siderWidth}px`,
-    '--soy-sider-collapsed-width': `${props.siderCollapsedWidth}px`,
-    '--soy-sider-z-index': props.siderZIndex,
-    '--soy-mobile-sider-z-index': props.mobileSiderZIndex,
+    '--soy-sidebar-width': `${props.sidebarWidth}px`,
+    '--soy-sidebar-collapsed-width': `${props.sidebarCollapsedWidth}px`,
+    '--soy-sidebar-z-index': props.sidebarZIndex,
+    '--soy-mobile-sidebar-z-index': props.mobileSidebarZIndex,
     '--soy-footer-height': `${props.footerHeight}px`,
     '--soy-footer-z-index': props.footerZIndex
   };
@@ -40,15 +40,15 @@ export function createLayoutCssVars(props: AdminLayoutProps) {
     maxZIndex = LAYOUT_MAX_Z_INDEX,
     headerHeight,
     tabHeight,
-    siderWidth,
-    siderCollapsedWidth,
+    sidebarWidth,
+    sidebarCollapsedWidth,
     footerHeight
   } = props;
 
   const headerZIndex = maxZIndex - 3;
   const tabZIndex = maxZIndex - 5;
-  const siderZIndex = mode === 'vertical' || isMobile ? maxZIndex - 1 : maxZIndex - 4;
-  const mobileSiderZIndex = isMobile ? maxZIndex - 2 : 0;
+  const sidebarZIndex = mode === 'vertical' || isMobile ? maxZIndex - 1 : maxZIndex - 4;
+  const mobileSidebarZIndex = isMobile ? maxZIndex - 2 : 0;
   const footerZIndex = maxZIndex - 5;
 
   const cssProps: LayoutCssVarsProps = {
@@ -56,10 +56,10 @@ export function createLayoutCssVars(props: AdminLayoutProps) {
     headerZIndex,
     tabHeight,
     tabZIndex,
-    siderWidth,
-    siderZIndex,
-    mobileSiderZIndex,
-    siderCollapsedWidth,
+    sidebarWidth,
+    sidebarZIndex,
+    mobileSidebarZIndex,
+    sidebarCollapsedWidth,
     footerHeight,
     footerZIndex
   };

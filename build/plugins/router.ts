@@ -1,6 +1,8 @@
 import type { RouteMeta } from 'vue-router';
 import ElegantVueRouter from '@elegant-router/vue/vite';
 import type { RouteKey } from '@elegant-router/types';
+import type { LoginModule } from '@/types/union-key';
+import type { I18nKey } from '@/types/app';
 
 export function setupElegantRouter() {
   return ElegantVueRouter({
@@ -12,7 +14,7 @@ export function setupElegantRouter() {
       const key = routeName as RouteKey;
 
       if (key === 'login') {
-        const modules: UnionKey.LoginModule[] = ['pwd-login', 'code-login', 'register', 'reset-pwd', 'bind-wechat'];
+        const modules: LoginModule[] = ['pwd-login', 'code-login', 'register', 'reset-pwd', 'bind-wechat'];
 
         const moduleReg = modules.join('|');
 
@@ -28,7 +30,7 @@ export function setupElegantRouter() {
 
       const meta: Partial<RouteMeta> = {
         title: key,
-        i18nKey: `route.${key}` as App.I18n.I18nKey
+        i18nKey: `route.${key}` as I18nKey
       };
 
       if (constantRoutes.includes(key)) {

@@ -4,13 +4,14 @@ import { useAuthStore } from '@/store/modules/auth';
 import { localStg } from '@/utils/storage';
 import { getServiceBaseURL } from '@/utils/service';
 import { $t } from '@/locales';
+import type { ImportMeta } from '@/types/vite-env';
+import type { DemoResponse, Response } from '@/types/app';
 import { getAuthorization, handleExpiredRequest, showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
-
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
-const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy);
+const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env as ImportMeta, isHttpProxy);
 
-export const request = createFlatRequest<App.Service.Response, RequestInstanceState>(
+export const request = createFlatRequest<Response, RequestInstanceState>(
   {
     baseURL,
     headers: {
@@ -123,7 +124,7 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
   }
 );
 
-export const demoRequest = createRequest<App.Service.DemoResponse>(
+export const demoRequest = createRequest<DemoResponse>(
   {
     baseURL: otherBaseURL.demo
   },

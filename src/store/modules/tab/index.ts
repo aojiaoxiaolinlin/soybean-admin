@@ -7,6 +7,7 @@ import { useRouteStore } from '@/store/modules/route';
 import { useRouterPush } from '@/hooks/common/router';
 import { localStg } from '@/utils/storage';
 import { SetupStoreId } from '@/enum';
+import type { RouterPushOptions, Tab, TabRoute } from '@/types/app';
 import { useThemeStore } from '../theme';
 import {
   extractTabsByAllRoutes,
@@ -28,10 +29,10 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   const { routerPush } = useRouterPush(false);
 
   /** Tabs */
-  const tabs = ref<App.Global.Tab[]>([]);
+  const tabs = ref<Tab[]>([]);
 
   /** Get active tab */
-  const homeTab = ref<App.Global.Tab>();
+  const homeTab = ref<Tab>();
 
   /** Init home tab */
   function initHomeTab() {
@@ -58,7 +59,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    *
    * @param currentRoute Current route
    */
-  function initTabStore(currentRoute: App.Global.TabRoute) {
+  function initTabStore(currentRoute: TabRoute) {
     const storageTabs = localStg.get('globalTabs');
 
     if (themeStore.tab.cache && storageTabs) {
@@ -75,7 +76,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param route Tab route
    * @param active Whether to activate the added tab
    */
-  function addTab(route: App.Global.TabRoute, active = true) {
+  function addTab(route: TabRoute, active = true) {
     const tab = getTabByRoute(route);
 
     const isHomeTab = tab.id === homeTab.value?.id;
@@ -158,7 +159,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    * @param key Route key
    * @param options Router push options
    */
-  async function replaceTab(key: RouteKey, options?: App.Global.RouterPushOptions) {
+  async function replaceTab(key: RouteKey, options?: RouterPushOptions) {
     const oldTabId = activeTabId.value;
 
     // push new route
@@ -175,7 +176,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
    *
    * @param tab
    */
-  async function switchRouteByTab(tab: App.Global.Tab) {
+  async function switchRouteByTab(tab: Tab) {
     const fail = await routerPush(tab.fullPath);
     if (!fail) {
       setActiveTabId(tab.id);

@@ -3,6 +3,7 @@ import type { ComputedRef, Ref } from 'vue';
 import type { FormInst } from 'naive-ui';
 import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
+import type { FormRule } from '@/types/app';
 
 export function useFormRules() {
   const patternRules = {
@@ -31,7 +32,7 @@ export function useFormRules() {
       message: $t('form.email.invalid'),
       trigger: 'change'
     }
-  } satisfies Record<string, App.Global.FormRule>;
+  } satisfies Record<string, FormRule>;
 
   const formRules = {
     userName: [createRequiredRule($t('form.userName.required')), patternRules.userName],
@@ -39,12 +40,12 @@ export function useFormRules() {
     pwd: [createRequiredRule($t('form.pwd.required')), patternRules.pwd],
     code: [createRequiredRule($t('form.code.required')), patternRules.code],
     email: [createRequiredRule($t('form.email.required')), patternRules.email]
-  } satisfies Record<string, App.Global.FormRule[]>;
+  } satisfies Record<string, FormRule[]>;
 
   /** the default required rule */
   const defaultRequiredRule = createRequiredRule($t('form.required'));
 
-  function createRequiredRule(message: string): App.Global.FormRule {
+  function createRequiredRule(message: string): FormRule {
     return {
       required: true,
       message
@@ -53,7 +54,7 @@ export function useFormRules() {
 
   /** create a rule for confirming the password */
   function createConfirmPwdRule(pwd: string | Ref<string> | ComputedRef<string>) {
-    const confirmPwdRule: App.Global.FormRule[] = [
+    const confirmPwdRule: FormRule[] = [
       { required: true, message: $t('form.confirmPwd.required') },
       {
         asyncValidator: (rule, value) => {

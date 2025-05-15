@@ -4,8 +4,10 @@ import { AdminLayout, LAYOUT_SCROLL_EL_ID } from '@sa/materials';
 import type { LayoutMode } from '@sa/materials';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
+import type { ThemeLayoutMode } from '@/types/union-key';
+import type { HeaderProps } from '@/types/app';
 import GlobalHeader from '../modules/global-header/index.vue';
-import GlobalSider from '../modules/global-sider/index.vue';
+import GlobalSidebar from '../modules/global-sidebar/index.vue';
 import GlobalTab from '../modules/global-tab/index.vue';
 import GlobalContent from '../modules/global-content/index.vue';
 import GlobalFooter from '../modules/global-footer/index.vue';
@@ -31,7 +33,7 @@ const layoutMode = computed(() => {
 const headerProps = computed(() => {
   const { mode, reverseHorizontalMix } = themeStore.layout;
 
-  const headerPropsConfig: Record<UnionKey.ThemeLayoutMode, App.Global.HeaderProps> = {
+  const headerPropsConfig: Record<ThemeLayoutMode, HeaderProps> = {
     vertical: {
       showLogo: false,
       showMenu: false,
@@ -57,19 +59,19 @@ const headerProps = computed(() => {
   return headerPropsConfig[mode];
 });
 
-const siderVisible = computed(() => themeStore.layout.mode !== 'horizontal');
+const sidebarVisible = computed(() => themeStore.layout.mode !== 'horizontal');
 
 const isVerticalMix = computed(() => themeStore.layout.mode === 'vertical-mix');
 
 const isHorizontalMix = computed(() => themeStore.layout.mode === 'horizontal-mix');
 
-const siderWidth = computed(() => getSiderWidth());
+const sidebarWidth = computed(() => getSidebarWidth());
 
-const siderCollapsedWidth = computed(() => getSiderCollapsedWidth());
+const sidebarCollapsedWidth = computed(() => getSidebarCollapsedWidth());
 
-function getSiderWidth() {
+function getSidebarWidth() {
   const { reverseHorizontalMix } = themeStore.layout;
-  const { width, mixWidth, mixChildMenuWidth } = themeStore.sider;
+  const { width, mixWidth, mixChildMenuWidth } = themeStore.sidebar;
 
   if (isHorizontalMix.value && reverseHorizontalMix) {
     return isActiveFirstLevelMenuHasChildren.value ? width : 0;
@@ -77,16 +79,16 @@ function getSiderWidth() {
 
   let w = isVerticalMix.value || isHorizontalMix.value ? mixWidth : width;
 
-  if (isVerticalMix.value && appStore.mixSiderFixed && childLevelMenus.value.length) {
+  if (isVerticalMix.value && appStore.mixSidebarFixed && childLevelMenus.value.length) {
     w += mixChildMenuWidth;
   }
 
   return w;
 }
 
-function getSiderCollapsedWidth() {
+function getSidebarCollapsedWidth() {
   const { reverseHorizontalMix } = themeStore.layout;
-  const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeStore.sider;
+  const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = themeStore.sidebar;
 
   if (isHorizontalMix.value && reverseHorizontalMix) {
     return isActiveFirstLevelMenuHasChildren.value ? collapsedWidth : 0;
@@ -94,7 +96,7 @@ function getSiderCollapsedWidth() {
 
   let w = isVerticalMix.value || isHorizontalMix.value ? mixCollapsedWidth : collapsedWidth;
 
-  if (isVerticalMix.value && appStore.mixSiderFixed && childLevelMenus.value.length) {
+  if (isVerticalMix.value && appStore.mixSidebarFixed && childLevelMenus.value.length) {
     w += mixChildMenuWidth;
   }
 
@@ -104,7 +106,7 @@ function getSiderCollapsedWidth() {
 
 <template>
   <AdminLayout
-    v-model:sider-collapse="appStore.siderCollapse"
+    v-model:sidebar-collapse="appStore.sidebarCollapse"
     :mode="layoutMode"
     :scroll-el-id="LAYOUT_SCROLL_EL_ID"
     :scroll-mode="themeStore.layout.scrollMode"
@@ -115,9 +117,9 @@ function getSiderCollapsedWidth() {
     :tab-visible="themeStore.tab.visible"
     :tab-height="themeStore.tab.height"
     :content-class="appStore.contentXScrollable ? 'overflow-x-hidden' : ''"
-    :sider-visible="siderVisible"
-    :sider-width="siderWidth"
-    :sider-collapsed-width="siderCollapsedWidth"
+    :sidebar-visible="sidebarVisible"
+    :sidebar-width="sidebarWidth"
+    :sidebar-collapsed-width="sidebarCollapsedWidth"
     :footer-visible="themeStore.footer.visible"
     :footer-height="themeStore.footer.height"
     :fixed-footer="themeStore.footer.fixed"
@@ -129,8 +131,8 @@ function getSiderCollapsedWidth() {
     <template #tab>
       <GlobalTab />
     </template>
-    <template #sider>
-      <GlobalSider />
+    <template #sidebar>
+      <GlobalSidebar />
     </template>
     <GlobalMenu />
     <GlobalContent />

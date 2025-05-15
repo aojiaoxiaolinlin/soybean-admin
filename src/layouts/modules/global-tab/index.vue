@@ -9,6 +9,7 @@ import { useRouteStore } from '@/store/modules/route';
 import { useTabStore } from '@/store/modules/tab';
 import { isPC } from '@/utils/agent';
 import BetterScroll from '@/components/custom/better-scroll.vue';
+import type { DropdownKey, Tab } from '@/types/app';
 import ContextMenu from './context-menu.vue';
 
 defineOptions({
@@ -72,17 +73,17 @@ function scrollByClientX(clientX: number) {
 }
 
 function getContextMenuDisabledKeys(tabId: string) {
-  const disabledKeys: App.Global.DropdownKey[] = [];
+  const disabledKeys: DropdownKey[] = [];
 
   if (tabStore.isTabRetain(tabId)) {
-    const homeDisable: App.Global.DropdownKey[] = ['closeCurrent', 'closeLeft'];
+    const homeDisable: DropdownKey[] = ['closeCurrent', 'closeLeft'];
     disabledKeys.push(...homeDisable);
   }
 
   return disabledKeys;
 }
 
-async function handleCloseTab(tab: App.Global.Tab) {
+async function handleCloseTab(tab: Tab) {
   await tabStore.removeTab(tab.id);
 
   if (themeStore.resetCacheStrategy === 'close') {

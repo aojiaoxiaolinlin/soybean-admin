@@ -83,20 +83,20 @@ const isWrapperScrollMode = computed(() => themeStore.layout.scrollMode === 'wra
         class="w-120px"
       />
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical'" key="6-1" :label="$t('theme.sider.width')">
-      <NInputNumber v-model:value="themeStore.sider.width" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical'" key="6-1" :label="$t('theme.sidebar.width')">
+      <NInputNumber v-model:value="themeStore.sidebar.width" size="small" :step="1" class="w-120px" />
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical'" key="6-2" :label="$t('theme.sider.collapsedWidth')">
-      <NInputNumber v-model:value="themeStore.sider.collapsedWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical'" key="6-2" :label="$t('theme.sidebar.collapsedWidth')">
+      <NInputNumber v-model:value="themeStore.sidebar.collapsedWidth" size="small" :step="1" class="w-120px" />
     </SettingItem>
-    <SettingItem v-if="isMixLayoutMode" key="6-3" :label="$t('theme.sider.mixWidth')">
-      <NInputNumber v-model:value="themeStore.sider.mixWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="isMixLayoutMode" key="6-3" :label="$t('theme.sidebar.mixWidth')">
+      <NInputNumber v-model:value="themeStore.sidebar.mixWidth" size="small" :step="1" class="w-120px" />
     </SettingItem>
-    <SettingItem v-if="isMixLayoutMode" key="6-4" :label="$t('theme.sider.mixCollapsedWidth')">
-      <NInputNumber v-model:value="themeStore.sider.mixCollapsedWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="isMixLayoutMode" key="6-4" :label="$t('theme.sidebar.mixCollapsedWidth')">
+      <NInputNumber v-model:value="themeStore.sidebar.mixCollapsedWidth" size="small" :step="1" class="w-120px" />
     </SettingItem>
-    <SettingItem v-if="layoutMode === 'vertical-mix'" key="6-5" :label="$t('theme.sider.mixChildMenuWidth')">
-      <NInputNumber v-model:value="themeStore.sider.mixChildMenuWidth" size="small" :step="1" class="w-120px" />
+    <SettingItem v-if="layoutMode === 'vertical-mix'" key="6-5" :label="$t('theme.sidebar.mixChildMenuWidth')">
+      <NInputNumber v-model:value="themeStore.sidebar.mixChildMenuWidth" size="small" :step="1" class="w-120px" />
     </SettingItem>
     <SettingItem key="7" :label="$t('theme.footer.visible')">
       <NSwitch v-model:value="themeStore.footer.visible" />

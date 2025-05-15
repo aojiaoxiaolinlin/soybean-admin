@@ -9,6 +9,7 @@ import { SetupStoreId } from '@/enum';
 import { createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
 import { getRouteName, getRoutePath } from '@/router/elegant/transform';
+import type { Menu } from '@/types/app';
 import { useAuthStore } from '../auth';
 import { useTabStore } from '../tab';
 import {
@@ -79,7 +80,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   const removeRouteFns: (() => void)[] = [];
 
   /** Global menus */
-  const menus = ref<App.Global.Menu[]>([]);
+  const menus = ref<Menu[]>([]);
   const searchMenus = computed(() => transformMenuToSearchMenus(menus.value));
 
   /** Get global menus */

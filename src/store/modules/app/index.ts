@@ -7,6 +7,7 @@ import { localStg } from '@/utils/storage';
 import { SetupStoreId } from '@/enum';
 import { $t, setLocale } from '@/locales';
 import { setDayjsLocale } from '@/locales/dayjs';
+import type { LangOption, LangType } from '@/types/app';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { useThemeStore } from '../theme';
@@ -21,12 +22,12 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const { bool: reloadFlag, setBool: setReloadFlag } = useBoolean(true);
   const { bool: fullContent, toggle: toggleFullContent } = useBoolean();
   const { bool: contentXScrollable, setBool: setContentXScrollable } = useBoolean();
-  const { bool: siderCollapse, setBool: setSiderCollapse, toggle: toggleSiderCollapse } = useBoolean();
+  const { bool: sidebarCollapse, setBool: setSidebarCollapse, toggle: toggleSidebarCollapse } = useBoolean();
   const {
-    bool: mixSiderFixed,
-    setBool: setMixSiderFixed,
-    toggle: toggleMixSiderFixed
-  } = useBoolean(localStg.get('mixSiderFixed') === 'Y');
+    bool: mixSidebarFixed,
+    setBool: setMixSidebarFixed,
+    toggle: toggleMixSidebarFixed
+  } = useBoolean(localStg.get('mixSidebarFixed') === 'Y');
 
   /** Is mobile layout */
   const isMobile = breakpoints.smaller('sm');
@@ -52,9 +53,9 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     }
   }
 
-  const locale = ref<App.I18n.LangType>(localStg.get('lang') || 'zh-CN');
+  const locale = ref<LangType>(localStg.get('lang') || 'zh-CN');
 
-  const localeOptions: App.I18n.LangOption[] = [
+  const localeOptions: LangOption[] = [
     {
       label: '中文',
       key: 'zh-CN'
@@ -65,7 +66,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     }
   ];
 
-  function changeLocale(lang: App.I18n.LangType) {
+  function changeLocale(lang: LangType) {
     locale.value = lang;
     setLocale(lang);
     localStg.set('lang', lang);
@@ -86,7 +87,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
 
   // watch store
   scope.run(() => {
-    // watch isMobile, if is mobile, collapse sider
+    // watch isMobile, if is mobile, collapse sidebar
     watch(
       isMobile,
       newValue => {
@@ -94,11 +95,11 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           // backup theme setting before is mobile
           localStg.set('backupThemeSettingBeforeIsMobile', {
             layout: themeStore.layout.mode,
-            siderCollapse: siderCollapse.value
+            sidebarCollapse: sidebarCollapse.value
           });
 
           themeStore.setThemeLayout('vertical');
-          setSiderCollapse(true);
+          setSidebarCollapse(true);
         } else {
           // when is not mobile, recover the backup theme setting
           const backup = localStg.get('backupThemeSettingBeforeIsMobile');
@@ -106,7 +107,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           if (backup) {
             nextTick(() => {
               themeStore.setThemeLayout(backup.layout);
-              setSiderCollapse(backup.siderCollapse);
+              setSidebarCollapse(backup.sidebarCollapse);
 
               localStg.remove('backupThemeSettingBeforeIsMobile');
             });
@@ -132,9 +133,9 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     });
   });
 
-  // cache mixSiderFixed
+  // cache mixSidebarFixed
   useEventListener(window, 'beforeunload', () => {
-    localStg.set('mixSiderFixed', mixSiderFixed.value ? 'Y' : 'N');
+    localStg.set('mixSidebarFixed', mixSidebarFixed.value ? 'Y' : 'N');
   });
 
   /** On scope dispose */
@@ -159,11 +160,11 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     toggleFullContent,
     contentXScrollable,
     setContentXScrollable,
-    siderCollapse,
-    setSiderCollapse,
-    toggleSiderCollapse,
-    mixSiderFixed,
-    setMixSiderFixed,
-    toggleMixSiderFixed
+    sidebarCollapse,
+    setSidebarCollapse,
+    toggleSidebarCollapse,
+    mixSidebarFixed,
+    setMixSidebarFixed,
+    toggleMixSidebarFixed
   };
 });

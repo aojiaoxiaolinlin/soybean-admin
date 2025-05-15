@@ -3,16 +3,17 @@ import { computed } from 'vue';
 import { createReusableTemplate } from '@vueuse/core';
 import { SimpleScrollbar } from '@sa/materials';
 import { transformColorWithOpacity } from '@sa/color';
+import type { Menu } from '@/types/app';
 
 defineOptions({
   name: 'FirstLevelMenu'
 });
 
 interface Props {
-  menus: App.Global.Menu[];
+  menus: Menu[];
   activeMenuKey?: string;
   inverted?: boolean;
-  siderCollapse?: boolean;
+  sidebarCollapse?: boolean;
   darkMode?: boolean;
   themeColor: string;
 }
@@ -20,17 +21,17 @@ interface Props {
 const props = defineProps<Props>();
 
 interface Emits {
-  (e: 'select', menu: App.Global.Menu): boolean;
-  (e: 'toggleSiderCollapse'): void;
+  (e: 'select', menu: Menu): boolean;
+  (e: 'toggleSidebarCollapse'): void;
 }
 
 const emit = defineEmits<Emits>();
 
 interface MixMenuItemProps {
   /** Menu item label */
-  label: App.Global.Menu['label'];
+  label: Menu['label'];
   /** Menu item icon */
-  icon: App.Global.Menu['icon'];
+  icon: Menu['icon'];
   /** Active menu item */
   active: boolean;
   /** Mini size */
@@ -47,12 +48,12 @@ const selectedBgColor = computed(() => {
   return darkMode ? dark : light;
 });
 
-function handleClickMixMenu(menu: App.Global.Menu) {
+function handleClickMixMenu(menu: Menu) {
   emit('select', menu);
 }
 
-function toggleSiderCollapse() {
-  emit('toggleSiderCollapse');
+function toggleSidebarCollapse() {
+  emit('toggleSidebarCollapse');
 }
 </script>
 
@@ -87,16 +88,16 @@ function toggleSiderCollapse() {
         :label="menu.label"
         :icon="menu.icon"
         :active="menu.key === activeMenuKey"
-        :is-mini="siderCollapse"
+        :is-mini="sidebarCollapse"
         @click="handleClickMixMenu(menu)"
       />
     </SimpleScrollbar>
     <MenuToggler
       arrow-icon
-      :collapsed="siderCollapse"
+      :collapsed="sidebarCollapse"
       :z-index="99"
       :class="{ 'text-white:88 !hover:text-white': inverted }"
-      @click="toggleSiderCollapse"
+      @click="toggleSidebarCollapse"
     />
   </div>
 </template>

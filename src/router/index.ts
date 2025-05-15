@@ -6,12 +6,13 @@ import {
   createWebHashHistory,
   createWebHistory
 } from 'vue-router';
+import type { ImportMeta, RouterHistoryMode } from '@/types/vite-env';
 import { createBuiltinVueRoutes } from './routes/builtin';
 import { createRouterGuard } from './guard';
 
-const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env;
+const { VITE_ROUTER_HISTORY_MODE = 'history', VITE_BASE_URL } = import.meta.env as ImportMeta;
 
-const historyCreatorMap: Record<Env.RouterHistoryMode, (base?: string) => RouterHistory> = {
+const historyCreatorMap: Record<RouterHistoryMode, (base?: string) => RouterHistory> = {
   hash: createWebHashHistory,
   history: createWebHistory,
   memory: createMemoryHistory

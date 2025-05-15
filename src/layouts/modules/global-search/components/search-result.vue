@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { useThemeStore } from '@/store/modules/theme';
 import { $t } from '@/locales';
+import type { Menu } from '@/types/app';
 
 defineOptions({ name: 'SearchResult' });
 
 interface Props {
-  options: App.Global.Menu[];
+  options: Menu[];
 }
 
 defineProps<Props>();
@@ -20,7 +21,7 @@ const theme = useThemeStore();
 
 const active = defineModel<string>('path', { required: true });
 
-async function handleMouseEnter(item: App.Global.Menu) {
+async function handleMouseEnter(item: Menu) {
   active.value = item.routePath;
 }
 

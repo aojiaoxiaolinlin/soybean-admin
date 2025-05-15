@@ -4,6 +4,7 @@ import type { VNode } from 'vue';
 import { useTabStore } from '@/store/modules/tab';
 import { useSvgIcon } from '@/hooks/common/icon';
 import { $t } from '@/locales';
+import type { DropdownKey } from '@/types/app';
 
 defineOptions({
   name: 'ContextMenu'
@@ -15,8 +16,8 @@ interface Props {
   /** ClientY */
   y: number;
   tabId: string;
-  excludeKeys?: App.Global.DropdownKey[];
-  disabledKeys?: App.Global.DropdownKey[];
+  excludeKeys?: DropdownKey[];
+  disabledKeys?: DropdownKey[];
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,7 +31,7 @@ const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore();
 const { SvgIconVNode } = useSvgIcon();
 
 type DropdownOption = {
-  key: App.Global.DropdownKey;
+  key: DropdownKey;
   label: string;
   icon?: () => VNode;
   disabled?: boolean;
@@ -83,7 +84,7 @@ function hideDropdown() {
   visible.value = false;
 }
 
-const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
+const dropdownAction: Record<DropdownKey, () => void> = {
   closeCurrent() {
     removeTab(props.tabId);
   },
@@ -101,7 +102,7 @@ const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
   }
 };
 
-function handleDropdown(optionKey: App.Global.DropdownKey) {
+function handleDropdown(optionKey: DropdownKey) {
   dropdownAction[optionKey]?.();
   hideDropdown();
 }

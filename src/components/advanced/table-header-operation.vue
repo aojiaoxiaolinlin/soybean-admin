@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { $t } from '@/locales';
+import type { Align, TableColumnCheck } from '@/types/naive-ui';
 
 defineOptions({
   name: 'TableHeaderOperation'
 });
 
 interface Props {
-  itemAlign?: NaiveUI.Align;
+  itemAlign?: Align;
   disabledDelete?: boolean;
   loading?: boolean;
 }
@@ -21,7 +22,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
-const columns = defineModel<NaiveUI.TableColumnCheck[]>('columns', {
+const columns = defineModel<TableColumnCheck[]>('columns', {
   default: () => []
 });
 

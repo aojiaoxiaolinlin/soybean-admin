@@ -2,6 +2,7 @@
 import type { PopoverPlacement } from 'naive-ui';
 import { themeLayoutModeRecord } from '@/constants/app';
 import { $t } from '@/locales';
+import type { ThemeLayoutMode } from '@/types/union-key';
 
 defineOptions({
   name: 'LayoutModeCard'
@@ -9,7 +10,7 @@ defineOptions({
 
 interface Props {
   /** Layout mode */
-  mode: UnionKey.ThemeLayoutMode;
+  mode: ThemeLayoutMode;
   /** Disabled */
   disabled?: boolean;
 }
@@ -18,13 +19,13 @@ const props = defineProps<Props>();
 
 interface Emits {
   /** Layout mode change */
-  (e: 'update:mode', mode: UnionKey.ThemeLayoutMode): void;
+  (e: 'update:mode', mode: ThemeLayoutMode): void;
 }
 
 const emit = defineEmits<Emits>();
 
 type LayoutConfig = Record<
-  UnionKey.ThemeLayoutMode,
+  ThemeLayoutMode,
   {
     placement: PopoverPlacement;
     headerClass: string;
@@ -60,7 +61,7 @@ const layoutConfig: LayoutConfig = {
   }
 };
 
-function handleChangeMode(mode: UnionKey.ThemeLayoutMode) {
+function handleChangeMode(mode: ThemeLayoutMode) {
   if (props.disabled) return;
 
   emit('update:mode', mode);

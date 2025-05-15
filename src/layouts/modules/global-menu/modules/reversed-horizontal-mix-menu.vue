@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import type { RouteKey } from '@elegant-router/types';
 import { SimpleScrollbar } from '@sa/materials';
-import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDER_MENU_ID } from '@/constants/app';
+import { GLOBAL_HEADER_MENU_ID, GLOBAL_SIDEBAR_MENU_ID } from '@/constants/app';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
@@ -39,7 +39,7 @@ function handleSelectMixMenu(key: RouteKey) {
 const expandedKeys = ref<string[]>([]);
 
 function updateExpandedKeys() {
-  if (appStore.siderCollapse || !selectedKey.value) {
+  if (appStore.sidebarCollapse || !selectedKey.value) {
     expandedKeys.value = [];
     return;
   }
@@ -66,14 +66,14 @@ watch(
       @update:value="handleSelectMixMenu"
     />
   </Teleport>
-  <Teleport :to="`#${GLOBAL_SIDER_MENU_ID}`">
+  <Teleport :to="`#${GLOBAL_SIDEBAR_MENU_ID}`">
     <SimpleScrollbar>
       <NMenu
         v-model:expanded-keys="expandedKeys"
         mode="vertical"
         :value="selectedKey"
-        :collapsed="appStore.siderCollapse"
-        :collapsed-width="themeStore.sider.collapsedWidth"
+        :collapsed="appStore.sidebarCollapse"
+        :collapsed-width="themeStore.sidebar.collapsedWidth"
         :collapsed-icon-size="22"
         :options="childLevelMenus"
         :indent="18"

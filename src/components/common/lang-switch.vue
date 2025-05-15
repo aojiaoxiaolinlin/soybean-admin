@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { $t } from '@/locales';
+import type { LangOption, LangType } from '@/types/app';
 
 defineOptions({
   name: 'LangSwitch'
@@ -8,9 +9,9 @@ defineOptions({
 
 interface Props {
   /** Current language */
-  lang: App.I18n.LangType;
+  lang: LangType;
   /** Language options */
-  langOptions: App.I18n.LangOption[];
+  langOptions: LangOption[];
   /** Show tooltip */
   showTooltip?: boolean;
 }
@@ -20,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 type Emits = {
-  (e: 'changeLang', lang: App.I18n.LangType): void;
+  (e: 'changeLang', lang: LangType): void;
 };
 
 const emit = defineEmits<Emits>();
@@ -31,7 +32,7 @@ const tooltipContent = computed(() => {
   return $t('icon.lang');
 });
 
-function changeLang(lang: App.I18n.LangType) {
+function changeLang(lang: LangType) {
   emit('changeLang', lang);
 }
 </script>

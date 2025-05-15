@@ -3,9 +3,10 @@ import { URL, fileURLToPath } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
 import { setupVitePlugins } from './build/plugins';
 import { createViteProxy, getBuildTime } from './build/config';
+import type { ImportMeta } from './src/types/vite-env';
 
 export default defineConfig(configEnv => {
-  const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as Env.ImportMeta;
+  const viteEnv = loadEnv(configEnv.mode, process.cwd()) as unknown as ImportMeta;
 
   const buildTime = getBuildTime();
 

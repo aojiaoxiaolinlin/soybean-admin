@@ -3,6 +3,7 @@ import { computed, reactive } from 'vue';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
+import type { FormRule } from '@/types/app';
 
 defineOptions({
   name: 'ResetPwd'
@@ -25,7 +26,7 @@ const model: FormModel = reactive({
   confirmPassword: ''
 });
 
-type RuleRecord = Partial<Record<keyof FormModel, App.Global.FormRule[]>>;
+type RuleRecord = Partial<Record<keyof FormModel, FormRule[]>>;
 
 const rules = computed<RuleRecord>(() => {
   const { formRules, createConfirmPwdRule } = useFormRules();

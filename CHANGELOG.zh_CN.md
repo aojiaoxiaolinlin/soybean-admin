@@ -59,7 +59,7 @@
 
 ### &nbsp;&nbsp;&nbsp;🚨 重大变更
 
-- **projects**: 当 vertical-mix 布局为 mixSiderFixed 时，不重置活动菜单 &nbsp;-&nbsp; by @honghuangdc [<samp>(939c5)</samp>](https://github.com/honghuangdc/soybean-admin/commit/939c512)
+- **projects**: 当 vertical-mix 布局为 mixsidebarFixed 时，不重置活动菜单 &nbsp;-&nbsp; by @honghuangdc [<samp>(939c5)</samp>](https://github.com/honghuangdc/soybean-admin/commit/939c512)
 
 ### &nbsp;&nbsp;&nbsp;🛠 优化
 

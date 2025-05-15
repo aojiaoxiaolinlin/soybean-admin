@@ -1,9 +1,11 @@
+import type { ColorPaletteNumber, ThemeColorKey, ThemePaletteColor, ThemeTokenCSSVars } from '@/types/app';
+
 /** Create color palette vars */
 function createColorPaletteVars() {
-  const colors: App.Theme.ThemeColorKey[] = ['primary', 'info', 'success', 'warning', 'error'];
-  const colorPaletteNumbers: App.Theme.ColorPaletteNumber[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+  const colors: ThemeColorKey[] = ['primary', 'info', 'success', 'warning', 'error'];
+  const colorPaletteNumbers: ColorPaletteNumber[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
-  const colorPaletteVar = {} as App.Theme.ThemePaletteColor;
+  const colorPaletteVar = {} as ThemePaletteColor;
 
   colors.forEach(color => {
     colorPaletteVar[color] = `rgb(var(--${color}-color))`;
@@ -18,7 +20,7 @@ function createColorPaletteVars() {
 const colorPaletteVars = createColorPaletteVars();
 
 /** Theme vars */
-export const themeVars: App.Theme.ThemeTokenCSSVars = {
+export const themeVars: ThemeTokenCSSVars = {
   colors: {
     ...colorPaletteVars,
     nprogress: 'rgb(var(--nprogress-color))',
@@ -29,7 +31,7 @@ export const themeVars: App.Theme.ThemeTokenCSSVars = {
   },
   boxShadow: {
     header: 'var(--header-box-shadow)',
-    sider: 'var(--sider-box-shadow)',
+    sidebar: 'var(--sidebar-box-shadow)',
     tab: 'var(--tab-box-shadow)'
   }
 };

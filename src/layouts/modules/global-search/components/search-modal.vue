@@ -5,6 +5,7 @@ import { onKeyStroke, useDebounceFn } from '@vueuse/core';
 import { useRouteStore } from '@/store/modules/route';
 import { useAppStore } from '@/store/modules/app';
 import { $t } from '@/locales';
+import type { Menu } from '@/types/app';
 import SearchResult from './search-result.vue';
 import SearchFooter from './search-footer.vue';
 
@@ -18,7 +19,7 @@ const isMobile = computed(() => appStore.isMobile);
 
 const keyword = ref('');
 const activePath = ref('');
-const resultOptions = shallowRef<App.Global.Menu[]>([]);
+const resultOptions = shallowRef<Menu[]>([]);
 
 const handleSearch = useDebounceFn(search, 300);
 

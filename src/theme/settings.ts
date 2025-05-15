@@ -1,8 +1,10 @@
+import type { ThemeSetting } from '@/types/app';
+
 /** Default theme settings */
-export const themeSettings: App.Theme.ThemeSetting = {
+export const themeSettings: ThemeSetting = {
   themeScheme: 'light',
   grayscale: false,
-  colourWeakness: false,
+  colorWeakness: false,
   recommendColor: false,
   themeColor: '#646cff',
   otherColor: {
@@ -39,7 +41,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
     mode: 'chrome'
   },
   fixedHeaderAndTab: true,
-  sider: {
+  sidebar: {
     inverted: false,
     width: 220,
     collapsedWidth: 64,
@@ -67,7 +69,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
       },
       boxShadow: {
         header: '0 1px 2px rgb(0, 21, 41, 0.08)',
-        sider: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
+        sidebar: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
         tab: '0 1px 2px rgb(0, 21, 41, 0.08)'
       }
     },
@@ -86,4 +88,4 @@ export const themeSettings: App.Theme.ThemeSetting = {
  *
  * If publish new version, use `overrideThemeSettings` to override certain theme settings
  */
-export const overrideThemeSettings: Partial<App.Theme.ThemeSetting> = {};
+export const overrideThemeSettings: Partial<ThemeSetting> = {};

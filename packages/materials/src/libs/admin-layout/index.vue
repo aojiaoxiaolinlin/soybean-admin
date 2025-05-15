@@ -19,18 +19,18 @@ const props = withDefaults(defineProps<AdminLayoutProps>(), {
   headerHeight: 56,
   tabVisible: true,
   tabHeight: 48,
-  siderVisible: true,
-  siderCollapse: false,
-  siderWidth: 220,
-  siderCollapsedWidth: 64,
+  sidebarVisible: true,
+  sidebarCollapse: false,
+  sidebarWidth: 220,
+  sidebarCollapsedWidth: 64,
   footerVisible: true,
   footerHeight: 48,
   rightFooter: false
 });
 
 interface Emits {
-  /** Update siderCollapse */
-  (e: 'update:siderCollapse', collapse: boolean): void;
+  /** Update sidebarCollapse */
+  (e: 'update:sidebarCollapse', collapse: boolean): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -44,8 +44,8 @@ type Slots = {
   header?: SlotFn;
   /** Tab */
   tab?: SlotFn;
-  /** Sider */
-  sider?: SlotFn;
+  /** Sidebar */
+  sidebar?: SlotFn;
   /** Footer */
   footer?: SlotFn;
 };
@@ -57,8 +57,8 @@ const cssVars = computed(() => createLayoutCssVars(props));
 // config visible
 const showHeader = computed(() => Boolean(slots.header) && props.headerVisible);
 const showTab = computed(() => Boolean(slots.tab) && props.tabVisible);
-const showSider = computed(() => !props.isMobile && Boolean(slots.sider) && props.siderVisible);
-const showMobileSider = computed(() => props.isMobile && Boolean(slots.sider) && props.siderVisible);
+const showSidebar = computed(() => !props.isMobile && Boolean(slots.sidebar) && props.sidebarVisible);
+const showMobileSidebar = computed(() => props.isMobile && Boolean(slots.sidebar) && props.sidebarVisible);
 const showFooter = computed(() => Boolean(slots.footer) && props.footerVisible);
 
 // scroll mode
@@ -73,8 +73,8 @@ const fixedHeaderAndTab = computed(() => props.fixedTop || (isHorizontal.value &
 
 // css
 const leftGapClass = computed(() => {
-  if (!props.fullContent && showSider.value) {
-    return props.siderCollapse ? style['left-gap_collapsed'] : style['left-gap'];
+  if (!props.fullContent && showSidebar.value) {
+    return props.sidebarCollapse ? style['left-gap_collapsed'] : style['left-gap'];
   }
 
   return '';
@@ -94,21 +94,21 @@ const footerLeftGapClass = computed(() => {
   return '';
 });
 
-const siderPaddingClass = computed(() => {
+const sidebarPaddingClass = computed(() => {
   let cls = '';
 
   if (showHeader.value && !headerLeftGapClass.value) {
-    cls += style['sider-padding-top'];
+    cls += style['sidebar-padding-top'];
   }
   if (showFooter.value && !footerLeftGapClass.value) {
-    cls += ` ${style['sider-padding-bottom']}`;
+    cls += ` ${style['sidebar-padding-bottom']}`;
   }
 
   return cls;
 });
 
 function handleClickMask() {
-  emit('update:siderCollapse', true);
+  emit('update:sidebarCollapse', true);
 }
 </script>
 
@@ -163,39 +163,39 @@ function handleClickMask() {
         ></div>
       </template>
 
-      <!-- Sider -->
-      <template v-if="showSider">
+      <!-- Sidebar -->
+      <template v-if="showSidebar">
         <aside
           v-show="!fullContent"
           class="absolute left-0 top-0 h-full"
           :class="[
             commonClass,
-            siderClass,
-            siderPaddingClass,
-            siderCollapse ? style['layout-sider_collapsed'] : style['layout-sider']
+            sidebarClass,
+            sidebarPaddingClass,
+            sidebarCollapse ? style['layout-sidebar_collapsed'] : style['layout-sidebar']
           ]"
         >
-          <slot name="sider"></slot>
+          <slot name="sidebar"></slot>
         </aside>
       </template>
 
-      <!-- Mobile Sider -->
-      <template v-if="showMobileSider">
+      <!-- Mobile Sidebar -->
+      <template v-if="showMobileSidebar">
         <aside
           class="absolute left-0 top-0 h-full w-0 bg-white"
           :class="[
             commonClass,
-            mobileSiderClass,
-            style['layout-mobile-sider'],
-            siderCollapse ? 'overflow-hidden' : style['layout-sider']
+            mobileSidebarClass,
+            style['layout-mobile-sidebar'],
+            sidebarCollapse ? 'overflow-hidden' : style['layout-sidebar']
           ]"
         >
-          <slot name="sider"></slot>
+          <slot name="sidebar"></slot>
         </aside>
         <div
-          v-show="!siderCollapse"
+          v-show="!sidebarCollapse"
           class="absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.2)]"
-          :class="[style['layout-mobile-sider-mask']]"
+          :class="[style['layout-mobile-sidebar-mask']]"
           @click="handleClickMask"
         ></div>
       </template>

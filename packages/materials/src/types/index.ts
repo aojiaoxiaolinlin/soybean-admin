@@ -42,44 +42,44 @@ interface AdminLayoutTabConfig {
   tabHeight?: number;
 }
 
-/** Sider config */
-interface AdminLayoutSiderConfig {
+/** Sidebar config */
+interface AdminLayoutSidebarConfig {
   /**
-   * Whether sider is visible
+   * Whether sidebar is visible
    *
    * @default true
    */
-  siderVisible?: boolean;
+  sidebarVisible?: boolean;
   /**
-   * Sider class
+   * Sidebar class
    *
    * @default ''
    */
-  siderClass?: string;
+  sidebarClass?: string;
   /**
-   * Mobile sider class
+   * Mobile sidebar class
    *
    * @default ''
    */
-  mobileSiderClass?: string;
+  mobileSidebarClass?: string;
   /**
-   * Sider collapse status
+   * Sidebar collapse status
    *
    * @default false
    */
-  siderCollapse?: boolean;
+  sidebarCollapse?: boolean;
   /**
-   * Sider width when collapse is false
+   * Sidebar width when collapse is false
    *
    * @default '220px'
    */
-  siderWidth?: number;
+  sidebarWidth?: number;
   /**
-   * Sider width when collapse is true
+   * Sidebar width when collapse is true
    *
    * @default '64px'
    */
-  siderCollapsedWidth?: number;
+  sidebarCollapsedWidth?: number;
 }
 
 /** Content config */
@@ -154,7 +154,7 @@ export type LayoutScrollMode = 'wrapper' | 'content';
 export interface AdminLayoutProps
   extends AdminLayoutHeaderConfig,
     AdminLayoutTabConfig,
-    AdminLayoutSiderConfig,
+    AdminLayoutSidebarConfig,
     AdminLayoutContentConfig,
     AdminLayoutFooterConfig {
   /**
@@ -209,7 +209,7 @@ export interface AdminLayoutProps
   /**
    * The max z-index of the layout
    *
-   * The z-index of Header,Tab,Sider and Footer will not exceed this value
+   * The z-index of Header,Tab,Sidebar and Footer will not exceed this value
    */
   maxZIndex?: number;
 }
@@ -224,12 +224,12 @@ type Prefix = '--soy-';
 
 export type LayoutCssVarsProps = Pick<
   AdminLayoutProps,
-  'headerHeight' | 'tabHeight' | 'siderWidth' | 'siderCollapsedWidth' | 'footerHeight'
+  'headerHeight' | 'tabHeight' | 'sidebarWidth' | 'sidebarCollapsedWidth' | 'footerHeight'
 > & {
   headerZIndex?: number;
   tabZIndex?: number;
-  siderZIndex?: number;
-  mobileSiderZIndex?: number;
+  sidebarZIndex?: number;
+  mobileSidebarZIndex?: number;
   footerZIndex?: number;
 };
 

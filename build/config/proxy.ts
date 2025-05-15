@@ -1,15 +1,16 @@
 import type { HttpProxy, ProxyOptions } from 'vite';
 import { bgRed, bgYellow, green, lightBlue } from 'kolorist';
 import { consola } from 'consola';
+import type { ServiceConfigItem } from '../../src/types/app';
 import { createServiceConfig } from '../../src/utils/service';
-
+import type { ImportMeta } from '../../src/types/vite-env';
 /**
  * Set http proxy
  *
  * @param env - The current env
  * @param enable - If enable http proxy
  */
-export function createViteProxy(env: Env.ImportMeta, enable: boolean) {
+export function createViteProxy(env: ImportMeta, enable: boolean) {
   const isEnableHttpProxy = enable && env.VITE_HTTP_PROXY === 'Y';
 
   if (!isEnableHttpProxy) return undefined;
@@ -27,7 +28,7 @@ export function createViteProxy(env: Env.ImportMeta, enable: boolean) {
   return proxy;
 }
 
-function createProxyItem(item: App.Service.ServiceConfigItem, enableLog: boolean) {
+function createProxyItem(item: ServiceConfigItem, enableLog: boolean) {
   const proxy: Record<string, ProxyOptions> = {};
 
   proxy[item.proxyPattern] = {

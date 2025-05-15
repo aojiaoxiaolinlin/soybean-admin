@@ -14,7 +14,7 @@ import BindWechat from './modules/bind-wechat.vue';
 
 interface Props {
   /** The login module */
-  module?: UnionKey.LoginModule;
+  module?: string;
 }
 
 const props = defineProps<Props>();
@@ -27,7 +27,7 @@ interface LoginModule {
   component: Component;
 }
 
-const moduleMap: Record<UnionKey.LoginModule, LoginModule> = {
+const moduleMap: Record<string, LoginModule> = {
   'pwd-login': { label: loginModuleRecord['pwd-login'], component: PwdLogin },
   'code-login': { label: loginModuleRecord['code-login'], component: CodeLogin },
   register: { label: loginModuleRecord.register, component: Register },

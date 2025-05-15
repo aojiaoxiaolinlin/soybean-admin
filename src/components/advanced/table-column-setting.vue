@@ -1,12 +1,13 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>, K = never">
 import { VueDraggable } from 'vue-draggable-plus';
 import { $t } from '@/locales';
+import type { TableColumnCheck } from '@/types/naive-ui';
 
 defineOptions({
   name: 'TableColumnSetting'
 });
 
-const columns = defineModel<NaiveUI.TableColumnCheck[]>('columns', {
+const columns = defineModel<TableColumnCheck[]>('columns', {
   required: true
 });
 </script>

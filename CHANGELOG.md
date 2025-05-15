@@ -267,7 +267,7 @@
 - **projects**:
   - avoid retrieving cached HTML &nbsp;-&nbsp; by @Azir-11 in https://github.com/soybeanjs/soybean-admin/issues/605 [<samp>(ef6cf)</samp>](https://github.com/soybeanjs/soybean-admin/commit/ef6cf93)
   - fix login redirect &nbsp;-&nbsp; by @soybeanjs [<samp>(3830e)</samp>](https://github.com/soybeanjs/soybean-admin/commit/3830ec7)
-  - fix vertical-mix-menu when sider collapse. fixed #608 &nbsp;-&nbsp; by @soybeanjs in https://github.com/soybeanjs/soybean-admin/issues/608 [<samp>(c3f1f)</samp>](https://github.com/soybeanjs/soybean-admin/commit/c3f1f69)
+  - fix vertical-mix-menu when sidebar collapse. fixed #608 &nbsp;-&nbsp; by @soybeanjs in https://github.com/soybeanjs/soybean-admin/issues/608 [<samp>(c3f1f)</samp>](https://github.com/soybeanjs/soybean-admin/commit/c3f1f69)
   - fix breadcrumb when activeMenu is parent menu. fixed #589 &nbsp;-&nbsp; by @soybeanjs in https://github.com/soybeanjs/soybean-admin/issues/589 [<samp>(79b2a)</samp>](https://github.com/soybeanjs/soybean-admin/commit/79b2a28)
   - fix refresh token when meet multi requests. fixed #581 &nbsp;-&nbsp; by @soybeanjs in https://github.com/soybeanjs/soybean-admin/issues/581 [<samp>(27b52)</samp>](https://github.com/soybeanjs/soybean-admin/commit/27b5222)
 - **types**:
@@ -307,7 +307,7 @@
 
 ### &nbsp;&nbsp;&nbsp;🚨 Breaking Changes
 
-- **projects**: don't reset active menu of vertical-mix layout when it is mixSiderFixed &nbsp;-&nbsp; by @honghuangdc [<samp>(939c5)</samp>](https://github.com/honghuangdc/soybean-admin/commit/939c512)
+- **projects**: don't reset active menu of vertical-mix layout when it is mixsidebarFixed &nbsp;-&nbsp; by @honghuangdc [<samp>(939c5)</samp>](https://github.com/honghuangdc/soybean-admin/commit/939c512)
 
 ### &nbsp;&nbsp;&nbsp;🛠 Optimizations
 

@@ -5,6 +5,7 @@ import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
+import type { FormRule } from '@/types/app';
 
 defineOptions({
   name: 'PwdLogin'
@@ -24,7 +25,7 @@ const model: FormModel = reactive({
   password: '123456'
 });
 
-const rules = computed<Record<keyof FormModel, App.Global.FormRule[]>>(() => {
+const rules = computed<Record<keyof FormModel, FormRule[]>>(() => {
   // inside computed to make locale reactive, if not apply i18n, you can define it without computed
   const { formRules } = useFormRules();
 

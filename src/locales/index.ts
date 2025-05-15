@@ -1,6 +1,7 @@
 import type { App } from 'vue';
 import { createI18n } from 'vue-i18n';
 import { localStg } from '@/utils/storage';
+import type { LangType } from '@/types/app';
 import messages from './locale';
 
 const i18n = createI18n({
@@ -19,8 +20,8 @@ export function setupI18n(app: App) {
   app.use(i18n);
 }
 
-export const $t = i18n.global.t as App.I18n.$T;
+export const $t = i18n.global.t;
 
-export function setLocale(locale: App.I18n.LangType) {
+export function setLocale(locale: LangType) {
   i18n.global.locale.value = locale;
 }
